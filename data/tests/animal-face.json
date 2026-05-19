@@ -1,0 +1,483 @@
+{
+  "slug": "animal-face",
+  "title": "동물상 테스트",
+  "description": "당신의 외모와 분위기로 알아보는 16가지 동물상",
+  "emoji": "🐶",
+  "estimatedMinutes": 2,
+  "results": [
+    {
+      "id": "dog",
+      "title": "강아지상",
+      "emoji": "🐶",
+      "shortDesc": "사랑스럽고 친근한 분위기 메이커",
+      "description": "당신은 어디서나 사람들에게 호감을 주는 강아지상이에요. 밝고 활기찬 에너지로 주변을 환하게 만들고, 처음 보는 사람과도 금세 친해지는 사교성이 매력 포인트. 잘 웃고 표현이 풍부해서 함께 있으면 기분이 좋아진다는 말을 자주 듣습니다.",
+      "traits": ["사교적", "밝음", "친근함", "에너지 넘침"],
+      "matches": ["cat", "rabbit", "deer"],
+      "avoid": ["wolf"]
+    },
+    {
+      "id": "cat",
+      "title": "고양이상",
+      "emoji": "🐱",
+      "shortDesc": "도도하지만 알수록 매력적인 신비주의",
+      "description": "당신은 첫인상은 차가워 보여도 알면 알수록 매력이 깊어지는 고양이상이에요. 갸름한 라인과 또렷한 눈매로 신비로운 분위기를 풍기고, 자기만의 페이스를 지키는 도도한 매력이 사람들의 호기심을 자극합니다. 무심한 듯 다정한 반전이 포인트.",
+      "traits": ["신비로움", "도도함", "지적", "독립적"],
+      "matches": ["dog", "fox", "wolf"],
+      "avoid": ["lion"]
+    },
+    {
+      "id": "fox",
+      "title": "여우상",
+      "emoji": "🦊",
+      "shortDesc": "똑똑하고 매혹적인 분위기의 소유자",
+      "description": "당신은 영리함과 매력을 동시에 가진 여우상이에요. 살짝 올라간 눈매와 또렷한 이목구비로 시크하면서도 섹시한 분위기를 풍기고, 상황 파악이 빨라 어떤 자리에서도 자연스럽게 빛납니다. 무심한 미소 하나로 분위기를 사로잡는 타입.",
+      "traits": ["영리함", "매혹적", "센스 있음", "분위기 있음"],
+      "matches": ["cat", "wolf", "owl"],
+      "avoid": ["bear"]
+    },
+    {
+      "id": "deer",
+      "title": "사슴상",
+      "emoji": "🦌",
+      "shortDesc": "청순하고 우아한 분위기의 소유자",
+      "description": "당신은 맑고 우아한 분위기의 사슴상이에요. 갸름한 얼굴형과 큰 눈, 긴 목 라인이 청순함을 더해주고, 조용히 빛나는 단아한 매력이 시선을 끕니다. 화려하지 않지만 한 번 보면 잊히지 않는 잔잔한 아름다움이 매력 포인트.",
+      "traits": ["청순함", "우아함", "단아함", "신비로움"],
+      "matches": ["dog", "rabbit", "fox"],
+      "avoid": ["tiger"]
+    },
+    {
+      "id": "rabbit",
+      "title": "토끼상",
+      "emoji": "🐰",
+      "shortDesc": "순수하고 사랑스러운 매력의 소유자",
+      "description": "당신은 순수하고 보호 본능을 자극하는 토끼상이에요. 큰 눈과 작은 입, 동그란 얼굴형으로 어린 동안 인상을 주고, 조용하지만 따뜻한 성격으로 주변 사람들을 편안하게 합니다. 살짝 수줍은 듯한 분위기가 사랑스러움의 비결.",
+      "traits": ["순수함", "사랑스러움", "수줍음", "따뜻함"],
+      "matches": ["deer", "hamster", "dog"],
+      "avoid": ["wolf"]
+    },
+    {
+      "id": "bear",
+      "title": "곰상",
+      "emoji": "🐻",
+      "shortDesc": "푸근하고 든든한 안정감의 소유자",
+      "description": "당신은 함께 있으면 마음이 편해지는 곰상이에요. 둥글둥글한 얼굴형과 온화한 눈매로 푸근한 인상을 주고, 묵직하면서도 다정한 성격이 큰 매력. 말은 많지 않아도 행동으로 챙겨주는 든든함이 주변 사람들을 끌어당깁니다.",
+      "traits": ["든든함", "온화함", "다정함", "묵직함"],
+      "matches": ["panda", "hamster", "penguin"],
+      "avoid": ["fox"]
+    },
+    {
+      "id": "wolf",
+      "title": "늑대상",
+      "emoji": "🐺",
+      "shortDesc": "카리스마와 야성미를 갖춘 분위기 메이커",
+      "description": "당신은 강렬한 인상의 늑대상이에요. 날카로운 눈매와 또렷한 이목구비로 카리스마 넘치는 분위기를 풍기고, 무심한 듯 시크한 매력이 주변을 압도합니다. 겉은 차가워 보여도 자기 사람에게는 한없이 충직한 반전 매력이 포인트.",
+      "traits": ["카리스마", "시크함", "야성미", "충직함"],
+      "matches": ["cat", "fox", "tiger"],
+      "avoid": ["rabbit"]
+    },
+    {
+      "id": "tiger",
+      "title": "호랑이상",
+      "emoji": "🐯",
+      "shortDesc": "강렬하고 당당한 카리스마의 소유자",
+      "description": "당신은 한 번 보면 잊히지 않는 호랑이상이에요. 또렷한 이목구비와 당당한 분위기로 어디서나 존재감이 빛나고, 자신감 있는 태도가 주변 사람들을 이끄는 리더 타입. 강해 보이는 외모와 달리 의외로 다정한 면이 반전 매력입니다.",
+      "traits": ["카리스마", "당당함", "강렬함", "리더십"],
+      "matches": ["wolf", "lion", "fox"],
+      "avoid": ["deer"]
+    },
+    {
+      "id": "squirrel",
+      "title": "다람쥐상",
+      "emoji": "🐿️",
+      "shortDesc": "발랄하고 사랑스러운 에너지의 소유자",
+      "description": "당신은 작고 발랄한 매력의 다람쥐상이에요. 동그란 눈과 또렷한 이목구비, 활기찬 표정으로 어디서나 귀여움을 발산하고, 호기심 많은 성격으로 새로운 걸 빠르게 받아들입니다. 함께 있으면 에너지가 충전되는 비타민 같은 존재.",
+      "traits": ["발랄함", "호기심", "귀여움", "재치"],
+      "matches": ["hamster", "dog", "meerkat"],
+      "avoid": ["bear"]
+    },
+    {
+      "id": "hamster",
+      "title": "햄스터상",
+      "emoji": "🐹",
+      "shortDesc": "동글동글 사랑스러운 동안 매력",
+      "description": "당신은 보고만 있어도 미소가 지어지는 햄스터상이에요. 동그란 얼굴형과 통통한 볼, 작은 입으로 사랑스러운 동안 인상을 주고, 순수하고 천진난만한 성격이 매력 포인트. 함께 있으면 마음이 말랑말랑해진다는 말을 자주 듣습니다.",
+      "traits": ["동안", "사랑스러움", "순수함", "통통함"],
+      "matches": ["rabbit", "panda", "squirrel"],
+      "avoid": ["tiger"]
+    },
+    {
+      "id": "raccoon",
+      "title": "너구리상",
+      "emoji": "🦝",
+      "shortDesc": "장난기 가득한 개성파 매력의 소유자",
+      "description": "당신은 어딘가 묘하게 끌리는 너구리상이에요. 또렷한 눈가와 개성 있는 이목구비로 독특한 분위기를 풍기고, 장난기 가득한 표정과 의외성 있는 매력이 사람들의 호감을 삽니다. 친해질수록 발견되는 다양한 매력이 포인트.",
+      "traits": ["개성", "장난기", "재치", "친근함"],
+      "matches": ["dog", "squirrel", "panda"],
+      "avoid": ["owl"]
+    },
+    {
+      "id": "penguin",
+      "title": "펭귄상",
+      "emoji": "🐧",
+      "shortDesc": "동글동글 순둥하고 듬직한 매력",
+      "description": "당신은 동글동글한 외모에 순둥한 매력의 펭귄상이에요. 둥근 얼굴과 차분한 눈매로 안정감 있는 인상을 주고, 말없이 곁을 지켜주는 듬직한 성격이 매력 포인트. 무뚝뚝해 보여도 알고 보면 다정한 반전이 사랑받는 이유.",
+      "traits": ["순둥함", "듬직함", "차분함", "다정함"],
+      "matches": ["bear", "panda", "hamster"],
+      "avoid": ["fox"]
+    },
+    {
+      "id": "owl",
+      "title": "부엉이상",
+      "emoji": "🦉",
+      "shortDesc": "지적이고 신비로운 분위기의 소유자",
+      "description": "당신은 차분한 지적 매력의 부엉이상이에요. 동그란 눈과 또렷한 이목구비로 진중한 인상을 주고, 깊이 있는 대화를 좋아하는 사색가 타입. 말은 적지만 한 마디 한 마디에 무게가 있어 어른스러운 분위기를 풍깁니다.",
+      "traits": ["지적", "차분함", "신비로움", "사색적"],
+      "matches": ["cat", "fox", "deer"],
+      "avoid": ["raccoon"]
+    },
+    {
+      "id": "lion",
+      "title": "사자상",
+      "emoji": "🦁",
+      "shortDesc": "당당하고 화려한 리더형 매력",
+      "description": "당신은 어디서든 빛나는 사자상이에요. 또렷한 이목구비와 화려한 분위기로 강한 존재감을 뿜어내고, 자신감 있는 태도가 자연스레 사람들을 이끄는 타입. 외향적이고 활기찬 성격으로 모임의 중심에 서게 됩니다.",
+      "traits": ["당당함", "화려함", "리더십", "활기"],
+      "matches": ["tiger", "dog", "wolf"],
+      "avoid": ["cat"]
+    },
+    {
+      "id": "panda",
+      "title": "판다상",
+      "emoji": "🐼",
+      "shortDesc": "보호 본능을 자극하는 사랑스러운 매력",
+      "description": "당신은 보고만 있어도 마음이 녹는 판다상이에요. 둥글둥글한 얼굴과 처진 눈, 통통한 인상으로 푸근한 사랑스러움을 발산하고, 느긋하고 다정한 성격이 매력 포인트. 곁에 있으면 편안해진다는 말을 자주 듣는 힐링 타입입니다.",
+      "traits": ["사랑스러움", "느긋함", "다정함", "힐링"],
+      "matches": ["bear", "hamster", "raccoon"],
+      "avoid": ["tiger"]
+    },
+    {
+      "id": "meerkat",
+      "title": "미어캣상",
+      "emoji": "🐾",
+      "shortDesc": "호기심 많고 영리한 작은 매력",
+      "description": "당신은 또렷한 눈빛이 매력적인 미어캣상이에요. 작고 야무진 얼굴형과 동그란 눈으로 영리한 인상을 주고, 호기심 많고 눈치 빠른 성격으로 어떤 상황에서도 빠르게 적응합니다. 발랄하면서도 야무진 반전 매력이 포인트.",
+      "traits": ["영리함", "야무짐", "호기심", "발랄함"],
+      "matches": ["squirrel", "dog", "owl"],
+      "avoid": ["bear"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": "주말에 가장 하고 싶은 일은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "친구들과 시끌벅적 모이기",
+          "scores": { "dog": 3, "lion": 2, "meerkat": 2, "squirrel": 1 }
+        },
+        {
+          "id": "b",
+          "text": "혼자 영화 보거나 책 읽기",
+          "scores": { "cat": 3, "owl": 2, "penguin": 2, "deer": 1 }
+        },
+        {
+          "id": "c",
+          "text": "새로운 장소 탐험하기",
+          "scores": { "wolf": 3, "tiger": 2, "fox": 2, "raccoon": 1 }
+        },
+        {
+          "id": "d",
+          "text": "집에서 푹 쉬며 충전",
+          "scores": { "bear": 3, "panda": 3, "hamster": 2, "rabbit": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "처음 만난 사람에게 자주 듣는 말은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "귀엽다는 말을 자주 들어",
+          "scores": { "rabbit": 3, "hamster": 3, "panda": 2, "squirrel": 2 }
+        },
+        {
+          "id": "b",
+          "text": "차가워 보인다는 말을 들어",
+          "scores": { "cat": 3, "fox": 3, "wolf": 2, "owl": 1 }
+        },
+        {
+          "id": "c",
+          "text": "듬직하다는 말을 들어",
+          "scores": { "bear": 3, "lion": 2, "tiger": 2, "penguin": 2 }
+        },
+        {
+          "id": "d",
+          "text": "똑똑해 보인다는 말을 들어",
+          "scores": { "owl": 3, "deer": 2, "meerkat": 2, "fox": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "친구들 사이에서 나의 포지션은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "분위기 메이커 / 텐션 담당",
+          "scores": { "dog": 3, "squirrel": 3, "meerkat": 2, "lion": 2 }
+        },
+        {
+          "id": "b",
+          "text": "고민 들어주는 조언자",
+          "scores": { "owl": 3, "deer": 2, "penguin": 2, "bear": 1 }
+        },
+        {
+          "id": "c",
+          "text": "카리스마 있는 리더",
+          "scores": { "tiger": 3, "lion": 3, "wolf": 2, "fox": 1 }
+        },
+        {
+          "id": "d",
+          "text": "사랑받는 마스코트",
+          "scores": { "hamster": 3, "panda": 3, "rabbit": 2, "raccoon": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "갈등 상황에서 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "직접 부딪혀서 해결한다",
+          "scores": { "tiger": 3, "lion": 2, "wolf": 2, "dog": 1 }
+        },
+        {
+          "id": "b",
+          "text": "한 발 물러서서 상황을 본다",
+          "scores": { "cat": 3, "fox": 3, "owl": 2, "deer": 1 }
+        },
+        {
+          "id": "c",
+          "text": "분위기를 풀어보려 노력한다",
+          "scores": { "dog": 2, "squirrel": 2, "panda": 2, "raccoon": 2 }
+        },
+        {
+          "id": "d",
+          "text": "일단 자리를 피한다",
+          "scores": { "rabbit": 3, "hamster": 2, "penguin": 2, "bear": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "내 매력 포인트를 한 단어로 말한다면?",
+      "options": [
+        {
+          "id": "a",
+          "text": "활기찬 에너지",
+          "scores": { "dog": 2, "squirrel": 2, "lion": 2, "meerkat": 2 }
+        },
+        {
+          "id": "b",
+          "text": "신비로운 분위기",
+          "scores": { "cat": 3, "fox": 2, "owl": 2, "wolf": 1 }
+        },
+        {
+          "id": "c",
+          "text": "청순한 매력",
+          "scores": { "deer": 3, "rabbit": 3, "panda": 1, "hamster": 1 }
+        },
+        {
+          "id": "d",
+          "text": "든든한 안정감",
+          "scores": { "bear": 3, "penguin": 2, "tiger": 2, "lion": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "좋아하는 데이트 장소는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "사람 많은 핫플 / 페스티벌",
+          "scores": { "dog": 2, "lion": 3, "meerkat": 2, "squirrel": 1 }
+        },
+        {
+          "id": "b",
+          "text": "조용한 카페나 서점",
+          "scores": { "cat": 2, "owl": 3, "deer": 2, "penguin": 1 }
+        },
+        {
+          "id": "c",
+          "text": "야경 보이는 옥상이나 바",
+          "scores": { "fox": 3, "wolf": 3, "tiger": 2, "cat": 1 }
+        },
+        {
+          "id": "d",
+          "text": "포근한 집 데이트",
+          "scores": { "bear": 2, "panda": 3, "hamster": 2, "rabbit": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "평소 내 표정은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "환하게 잘 웃는 편",
+          "scores": { "dog": 3, "squirrel": 2, "hamster": 1, "lion": 1 }
+        },
+        {
+          "id": "b",
+          "text": "무표정에 가까운 편",
+          "scores": { "cat": 3, "wolf": 2, "owl": 2, "fox": 1 }
+        },
+        {
+          "id": "c",
+          "text": "은은하게 미소 짓는 편",
+          "scores": { "deer": 3, "fox": 1, "rabbit": 2, "panda": 2 }
+        },
+        {
+          "id": "d",
+          "text": "진지하고 차분한 편",
+          "scores": { "tiger": 2, "bear": 2, "penguin": 3, "owl": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "선호하는 패션 스타일은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "캐주얼 / 스포티",
+          "scores": { "dog": 3, "squirrel": 2, "meerkat": 2, "raccoon": 1 }
+        },
+        {
+          "id": "b",
+          "text": "시크 / 모노톤",
+          "scores": { "cat": 3, "fox": 2, "wolf": 3, "owl": 1 }
+        },
+        {
+          "id": "c",
+          "text": "러블리 / 파스텔",
+          "scores": { "rabbit": 3, "hamster": 2, "panda": 2, "deer": 2 }
+        },
+        {
+          "id": "d",
+          "text": "클래식 / 포멀",
+          "scores": { "bear": 2, "lion": 2, "tiger": 2, "penguin": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "거울 속 내 얼굴형은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "둥글둥글한 동안형",
+          "scores": { "hamster": 3, "panda": 3, "bear": 2, "rabbit": 1 }
+        },
+        {
+          "id": "b",
+          "text": "갸름한 V라인형",
+          "scores": { "deer": 3, "fox": 2, "cat": 2, "owl": 1 }
+        },
+        {
+          "id": "c",
+          "text": "또렷한 각진형",
+          "scores": { "tiger": 3, "lion": 2, "wolf": 2, "fox": 1 }
+        },
+        {
+          "id": "d",
+          "text": "작고 또렷한 형",
+          "scores": { "squirrel": 2, "raccoon": 2, "meerkat": 3, "penguin": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "내 눈매를 한 마디로?",
+      "options": [
+        {
+          "id": "a",
+          "text": "크고 맑은 눈",
+          "scores": { "deer": 3, "dog": 2, "rabbit": 2, "panda": 1 }
+        },
+        {
+          "id": "b",
+          "text": "살짝 처진 부드러운 눈",
+          "scores": { "hamster": 2, "panda": 2, "bear": 3, "penguin": 1 }
+        },
+        {
+          "id": "c",
+          "text": "올라간 날카로운 눈",
+          "scores": { "cat": 2, "fox": 3, "wolf": 2, "tiger": 2 }
+        },
+        {
+          "id": "d",
+          "text": "또렷한 동그란 눈",
+          "scores": { "squirrel": 3, "owl": 2, "meerkat": 2, "raccoon": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "text": "운동이나 활동에 대한 내 태도는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "에너지 넘치게 자주 한다",
+          "scores": { "dog": 2, "lion": 3, "tiger": 2, "meerkat": 2 }
+        },
+        {
+          "id": "b",
+          "text": "혼자 조용히 산책하는 정도",
+          "scores": { "cat": 2, "deer": 2, "owl": 2, "penguin": 2 }
+        },
+        {
+          "id": "c",
+          "text": "필요할 때만 빠르게",
+          "scores": { "fox": 2, "wolf": 2, "raccoon": 2, "squirrel": 1 }
+        },
+        {
+          "id": "d",
+          "text": "최대한 안 움직이고 싶다",
+          "scores": { "bear": 3, "panda": 3, "hamster": 2, "rabbit": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "text": "사람들이 나에 대해 가장 많이 하는 말은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "함께 있으면 즐겁다",
+          "scores": { "dog": 3, "squirrel": 2, "lion": 2, "raccoon": 1 }
+        },
+        {
+          "id": "b",
+          "text": "알수록 매력 있다",
+          "scores": { "cat": 3, "fox": 2, "wolf": 2, "owl": 1 }
+        },
+        {
+          "id": "c",
+          "text": "보고 있으면 마음이 편하다",
+          "scores": { "bear": 2, "panda": 3, "hamster": 2, "rabbit": 2 }
+        },
+        {
+          "id": "d",
+          "text": "한 번 보면 잊히지 않는다",
+          "scores": { "tiger": 3, "lion": 2, "deer": 2, "fox": 1 }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+{
+  "slug": "past-life-job",
+  "title": "전생 직업 테스트",
+  "description": "전생의 나는 어떤 일을 하던 사람이었을까?",
+  "emoji": "⏳",
+  "estimatedMinutes": 2,
+  "results": [
+    {
+      "id": "painter",
+      "title": "궁중 화가",
+      "emoji": "🎨",
+      "shortDesc": "섬세한 손끝으로 시대를 그린 예술가",
+      "description": "당신은 전생에 궁궐에서 그림을 그리던 화가였어요. 섬세한 감수성과 색에 대한 예민한 감각으로 왕실의 풍경과 사람들을 화폭에 담아냈죠. 지금도 아름다운 것에 쉽게 마음이 흔들리고, 평범한 일상 속에서도 남들이 못 보는 결을 발견하는 능력이 남아 있어요.",
+      "traits": ["섬세함", "감수성", "심미안", "관찰력"],
+      "matches": ["poet", "musician", "dancer"],
+      "avoid": ["general"]
+    },
+    {
+      "id": "swordsman",
+      "title": "떠돌이 검객",
+      "emoji": "⚔️",
+      "shortDesc": "정의를 좇아 세상을 떠돈 자유로운 검사",
+      "description": "당신은 전생에 검 하나 들고 세상을 떠돌던 검객이었어요. 권력에 굽히지 않고 약자 편에 서며, 옳다고 믿는 일에는 망설임 없이 검을 빼들었죠. 지금도 부조리를 보면 참지 못하는 성격과, 한 번 결심하면 끝까지 밀고 가는 신념이 남아 있어요.",
+      "traits": ["정의감", "결단력", "자유로움", "신념"],
+      "matches": ["general", "captain", "merchant"],
+      "avoid": ["scholar"]
+    },
+    {
+      "id": "scholar",
+      "title": "학당 선비",
+      "emoji": "📚",
+      "shortDesc": "책 속에서 진리를 찾던 사색가",
+      "description": "당신은 전생에 책을 벗 삼아 평생을 보낸 선비였어요. 학문을 사랑하고 깊이 사색하며, 옳고 그름을 분별하는 안목이 뛰어났죠. 지금도 새로운 지식 앞에서 가슴이 뛰고, 조용한 시간에 생각을 정리하는 것을 즐기는 사색가 기질이 강해요.",
+      "traits": ["지적", "사색적", "분별력", "차분함"],
+      "matches": ["physician", "poet", "potter"],
+      "avoid": ["dancer"]
+    },
+    {
+      "id": "merchant",
+      "title": "객주 상인",
+      "emoji": "💰",
+      "shortDesc": "사람과 물건을 잇던 셈 밝은 장사꾼",
+      "description": "당신은 전생에 시장을 누비며 큰 거상으로 이름을 날린 상인이었어요. 사람의 마음을 읽고 물건의 가치를 알아보는 안목이 탁월했고, 어떤 자리에서도 자연스럽게 인맥을 만들어냈죠. 지금도 사교성과 현실적 판단력이 어느 자리에서나 빛납니다.",
+      "traits": ["사교성", "현실 감각", "셈 빠름", "수완"],
+      "matches": ["captain", "cook", "swordsman"],
+      "avoid": ["fortune_teller"]
+    },
+    {
+      "id": "physician",
+      "title": "한약방 의원",
+      "emoji": "🌿",
+      "shortDesc": "사람을 살리던 따뜻한 손길의 치유자",
+      "description": "당신은 전생에 한약방에서 사람을 돌보던 의원이었어요. 약초를 분별하는 지혜와 환자의 아픔에 공감하는 따뜻함을 함께 가진 보기 드문 사람이었죠. 지금도 누군가를 보살피고 위로하는 일에 자연스럽게 손이 가는 따뜻한 마음이 남아 있어요.",
+      "traits": ["따뜻함", "지혜", "공감력", "차분함"],
+      "matches": ["scholar", "farmer", "potter"],
+      "avoid": ["swordsman"]
+    },
+    {
+      "id": "musician",
+      "title": "거리의 음악가",
+      "emoji": "🎵",
+      "shortDesc": "한 가락으로 사람들을 울리던 떠돌이 악사",
+      "description": "당신은 전생에 거리에서 사람들에게 음악을 들려주던 악사였어요. 한 곡조에 사람들을 웃기고 울리는 재주를 가졌고, 자유로운 영혼으로 어디든 떠돌며 노래를 남겼죠. 지금도 음악에 쉽게 빠져들고, 분위기를 만들어내는 감각이 탁월해요.",
+      "traits": ["감성", "자유로움", "표현력", "분위기"],
+      "matches": ["dancer", "poet", "painter"],
+      "avoid": ["general"]
+    },
+    {
+      "id": "dancer",
+      "title": "궁궐 무희",
+      "emoji": "💃",
+      "shortDesc": "춤사위로 마음을 사로잡던 예술가",
+      "description": "당신은 전생에 왕실 연회에서 사람들의 시선을 사로잡던 무희였어요. 우아한 몸짓과 표현력으로 한 자리를 빛냈고, 무대 위에서 가장 자신이 되는 사람이었죠. 지금도 표현하고 빛나는 자리를 좋아하며, 사람들의 시선을 자연스럽게 즐기는 매력이 있어요.",
+      "traits": ["우아함", "표현력", "감각", "매력"],
+      "matches": ["musician", "painter", "poet"],
+      "avoid": ["scholar"]
+    },
+    {
+      "id": "farmer",
+      "title": "시골 농부",
+      "emoji": "🌾",
+      "shortDesc": "땅과 함께 호흡한 성실한 일꾼",
+      "description": "당신은 전생에 묵묵히 땅을 일구던 농부였어요. 계절의 흐름을 읽고, 한 톨의 곡식도 헛되이 하지 않으며 가족을 지킨 든든한 사람이었죠. 지금도 성실함과 책임감이 몸에 배어 있고, 화려함보다 일상의 행복을 더 소중히 여기는 사람이에요.",
+      "traits": ["성실함", "책임감", "끈기", "소박함"],
+      "matches": ["physician", "potter", "cook"],
+      "avoid": ["dancer"]
+    },
+    {
+      "id": "fortune_teller",
+      "title": "떠돌이 점쟁이",
+      "emoji": "🔮",
+      "shortDesc": "별과 사람의 운명을 읽던 신비주의자",
+      "description": "당신은 전생에 사람들의 운명을 읽어주던 점쟁이였어요. 남들이 보지 못하는 것을 보는 직관과 신비로운 분위기로 마을마다 발걸음을 멈추게 했죠. 지금도 직감이 유난히 잘 맞고, 사람을 한눈에 파악하는 통찰력이 남다른 편이에요.",
+      "traits": ["직관", "신비로움", "통찰", "감각적"],
+      "matches": ["poet", "scholar", "painter"],
+      "avoid": ["merchant"]
+    },
+    {
+      "id": "general",
+      "title": "변방의 장군",
+      "emoji": "🛡️",
+      "shortDesc": "국경을 지키던 카리스마 넘치는 지휘관",
+      "description": "당신은 전생에 변방에서 군사를 이끌던 장군이었어요. 위기 상황에서도 흔들리지 않는 담대함과, 사람들을 한 방향으로 모으는 카리스마로 부하들에게 깊은 신뢰를 받았죠. 지금도 결정적 순간에 강해지고, 사람들이 따라오는 리더십이 자연스러워요.",
+      "traits": ["카리스마", "리더십", "담대함", "결단력"],
+      "matches": ["swordsman", "captain", "merchant"],
+      "avoid": ["painter"]
+    },
+    {
+      "id": "captain",
+      "title": "항해의 선장",
+      "emoji": "⚓",
+      "shortDesc": "바다 너머 미지를 향한 모험가",
+      "description": "당신은 전생에 큰 배를 이끌고 바다를 건넌 선장이었어요. 알지 못하는 곳을 향한 호기심과 위험 앞에서도 물러서지 않는 용기로 새로운 길을 열어갔죠. 지금도 변화를 두려워하지 않고, 새로운 도전 앞에서 가장 자신이 되는 사람이에요.",
+      "traits": ["모험심", "용기", "호기심", "결단"],
+      "matches": ["swordsman", "merchant", "general"],
+      "avoid": ["farmer"]
+    },
+    {
+      "id": "potter",
+      "title": "산속 도공",
+      "emoji": "🏺",
+      "shortDesc": "흙으로 작품을 빚던 고요한 장인",
+      "description": "당신은 전생에 산속 가마 곁에서 평생을 보낸 도공이었어요. 한 작품을 완성하기 위해 수없이 다시 빚고, 자기만의 길을 묵묵히 걸어간 장인이었죠. 지금도 한 가지에 깊이 몰입하는 집중력과, 완성도를 끝까지 끌어올리는 성격이 남아 있어요.",
+      "traits": ["집중력", "장인 정신", "고요함", "완성도"],
+      "matches": ["scholar", "farmer", "physician"],
+      "avoid": ["dancer"]
+    },
+    {
+      "id": "cook",
+      "title": "주막 요리사",
+      "emoji": "🍲",
+      "shortDesc": "정성스러운 손맛으로 사람을 행복하게 한 사람",
+      "description": "당신은 전생에 시골 주막에서 사람들의 허기를 달래주던 요리사였어요. 한 그릇의 정성으로 지친 나그네에게 위로를 건넸고, 음식 속에 늘 따뜻한 마음을 담았죠. 지금도 사람을 챙기는 마음과, 일상의 소소한 행복을 만드는 감각이 남아 있어요.",
+      "traits": ["따뜻함", "정성", "현실 감각", "사교성"],
+      "matches": ["merchant", "farmer", "musician"],
+      "avoid": ["fortune_teller"]
+    },
+    {
+      "id": "poet",
+      "title": "방랑 시인",
+      "emoji": "📜",
+      "shortDesc": "마음을 글로 빚어내던 자유로운 시인",
+      "description": "당신은 전생에 정처 없이 떠돌며 시를 짓던 시인이었어요. 평범한 풍경에서도 남들이 못 보는 정서를 읽어냈고, 한 줄의 시로 사람들의 마음을 움직였죠. 지금도 감성이 풍부하고, 말 한 마디에 무게가 실리는 깊이 있는 사람이에요.",
+      "traits": ["감수성", "표현력", "자유로움", "사색"],
+      "matches": ["painter", "scholar", "musician"],
+      "avoid": ["general"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": "다음 중 가장 마음이 끌리는 풍경은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "노을이 지는 산속 가마터",
+          "scores": { "potter": 3, "painter": 2, "physician": 1 }
+        },
+        {
+          "id": "b",
+          "text": "북적이는 저잣거리 시장",
+          "scores": { "merchant": 3, "musician": 2, "cook": 1 }
+        },
+        {
+          "id": "c",
+          "text": "달빛 비치는 바다 위 갑판",
+          "scores": { "captain": 3, "swordsman": 2, "fortune_teller": 1 }
+        },
+        {
+          "id": "d",
+          "text": "조용한 서재의 책 더미",
+          "scores": { "scholar": 3, "poet": 2, "physician": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "어렸을 때 자주 들었던 말은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "참 영리하다 / 똑똑하다",
+          "scores": { "scholar": 3, "physician": 2, "fortune_teller": 1 }
+        },
+        {
+          "id": "b",
+          "text": "예술적 감각이 있다",
+          "scores": { "painter": 3, "musician": 2, "dancer": 2 }
+        },
+        {
+          "id": "c",
+          "text": "성실하고 듬직하다",
+          "scores": { "farmer": 3, "potter": 2, "physician": 1 }
+        },
+        {
+          "id": "d",
+          "text": "당찬 아이다 / 겁이 없다",
+          "scores": { "general": 3, "swordsman": 2, "captain": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "친구들 사이에서 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "분위기 메이커, 흥을 책임짐",
+          "scores": { "musician": 3, "dancer": 2, "merchant": 2 }
+        },
+        {
+          "id": "b",
+          "text": "고민을 들어주는 상담가",
+          "scores": { "physician": 3, "scholar": 2, "fortune_teller": 1 }
+        },
+        {
+          "id": "c",
+          "text": "결정할 때 의지하는 리더",
+          "scores": { "general": 3, "captain": 2, "swordsman": 1 }
+        },
+        {
+          "id": "d",
+          "text": "자기 일에 묵묵한 마이페이스",
+          "scores": { "potter": 3, "farmer": 2, "painter": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "가장 즐거운 활동을 고르라면?",
+      "options": [
+        {
+          "id": "a",
+          "text": "혼자 무언가를 만들거나 그리기",
+          "scores": { "painter": 3, "potter": 2, "poet": 2 }
+        },
+        {
+          "id": "b",
+          "text": "사람들과 어울려 떠들기",
+          "scores": { "merchant": 3, "musician": 2, "dancer": 1 }
+        },
+        {
+          "id": "c",
+          "text": "새로운 장소 탐험하기",
+          "scores": { "captain": 3, "swordsman": 2, "fortune_teller": 1 }
+        },
+        {
+          "id": "d",
+          "text": "책 읽거나 깊이 사색하기",
+          "scores": { "scholar": 3, "poet": 2, "physician": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "내 매력 포인트는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "차분하고 듬직한 신뢰감",
+          "scores": { "physician": 2, "farmer": 3, "potter": 2 }
+        },
+        {
+          "id": "b",
+          "text": "표현력과 분위기를 만드는 힘",
+          "scores": { "dancer": 3, "musician": 2, "painter": 1 }
+        },
+        {
+          "id": "c",
+          "text": "결정력과 카리스마",
+          "scores": { "general": 3, "captain": 2, "swordsman": 2 }
+        },
+        {
+          "id": "d",
+          "text": "직관과 신비로운 분위기",
+          "scores": { "fortune_teller": 3, "poet": 2, "scholar": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "갈등이 생겼을 때 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "정면으로 부딪쳐 해결",
+          "scores": { "swordsman": 3, "general": 2, "captain": 1 }
+        },
+        {
+          "id": "b",
+          "text": "한 발 물러서서 관찰",
+          "scores": { "scholar": 3, "fortune_teller": 2, "potter": 1 }
+        },
+        {
+          "id": "c",
+          "text": "분위기를 풀어 화해 유도",
+          "scores": { "merchant": 3, "musician": 2, "dancer": 1 }
+        },
+        {
+          "id": "d",
+          "text": "조용히 자기 길을 감",
+          "scores": { "farmer": 3, "potter": 2, "painter": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "내 인생에서 가장 행복했던 순간은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "오래 준비한 결과물이 완성됐을 때",
+          "scores": { "potter": 3, "painter": 2, "scholar": 2 }
+        },
+        {
+          "id": "b",
+          "text": "좋은 사람들과 함께 웃을 때",
+          "scores": { "merchant": 2, "musician": 3, "cook": 2 }
+        },
+        {
+          "id": "c",
+          "text": "새로운 곳에 도착했을 때",
+          "scores": { "captain": 3, "swordsman": 2, "fortune_teller": 1 }
+        },
+        {
+          "id": "d",
+          "text": "누군가에게 도움이 됐을 때",
+          "scores": { "physician": 3, "farmer": 2, "general": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "가장 마음 편한 시간대는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "이른 새벽, 조용한 시간",
+          "scores": { "farmer": 2, "scholar": 2, "potter": 3 }
+        },
+        {
+          "id": "b",
+          "text": "한낮, 활기찬 시간",
+          "scores": { "merchant": 3, "general": 2, "captain": 1 }
+        },
+        {
+          "id": "c",
+          "text": "해질녘, 노을이 짙은 시간",
+          "scores": { "painter": 3, "poet": 2, "physician": 1 }
+        },
+        {
+          "id": "d",
+          "text": "깊은 밤, 별빛 가득한 시간",
+          "scores": { "fortune_teller": 3, "musician": 2, "dancer": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "가장 편안하게 머무는 공간은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "탁 트인 자연 한가운데",
+          "scores": { "farmer": 3, "captain": 2, "swordsman": 1 }
+        },
+        {
+          "id": "b",
+          "text": "사람 많은 따뜻한 식당",
+          "scores": { "merchant": 2, "musician": 2, "cook": 3 }
+        },
+        {
+          "id": "c",
+          "text": "내 작업물이 가득한 공방",
+          "scores": { "potter": 3, "painter": 2, "physician": 1 }
+        },
+        {
+          "id": "d",
+          "text": "책과 글이 쌓인 서재",
+          "scores": { "scholar": 3, "poet": 2, "fortune_teller": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "사람들이 나에 대해 자주 하는 말은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "함께 있으면 든든하다",
+          "scores": { "general": 2, "physician": 3, "farmer": 2 }
+        },
+        {
+          "id": "b",
+          "text": "재능이 있어 보인다",
+          "scores": { "painter": 3, "musician": 2, "dancer": 2 }
+        },
+        {
+          "id": "c",
+          "text": "사람을 잘 다룬다",
+          "scores": { "merchant": 3, "general": 2, "swordsman": 1 }
+        },
+        {
+          "id": "d",
+          "text": "신비롭다 / 깊이 있다",
+          "scores": { "fortune_teller": 3, "scholar": 2, "poet": 2 }
+        }
+      ]
+    }
+  ]
+}
