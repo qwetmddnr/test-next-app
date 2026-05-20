@@ -82,11 +82,8 @@ export function ResultView({
   const shareTitle = `${result.title} - 오늘의 나`;
   const shareText = `나는 ${result.emoji} ${result.title}! ${result.shortDesc}`;
 
-  const ENTRY_PATHS: Record<string, string> = {
-    tarot: "/tarot",
-    "new-year": "/new-year",
-  };
-  const entryPath = (slug: string) => ENTRY_PATHS[slug] ?? `/tests/${slug}`;
+  const entryPath = (t: TestDefinition) =>
+    t.entryPath ?? `/tests/${t.slug}`;
 
   const titleMatch = result.title.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
   const koreanTitle = titleMatch ? titleMatch[1].trim() : result.title;
@@ -312,7 +309,7 @@ export function ResultView({
         >
           <ShareButton url={shareUrl} title={shareTitle} text={shareText} />
           <Link
-            href={entryPath(test.slug)}
+            href={entryPath(test)}
             replace
             className="block rounded-full border-2 border-gray-200 bg-white py-4 text-center font-medium text-gray-700 transition hover:border-gray-300 active:scale-95"
           >
@@ -343,7 +340,7 @@ export function ResultView({
               {otherTests.map((t) => (
                 <Link
                   key={t.slug}
-                  href={entryPath(t.slug)}
+                  href={entryPath(t)}
                   replace
                   className="block rounded-2xl bg-white/80 p-4 shadow-sm ring-1 ring-pink-100 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
                 >

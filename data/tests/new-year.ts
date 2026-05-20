@@ -127,6 +127,8 @@ const newYear: TestDefinition = {
   estimatedMinutes: 1,
   results,
   questions: [],
+  category: "fortune",
+  entryPath: "/new-year",
 };
 
 export default newYear;

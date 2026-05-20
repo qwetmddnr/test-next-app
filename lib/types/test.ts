@@ -24,6 +24,8 @@ export interface TestResult {
   displayCode?: string;
 }
 
+export type TestCategory = "fortune" | "fun";
+
 export interface TestDefinition {
   slug: string;
   title: string;
@@ -32,6 +34,9 @@ export interface TestDefinition {
   estimatedMinutes: number;
   questions: TestQuestion[];
   results: TestResult[];
+  category?: TestCategory;
+  entryPath?: string;
+  comingSoon?: boolean;
 }
 
 export type TestAnswers = Record<string, string>;

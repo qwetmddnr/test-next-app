@@ -232,6 +232,8 @@ const tarot: TestDefinition = {
   estimatedMinutes: 1,
   results,
   questions: [],
+  category: "fortune",
+  entryPath: "/tarot",
 };
 
 export default tarot;

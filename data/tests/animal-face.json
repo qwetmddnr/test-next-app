@@ -4,6 +4,7 @@
   "description": "당신의 외모와 분위기로 알아보는 16가지 동물상",
   "emoji": "🐶",
   "estimatedMinutes": 2,
+  "category": "fun",
   "results": [
     {
       "id": "dog",

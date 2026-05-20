@@ -262,6 +262,8 @@ const mbti: TestDefinition = {
   estimatedMinutes: 3,
   results: RESULTS.map((r) => ({ ...r, displayCode: r.id })),
   questions: QUESTIONS,
+  category: "fortune",
+  entryPath: "/tests/mbti",
 };
 
 export default mbti;

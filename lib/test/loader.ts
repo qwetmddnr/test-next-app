@@ -1,10 +1,23 @@
-import type { TestDefinition, TestResult } from "@/lib/types/test";
+import type { TestCategory, TestDefinition, TestResult } from "@/lib/types/test";
 import animalFace from "@/data/tests/animal-face.json";
 import pastLifeJob from "@/data/tests/past-life-job.json";
 import loveStyle from "@/data/tests/love-style.json";
 import mbti from "@/data/tests/mbti";
 import tarot from "@/data/tests/tarot";
 import newYear from "@/data/tests/new-year";
+
+const sajuPlaceholder: TestDefinition = {
+  slug: "saju",
+  title: "오늘의 사주",
+  description: "만세력 기반의 AI 사주 분석 (준비중)",
+  emoji: "☯️",
+  estimatedMinutes: 0,
+  questions: [],
+  results: [],
+  category: "fortune",
+  entryPath: "/saju",
+  comingSoon: true,
+};
 
 const TESTS: Record<string, TestDefinition> = {
   "animal-face": animalFace as unknown as TestDefinition,
@@ -13,6 +26,7 @@ const TESTS: Record<string, TestDefinition> = {
   mbti,
   tarot,
   "new-year": newYear,
+  saju: sajuPlaceholder,
 };
 
 export function getTest(slug: string): TestDefinition | null {
@@ -28,7 +42,21 @@ export function getAllTests(): TestDefinition[] {
 }
 
 export function getOtherTests(excludeSlug: string): TestDefinition[] {
-  return getAllTests().filter((t) => t.slug !== excludeSlug);
+  return getAllTests().filter(
+    (t) => t.slug !== excludeSlug && !t.comingSoon
+  );
+}
+
+export function getTestsByCategory(): Record<TestCategory, TestDefinition[]> {
+  const all = getAllTests();
+  return {
+    fortune: all.filter((t) => t.category === "fortune"),
+    fun: all.filter((t) => t.category === "fun"),
+  };
+}
+
+export function getEntryPath(test: TestDefinition): string {
+  return test.entryPath ?? `/tests/${test.slug}`;
 }
 
 export function getResult(

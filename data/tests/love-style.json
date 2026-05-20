@@ -4,6 +4,7 @@
   "description": "당신의 사랑은 어떤 모양인가요?",
   "emoji": "💕",
   "estimatedMinutes": 3,
+  "category": "fun",
   "results": [
     {
       "id": "straight",
