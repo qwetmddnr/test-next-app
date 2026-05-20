@@ -125,7 +125,7 @@ export function CardPicker({ deck }: CardPickerProps) {
               <motion.p
                 animate={{ opacity: [0.4, 1, 0.4] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="mt-2 text-xs text-gray-400"
+                className="mt-2 text-xs text-violet-100/70"
               >
                 마음을 가라앉히고 잠시만 기다려주세요
               </motion.p>
@@ -295,7 +295,7 @@ export function CardPicker({ deck }: CardPickerProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-sm text-gray-400"
+              className="text-sm text-violet-100/60"
             >
               카드를 섞고 있어요...
             </motion.p>
@@ -307,10 +307,10 @@ export function CardPicker({ deck }: CardPickerProps) {
               exit={{ opacity: 0 }}
               transition={{ delay: 0.9 }}
             >
-              <p className="text-sm font-medium text-gray-700">
+              <p className="text-sm font-medium text-white">
                 마음에 끌리는 카드 한 장을 선택하세요
               </p>
-              <p className="mt-1 text-xs text-gray-400">
+              <p className="mt-1 text-xs text-violet-100/70">
                 22장 메이저 아르카나가 무작위 순서로 펼쳐졌어요
               </p>
             </motion.div>
@@ -319,7 +319,7 @@ export function CardPicker({ deck }: CardPickerProps) {
               key="selected"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-sm font-medium text-pink-600"
+              className="text-sm font-medium text-pink-200"
             >
               ✨ 카드가 선택됐어요
             </motion.p>
