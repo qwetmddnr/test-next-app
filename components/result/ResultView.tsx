@@ -8,6 +8,7 @@ import type { TestDefinition, TestResult } from "@/lib/types/test";
 import { fadeUp, resultEmoji } from "@/lib/motion/variants";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { createClient } from "@/lib/supabase/client";
+import { AIInsightSection } from "./AIInsightSection";
 import { ShareButton } from "./ShareButton";
 
 interface ResultViewProps {
@@ -16,17 +17,6 @@ interface ResultViewProps {
   otherTests?: TestDefinition[];
   aiInsight?: string | null;
   triggerConfetti?: boolean;
-}
-
-function stripMarkdown(text: string): string {
-  return text
-    .replace(/^#{1,6}\s+.*$/gm, "")
-    .replace(/\*\*(.+?)\*\*/g, "$1")
-    .replace(/(?<!\*)\*(?!\s)(.+?)(?<!\s)\*/g, "$1")
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/^[\s]*[-*]\s+/gm, "")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
 }
 
 export function ResultView({
@@ -164,14 +154,12 @@ export function ResultView({
             initial="hidden"
             animate="show"
             custom={1.0}
-            className="mt-4 rounded-2xl bg-gradient-to-br from-violet-50 to-pink-50 p-5 ring-1 ring-violet-200 backdrop-blur"
           >
-            <h3 className="mb-2 flex items-center gap-1.5 text-sm font-bold text-violet-700">
-              <span>✨</span> AI가 본 당신
-            </h3>
-            <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
-              {stripMarkdown(aiInsight)}
-            </p>
+            <AIInsightSection
+              insight={aiInsight}
+              testSlug={test.slug}
+              resultId={result.id}
+            />
           </motion.div>
         )}
 
