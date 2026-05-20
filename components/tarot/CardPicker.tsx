@@ -108,79 +108,106 @@ export function CardPicker({ deck }: CardPickerProps) {
             style={{ height: 340 }}
           >
             <motion.div
-              animate={{ y: [0, -8, 0] }}
+              animate={{ y: [0, -6, 0] }}
               transition={{
-                duration: 3,
+                duration: 3.2,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="relative h-44 w-56"
+              className="relative mx-auto h-56 w-56"
             >
-              {/* 보라 글로우 (수정구슬 뒤) */}
+              {/* 깊은 보라 후광 (가장 뒤) */}
               <motion.div
-                className="absolute right-2 bottom-2 h-24 w-24 rounded-full bg-violet-300/50 blur-2xl"
-                animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.9, 1.1, 0.9] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/30 blur-[60px]"
+                animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.85, 1.05, 0.85] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              {/* 점쟁이 — 좌상단에서 살짝 흔들림 */}
+              {/* 신비로운 안개 링 */}
+              <motion.div
+                className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-violet-300/40"
+                animate={{ rotate: 360, opacity: [0.3, 0.6, 0.3] }}
+                transition={{
+                  rotate: { duration: 12, repeat: Infinity, ease: "linear" },
+                  opacity: { duration: 2.4, repeat: Infinity },
+                }}
+              />
+
+              {/* 점쟁이 — 가운데 위치, 미세하게 어루만지듯 좌우 흔들림 */}
               <motion.span
-                className="absolute left-2 top-1 text-[100px] leading-none"
-                style={{ transformOrigin: "70% 80%" }}
-                animate={{ rotate: [-3, 3, -3] }}
-                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute left-1/2 top-0 -translate-x-1/2 text-[130px] leading-none"
+                style={{
+                  transformOrigin: "50% 95%",
+                  filter:
+                    "drop-shadow(0 6px 12px rgba(124, 58, 237, 0.35))",
+                }}
+                animate={{ rotate: [-2.5, 2.5, -2.5] }}
+                transition={{
+                  duration: 3.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 🧙‍♀️
               </motion.span>
 
-              {/* 수정구슬 — 점쟁이 손끝 쪽에 위치, 살짝 맥동 */}
+              {/* 수정구슬 — 점쟁이 손 위치(아래쪽 중앙)에 겹쳐 배치, 부드럽게 떨림 */}
               <motion.span
-                className="absolute right-2 bottom-2 text-[78px] leading-none"
-                animate={{ scale: [1, 1.06, 1] }}
+                className="absolute left-1/2 bottom-0 -translate-x-1/2 text-[80px] leading-none"
+                style={{
+                  filter:
+                    "drop-shadow(0 0 24px rgba(167, 139, 250, 0.7))",
+                }}
+                animate={{
+                  scale: [1, 1.05, 1],
+                  y: [0, -2, 0],
+                }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
                 🔮
               </motion.span>
 
-              {/* 수정구슬 주위 스파클 */}
+              {/* 수정구슬 위로 올라오는 작은 별들 */}
               <motion.span
-                className="absolute right-0 top-10 text-2xl"
+                className="absolute left-[42%] bottom-20 text-base text-violet-400"
                 animate={{
-                  scale: [1, 1.35, 1],
-                  opacity: [0.4, 1, 0.4],
-                  rotate: [0, 15, 0],
+                  y: [0, -18, -36],
+                  opacity: [0, 0.9, 0],
+                  scale: [0.6, 1, 0.6],
                 }}
-                transition={{ duration: 1.6, repeat: Infinity }}
+                transition={{ duration: 2.2, repeat: Infinity }}
               >
-                ✨
+                ✦
               </motion.span>
               <motion.span
-                className="absolute right-16 -bottom-1 text-lg text-violet-400"
+                className="absolute right-[34%] bottom-16 text-sm text-pink-400"
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.5, 1, 0.5],
+                  y: [0, -22, -44],
+                  opacity: [0, 0.8, 0],
+                  scale: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 1.8,
+                  duration: 2.4,
                   repeat: Infinity,
-                  delay: 0.5,
+                  delay: 0.7,
                 }}
               >
                 ✦
               </motion.span>
               <motion.span
-                className="absolute right-20 top-3 text-base"
+                className="absolute left-[52%] bottom-24 text-xs text-violet-300"
                 animate={{
-                  scale: [1, 1.4, 1],
-                  opacity: [0.4, 1, 0.4],
+                  y: [0, -20, -40],
+                  opacity: [0, 0.7, 0],
+                  scale: [0.5, 0.9, 0.5],
                 }}
                 transition={{
-                  duration: 1.4,
+                  duration: 2,
                   repeat: Infinity,
-                  delay: 1,
+                  delay: 1.3,
                 }}
               >
-                ✨
+                ✦
               </motion.span>
             </motion.div>
 
