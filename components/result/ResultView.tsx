@@ -82,6 +82,9 @@ export function ResultView({
   const shareTitle = `${result.title} - 오늘의 나`;
   const shareText = `나는 ${result.emoji} ${result.title}! ${result.shortDesc}`;
 
+  const entryPath = (slug: string) =>
+    slug === "tarot" ? "/tarot" : `/tests/${slug}`;
+
   return (
     <main className="flex-1 px-5 pb-12 pt-8">
       <div className="mx-auto max-w-md">
@@ -276,7 +279,8 @@ export function ResultView({
         >
           <ShareButton url={shareUrl} title={shareTitle} text={shareText} />
           <Link
-            href={`/tests/${test.slug}`}
+            href={entryPath(test.slug)}
+            replace
             className="block rounded-full border-2 border-gray-200 bg-white py-4 text-center font-medium text-gray-700 transition hover:border-gray-300 active:scale-95"
           >
             🔄 다시 해보기
@@ -306,7 +310,8 @@ export function ResultView({
               {otherTests.map((t) => (
                 <Link
                   key={t.slug}
-                  href={`/tests/${t.slug}`}
+                  href={entryPath(t.slug)}
+                  replace
                   className="block rounded-2xl bg-white/80 p-4 shadow-sm ring-1 ring-pink-100 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
                 >
                   <div className="flex items-center gap-4">
