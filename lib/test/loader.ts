@@ -4,6 +4,7 @@ import pastLifeJob from "@/data/tests/past-life-job.json";
 import loveStyle from "@/data/tests/love-style.json";
 import mbti from "@/data/tests/mbti";
 import tarot from "@/data/tests/tarot";
+import newYear from "@/data/tests/new-year";
 
 const TESTS: Record<string, TestDefinition> = {
   "animal-face": animalFace as unknown as TestDefinition,
@@ -11,6 +12,7 @@ const TESTS: Record<string, TestDefinition> = {
   "love-style": loveStyle as unknown as TestDefinition,
   mbti,
   tarot,
+  "new-year": newYear,
 };
 
 export function getTest(slug: string): TestDefinition | null {

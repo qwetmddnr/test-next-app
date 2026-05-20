@@ -5,6 +5,7 @@ import { getTest } from "@/lib/test/loader";
 // 별도 entry 페이지를 가진 테스트는 그쪽으로 리다이렉트
 const ENTRY_REDIRECTS: Record<string, string> = {
   tarot: "/tarot",
+  "new-year": "/new-year",
 };
 
 export default async function TestPage({

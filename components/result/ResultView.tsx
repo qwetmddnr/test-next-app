@@ -82,8 +82,11 @@ export function ResultView({
   const shareTitle = `${result.title} - 오늘의 나`;
   const shareText = `나는 ${result.emoji} ${result.title}! ${result.shortDesc}`;
 
-  const entryPath = (slug: string) =>
-    slug === "tarot" ? "/tarot" : `/tests/${slug}`;
+  const ENTRY_PATHS: Record<string, string> = {
+    tarot: "/tarot",
+    "new-year": "/new-year",
+  };
+  const entryPath = (slug: string) => ENTRY_PATHS[slug] ?? `/tests/${slug}`;
 
   const titleMatch = result.title.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
   const koreanTitle = titleMatch ? titleMatch[1].trim() : result.title;
