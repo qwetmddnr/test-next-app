@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
 import { fadeUp, resultEmoji } from "@/lib/motion/variants";
 import { AdSlot } from "@/components/ads/AdSlot";
+import { createClient } from "@/lib/supabase/client";
 import { ShareButton } from "./ShareButton";
 
 interface ResultViewProps {
@@ -22,6 +23,8 @@ export function ResultView({
   otherTests = [],
   triggerConfetti = true,
 }: ResultViewProps) {
+  const [viewCount, setViewCount] = useState<number | null>(null);
+
   useEffect(() => {
     if (!triggerConfetti) return;
     confetti({
@@ -31,6 +34,37 @@ export function ResultView({
       colors: ["#FF6B9D", "#A78BFA", "#FBBF24", "#FFB3CD"],
     });
   }, [triggerConfetti]);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+
+    const supabase = createClient();
+    const key = `viewed:${test.slug}:${result.id}`;
+    const alreadyViewed =
+      typeof window !== "undefined" && sessionStorage.getItem(key);
+
+    const apply = (n: number | null) => {
+      if (n !== null && !Number.isNaN(n)) setViewCount(n);
+    };
+
+    if (alreadyViewed) {
+      supabase
+        .from("result_stats")
+        .select("view_count")
+        .eq("test_type", test.slug)
+        .eq("result_id", result.id)
+        .maybeSingle()
+        .then(({ data }) => apply(data ? Number(data.view_count) : null));
+    } else {
+      sessionStorage.setItem(key, "1");
+      supabase
+        .rpc("increment_result_view", {
+          p_test_type: test.slug,
+          p_result_id: result.id,
+        })
+        .then(({ data }) => apply(data !== null ? Number(data) : null));
+    }
+  }, [test.slug, result.id]);
 
   const matchResults = result.matches
     .map((id) => test.results.find((r) => r.id === id))
@@ -77,6 +111,17 @@ export function ResultView({
         >
           {result.shortDesc}
         </motion.p>
+
+        {viewCount !== null && viewCount > 0 && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
+            className="mt-2 text-center text-xs text-gray-400"
+          >
+            ✨ {viewCount.toLocaleString()}회 조회됨
+          </motion.p>
+        )}
 
         <motion.div
           variants={fadeUp}
