@@ -170,27 +170,27 @@
   "questions": [
     {
       "id": "q1",
-      "text": "주말에 가장 하고 싶은 일은?",
+      "text": "사진 찍을 때 가장 자주 나오는 표정/포즈?",
       "options": [
         {
           "id": "a",
-          "text": "친구들과 시끌벅적 모이기",
-          "scores": { "dog": 3, "lion": 2, "meerkat": 2, "squirrel": 1 }
+          "text": "환한 웃음, 이가 보이게",
+          "scores": { "dog": 3, "squirrel": 2, "lion": 2, "hamster": 1 }
         },
         {
           "id": "b",
-          "text": "혼자 영화 보거나 책 읽기",
-          "scores": { "cat": 3, "owl": 2, "penguin": 2, "deer": 1 }
+          "text": "무표정 또는 살짝 미소",
+          "scores": { "cat": 3, "wolf": 2, "owl": 2, "fox": 1 }
         },
         {
           "id": "c",
-          "text": "새로운 장소 탐험하기",
-          "scores": { "wolf": 3, "tiger": 2, "fox": 2, "raccoon": 1 }
+          "text": "시크하게 입꼬리만 살짝",
+          "scores": { "fox": 3, "cat": 2, "wolf": 2, "tiger": 1 }
         },
         {
           "id": "d",
-          "text": "집에서 푹 쉬며 충전",
-          "scores": { "bear": 3, "panda": 3, "hamster": 2, "rabbit": 1 }
+          "text": "귀엽게 V포즈 / 입 모양",
+          "scores": { "rabbit": 3, "hamster": 2, "panda": 2, "squirrel": 1 }
         }
       ]
     },
@@ -222,53 +222,53 @@
     },
     {
       "id": "q3",
-      "text": "친구들 사이에서 나의 포지션은?",
+      "text": "내 외모/스타일에서 가장 자주 받는 칭찬은?",
       "options": [
         {
           "id": "a",
-          "text": "분위기 메이커 / 텐션 담당",
-          "scores": { "dog": 3, "squirrel": 3, "meerkat": 2, "lion": 2 }
+          "text": "눈매가 매력적이다",
+          "scores": { "cat": 3, "fox": 3, "deer": 2, "owl": 1 }
         },
         {
           "id": "b",
-          "text": "고민 들어주는 조언자",
-          "scores": { "owl": 3, "deer": 2, "penguin": 2, "bear": 1 }
+          "text": "표정이 사랑스럽다 / 잘 웃는다",
+          "scores": { "dog": 3, "squirrel": 2, "hamster": 2, "rabbit": 1 }
         },
         {
           "id": "c",
-          "text": "카리스마 있는 리더",
-          "scores": { "tiger": 3, "lion": 3, "wolf": 2, "fox": 1 }
+          "text": "분위기가 있다 / 신비롭다",
+          "scores": { "wolf": 3, "fox": 2, "owl": 2, "cat": 1 }
         },
         {
           "id": "d",
-          "text": "사랑받는 마스코트",
-          "scores": { "hamster": 3, "panda": 3, "rabbit": 2, "raccoon": 2 }
+          "text": "인상이 좋다 / 편안하다",
+          "scores": { "bear": 3, "panda": 2, "penguin": 2, "lion": 1 }
         }
       ]
     },
     {
       "id": "q4",
-      "text": "갈등 상황에서 나는?",
+      "text": "거울 볼 때 가장 마음에 드는 부분은?",
       "options": [
         {
           "id": "a",
-          "text": "직접 부딪혀서 해결한다",
-          "scores": { "tiger": 3, "lion": 2, "wolf": 2, "dog": 1 }
+          "text": "눈매",
+          "scores": { "cat": 3, "fox": 2, "deer": 2, "owl": 1 }
         },
         {
           "id": "b",
-          "text": "한 발 물러서서 상황을 본다",
-          "scores": { "cat": 3, "fox": 3, "owl": 2, "deer": 1 }
+          "text": "입매 / 잘 웃는 미소",
+          "scores": { "dog": 3, "squirrel": 2, "lion": 2, "rabbit": 1 }
         },
         {
           "id": "c",
-          "text": "분위기를 풀어보려 노력한다",
-          "scores": { "dog": 2, "squirrel": 2, "panda": 2, "raccoon": 2 }
+          "text": "얼굴형 / 볼",
+          "scores": { "hamster": 3, "panda": 2, "bear": 2, "rabbit": 1 }
         },
         {
           "id": "d",
-          "text": "일단 자리를 피한다",
-          "scores": { "rabbit": 3, "hamster": 2, "penguin": 2, "bear": 1 }
+          "text": "전체적인 분위기",
+          "scores": { "wolf": 3, "tiger": 2, "owl": 2, "fox": 1 }
         }
       ]
     },
@@ -300,27 +300,27 @@
     },
     {
       "id": "q6",
-      "text": "좋아하는 데이트 장소는?",
+      "text": "어울리는 헤어 스타일/길이는?",
       "options": [
         {
           "id": "a",
-          "text": "사람 많은 핫플 / 페스티벌",
-          "scores": { "dog": 2, "lion": 3, "meerkat": 2, "squirrel": 1 }
+          "text": "단정한 짧은 머리",
+          "scores": { "dog": 3, "lion": 2, "tiger": 2, "penguin": 1 }
         },
         {
           "id": "b",
-          "text": "조용한 카페나 서점",
-          "scores": { "cat": 2, "owl": 3, "deer": 2, "penguin": 1 }
+          "text": "길고 윤기 있는 생머리",
+          "scores": { "cat": 3, "fox": 2, "deer": 2, "owl": 1 }
         },
         {
           "id": "c",
-          "text": "야경 보이는 옥상이나 바",
-          "scores": { "fox": 3, "wolf": 3, "tiger": 2, "cat": 1 }
+          "text": "동글동글 단발 / 볼륨 있는 머리",
+          "scores": { "hamster": 3, "panda": 2, "rabbit": 2, "squirrel": 1 }
         },
         {
           "id": "d",
-          "text": "포근한 집 데이트",
-          "scores": { "bear": 2, "panda": 3, "hamster": 2, "rabbit": 2 }
+          "text": "자유로운 웨이브 / 긴 머리",
+          "scores": { "wolf": 3, "raccoon": 2, "meerkat": 1, "owl": 1 }
         }
       ]
     },
@@ -430,53 +430,53 @@
     },
     {
       "id": "q11",
-      "text": "운동이나 활동에 대한 내 태도는?",
+      "text": "닮았다는 말 자주 듣는 분위기는?",
       "options": [
         {
           "id": "a",
-          "text": "에너지 넘치게 자주 한다",
-          "scores": { "dog": 2, "lion": 3, "tiger": 2, "meerkat": 2 }
+          "text": "강아지/사슴 같은 청순·사랑스러움",
+          "scores": { "dog": 2, "deer": 3, "rabbit": 2, "hamster": 1 }
         },
         {
           "id": "b",
-          "text": "혼자 조용히 산책하는 정도",
-          "scores": { "cat": 2, "deer": 2, "owl": 2, "penguin": 2 }
+          "text": "고양이/여우 같은 시크·도도함",
+          "scores": { "cat": 3, "fox": 3, "owl": 1, "wolf": 1 }
         },
         {
           "id": "c",
-          "text": "필요할 때만 빠르게",
-          "scores": { "fox": 2, "wolf": 2, "raccoon": 2, "squirrel": 1 }
+          "text": "호랑이/사자 같은 강렬·카리스마",
+          "scores": { "tiger": 3, "lion": 3, "wolf": 2, "meerkat": 1 }
         },
         {
           "id": "d",
-          "text": "최대한 안 움직이고 싶다",
-          "scores": { "bear": 3, "panda": 3, "hamster": 2, "rabbit": 1 }
+          "text": "곰/판다 같은 푸근·사랑",
+          "scores": { "bear": 3, "panda": 3, "penguin": 1, "hamster": 1 }
         }
       ]
     },
     {
       "id": "q12",
-      "text": "사람들이 나에 대해 가장 많이 하는 말은?",
+      "text": "내 입매를 한 마디로?",
       "options": [
         {
           "id": "a",
-          "text": "함께 있으면 즐겁다",
+          "text": "잘 웃는 활기찬 입",
           "scores": { "dog": 3, "squirrel": 2, "lion": 2, "raccoon": 1 }
         },
         {
           "id": "b",
-          "text": "알수록 매력 있다",
-          "scores": { "cat": 3, "fox": 2, "wolf": 2, "owl": 1 }
+          "text": "작고 도톰한 사랑스러운 입",
+          "scores": { "rabbit": 3, "hamster": 2, "panda": 2, "deer": 1 }
         },
         {
           "id": "c",
-          "text": "보고 있으면 마음이 편하다",
-          "scores": { "bear": 2, "panda": 3, "hamster": 2, "rabbit": 2 }
+          "text": "얇고 또렷한 시크한 입",
+          "scores": { "cat": 3, "fox": 2, "wolf": 2, "owl": 1 }
         },
         {
           "id": "d",
-          "text": "한 번 보면 잊히지 않는다",
-          "scores": { "tiger": 3, "lion": 2, "deer": 2, "fox": 1 }
+          "text": "다물고 있는 차분한 입",
+          "scores": { "bear": 3, "tiger": 2, "penguin": 2, "meerkat": 1 }
         }
       ]
     }
