@@ -18,6 +18,17 @@ interface ResultViewProps {
   triggerConfetti?: boolean;
 }
 
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/^#{1,6}\s+.*$/gm, "")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/(?<!\*)\*(?!\s)(.+?)(?<!\s)\*/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/^[\s]*[-*]\s+/gm, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 export function ResultView({
   test,
   result,
@@ -159,7 +170,7 @@ export function ResultView({
               <span>✨</span> AI가 본 당신
             </h3>
             <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
-              {aiInsight}
+              {stripMarkdown(aiInsight)}
             </p>
           </motion.div>
         )}
