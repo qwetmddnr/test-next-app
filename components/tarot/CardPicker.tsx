@@ -1,133 +1,140 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import type { TestDefinition } from "@/lib/types/test";
+import type { TestDefinition, TestResult } from "@/lib/types/test";
 
 interface CardPickerProps {
   deck: TestDefinition;
 }
 
-type Stage = "idle" | "shuffling" | "revealing";
+const CARDS_SHOWN = 5;
+const FAN_SPREAD_DEG = 18;
+
+function shuffleAndPick(results: TestResult[], n: number): TestResult[] {
+  const arr = [...results];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr.slice(0, n);
+}
 
 export function CardPicker({ deck }: CardPickerProps) {
   const router = useRouter();
-  const [stage, setStage] = useState<Stage>("idle");
+  const [cards, setCards] = useState<TestResult[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  function handleDraw() {
-    if (stage !== "idle") return;
+  // Client-only randomize to avoid SSR hydration mismatch
+  useEffect(() => {
+    setCards(shuffleAndPick(deck.results, CARDS_SHOWN));
+  }, [deck.results]);
+
+  function handleSelect(index: number) {
+    if (selectedIndex !== null || cards.length === 0) return;
     if (typeof navigator !== "undefined" && "vibrate" in navigator) {
-      navigator.vibrate(20);
+      navigator.vibrate(25);
     }
-    setStage("shuffling");
-
+    setSelectedIndex(index);
     setTimeout(() => {
-      setStage("revealing");
-      setTimeout(() => {
-        const card =
-          deck.results[Math.floor(Math.random() * deck.results.length)];
-        router.push(`/result/${deck.slug}/${card.id}`);
-      }, 700);
-    }, 1500);
+      router.push(`/result/${deck.slug}/${cards[index].id}`);
+    }, 1100);
   }
 
   return (
     <div className="flex flex-col items-center">
-      <motion.div
-        className="relative flex h-72 w-48 cursor-pointer items-center justify-center"
-        onClick={handleDraw}
-        animate={
-          stage === "shuffling"
-            ? { rotate: [0, 6, -6, 6, -6, 0], y: [0, -8, 0, -8, 0, 0] }
-            : stage === "revealing"
-            ? { rotate: [0, 360], scale: [1, 1.15, 1] }
-            : {}
-        }
-        transition={
-          stage === "shuffling"
-            ? { duration: 1.4, ease: "easeInOut" }
-            : stage === "revealing"
-            ? { duration: 0.7, ease: "easeOut" }
-            : { duration: 0.3 }
-        }
-        whileHover={stage === "idle" ? { scale: 1.04 } : undefined}
-        whileTap={stage === "idle" ? { scale: 0.95 } : undefined}
-      >
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-2xl shadow-violet-300/60" />
-        <div className="absolute inset-2 rounded-xl border-2 border-white/40" />
-        <div className="absolute inset-0 flex items-center justify-center text-7xl">
-          <AnimatePresence mode="wait">
-            {stage === "idle" && (
-              <motion.span
-                key="idle"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                ✦
-              </motion.span>
-            )}
-            {stage === "shuffling" && (
-              <motion.span
-                key="shuffling"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, scale: [0.8, 1.2, 0.8] }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  scale: { duration: 0.6, repeat: Infinity },
-                }}
-              >
-                🌀
-              </motion.span>
-            )}
-            {stage === "revealing" && (
-              <motion.span
-                key="revealing"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                ✨
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
+      <div className="relative h-[320px] w-full">
+        {cards.map((card, i) => {
+          const angle = (i - (CARDS_SHOWN - 1) / 2) * FAN_SPREAD_DEG;
+          const isSelected = selectedIndex === i;
+          const isOther = selectedIndex !== null && !isSelected;
 
-      <div className="mt-8 h-12 text-center">
-        <AnimatePresence mode="wait">
-          {stage === "idle" && (
-            <motion.div
-              key="hint"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+          return (
+            <motion.button
+              key={`${card.id}-${i}`}
+              type="button"
+              onClick={() => handleSelect(i)}
+              aria-label={`카드 ${i + 1} 선택`}
+              className="absolute left-1/2 bottom-2 h-44 w-28 cursor-pointer"
+              style={{
+                transformOrigin: "50% 130%",
+                marginLeft: "-3.5rem",
+                zIndex: 10 - Math.abs(i - 2),
+              }}
+              initial={{ rotate: 0, y: 280, opacity: 0 }}
+              animate={
+                isSelected
+                  ? {
+                      rotate: [angle, 0],
+                      y: [0, -140],
+                      scale: [1, 1.15],
+                      opacity: 1,
+                    }
+                  : isOther
+                  ? { rotate: angle, y: 0, opacity: 0.3, scale: 0.95 }
+                  : { rotate: angle, y: 0, opacity: 1, scale: 1 }
+              }
+              transition={
+                selectedIndex === null
+                  ? { duration: 0.6, delay: i * 0.08, ease: "easeOut" }
+                  : { duration: 0.6, ease: "easeOut" }
+              }
+              whileHover={
+                selectedIndex === null
+                  ? { y: -18, transition: { duration: 0.2 } }
+                  : undefined
+              }
+              whileTap={
+                selectedIndex === null ? { scale: 0.95 } : undefined
+              }
+              disabled={selectedIndex !== null && !isSelected}
             >
-              <p className="text-sm font-medium text-gray-700">
-                마음에 끌리는 순간 카드를 탭하세요
-              </p>
-              <p className="mt-1 text-xs text-gray-400">
-                22장 메이저 아르카나 · 한 장 뽑기
-              </p>
-            </motion.div>
-          )}
-          {stage === "shuffling" && (
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-xl shadow-violet-400/40" />
+              <div className="absolute inset-1.5 rounded-xl border-2 border-white/40" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white/90">
+                <span className="text-3xl">✦</span>
+                <span className="mt-1 text-[10px] tracking-widest text-white/60">
+                  TAROT
+                </span>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      <div className="mt-2 h-12 text-center">
+        <AnimatePresence mode="wait">
+          {cards.length === 0 ? (
             <motion.p
-              key="shuffling"
+              key="loading"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-sm font-medium text-violet-600"
+              className="text-sm text-gray-400"
             >
               카드를 섞고 있어요...
             </motion.p>
-          )}
-          {stage === "revealing" && (
+          ) : selectedIndex === null ? (
+            <motion.div
+              key="hint"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ delay: 0.5 }}
+            >
+              <p className="text-sm font-medium text-gray-700">
+                마음에 끌리는 카드 한 장을 선택하세요
+              </p>
+              <p className="mt-1 text-xs text-gray-400">
+                22장 중 무작위로 5장이 펼쳐졌어요
+              </p>
+            </motion.div>
+          ) : (
             <motion.p
-              key="revealing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              key="selected"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
               className="text-sm font-medium text-pink-600"
             >
               ✨ 카드가 선택됐어요
@@ -135,26 +142,6 @@ export function CardPicker({ deck }: CardPickerProps) {
           )}
         </AnimatePresence>
       </div>
-
-      {stage === "idle" && (
-        <motion.button
-          type="button"
-          onClick={handleDraw}
-          whileTap={{ scale: 0.95 }}
-          animate={{
-            boxShadow: [
-              "0 0 0 0 rgba(167, 139, 250, 0.4)",
-              "0 0 0 14px rgba(167, 139, 250, 0)",
-            ],
-          }}
-          transition={{
-            boxShadow: { duration: 2, repeat: Infinity, ease: "easeOut" },
-          }}
-          className="mt-6 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-violet-200/60"
-        >
-          🃏 카드 한 장 뽑기
-        </motion.button>
-      )}
     </div>
   );
 }
