@@ -85,6 +85,10 @@ export function ResultView({
   const entryPath = (slug: string) =>
     slug === "tarot" ? "/tarot" : `/tests/${slug}`;
 
+  const titleMatch = result.title.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+  const koreanTitle = titleMatch ? titleMatch[1].trim() : result.title;
+  const englishTitle = titleMatch ? titleMatch[2].trim() : null;
+
   return (
     <main className="flex-1 px-5 pb-12 pt-8">
       <div className="mx-auto max-w-md">
@@ -126,9 +130,21 @@ export function ResultView({
           className="text-center text-3xl font-bold tracking-tight"
         >
           <span className="bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
-            당신은 {result.title}!
+            당신은 {koreanTitle}!
           </span>
         </motion.h1>
+
+        {englishTitle && (
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.5}
+            className="mt-1 text-center text-xs font-medium tracking-[0.2em] text-gray-400"
+          >
+            {englishTitle}
+          </motion.p>
+        )}
 
         <motion.p
           variants={fadeUp}
