@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
-import { PopularResults } from "@/components/home/PopularResults";
-import { getPopularResults } from "@/lib/stats/popular";
+import { PopularTests } from "@/components/home/PopularTests";
+import { getPopularTests } from "@/lib/stats/popular";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const popular = await getPopularResults(5);
+  const popular = await getPopularTests(10);
 
   return (
     <main className="flex-1 px-5 pb-8 pt-10">
@@ -32,36 +32,9 @@ export default async function Home() {
           </div>
         </section>
 
-        <PopularResults entries={popular} />
+        <PopularTests entries={popular} />
 
         <AdSlot slot="home-middle" />
-
-        <section>
-          <h2 className="mb-4 text-lg font-bold text-gray-800">🎮 재미로 보는 테스트</h2>
-          <div className="space-y-3">
-            <TestCard
-              href="/tests/animal-face"
-              emoji="🐶"
-              title="동물상 테스트"
-              subtitle="당신은 어떤 동물상?"
-              meta="12문항 · 결과 16종"
-            />
-            <TestCard
-              href="/tests/past-life-job"
-              emoji="⏳"
-              title="전생 직업 테스트"
-              subtitle="전생의 나는 어떤 사람?"
-              meta="10문항 · 결과 14종"
-            />
-            <TestCard
-              href="/tests/love-style"
-              emoji="💕"
-              title="나의 연애 유형"
-              subtitle="당신의 사랑 방식은?"
-              meta="15문항 · 결과 8종"
-            />
-          </div>
-        </section>
       </div>
     </main>
   );
@@ -83,37 +56,6 @@ function FortuneCard({
     >
       <span className="mb-2 text-3xl">{emoji}</span>
       <span className="text-sm font-medium text-gray-700">{label}</span>
-    </Link>
-  );
-}
-
-function TestCard({
-  href,
-  emoji,
-  title,
-  subtitle,
-  meta,
-}: {
-  href: string;
-  emoji: string;
-  title: string;
-  subtitle: string;
-  meta: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="block rounded-2xl bg-white/80 p-4 shadow-sm ring-1 ring-pink-100 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
-    >
-      <div className="flex items-center gap-4">
-        <span className="text-4xl">{emoji}</span>
-        <div className="flex-1">
-          <div className="font-semibold text-gray-900">{title}</div>
-          <div className="text-sm text-gray-500">{subtitle}</div>
-          <div className="mt-1 text-xs text-gray-400">{meta}</div>
-        </div>
-        <span className="text-gray-300">›</span>
-      </div>
     </Link>
   );
 }

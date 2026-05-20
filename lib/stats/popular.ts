@@ -1,16 +1,15 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import { getResult } from "@/lib/test/loader";
-import type { TestDefinition, TestResult } from "@/lib/types/test";
+import { getTest } from "@/lib/test/loader";
+import type { TestDefinition } from "@/lib/types/test";
 
-export interface PopularResultEntry {
+export interface PopularTestEntry {
   test: TestDefinition;
-  result: TestResult;
-  viewCount: number;
+  totalViews: number;
 }
 
-export async function getPopularResults(
-  limit: number = 5
-): Promise<PopularResultEntry[]> {
+export async function getPopularTests(
+  limit: number = 10
+): Promise<PopularTestEntry[]> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return [];
@@ -19,26 +18,27 @@ export async function getPopularResults(
     const supabase = createSupabaseClient(url, key);
     const { data, error } = await supabase
       .from("result_stats")
-      .select("test_type, result_id, view_count")
-      .order("view_count", { ascending: false })
-      .limit(limit);
+      .select("test_type, view_count");
 
     if (error || !data) return [];
 
-    const entries: PopularResultEntry[] = [];
+    // Group by test_type, sum view_count
+    const totals: Record<string, number> = {};
     for (const row of data) {
-      const found = getResult(
-        row.test_type as string,
-        row.result_id as string
-      );
-      if (!found) continue;
-      entries.push({
-        test: found.test,
-        result: found.result,
-        viewCount: Number(row.view_count) || 0,
-      });
+      const slug = row.test_type as string;
+      const count = Number(row.view_count) || 0;
+      totals[slug] = (totals[slug] ?? 0) + count;
     }
-    return entries;
+
+    const entries: PopularTestEntry[] = [];
+    for (const [slug, total] of Object.entries(totals)) {
+      const test = getTest(slug);
+      if (!test) continue;
+      entries.push({ test, totalViews: total });
+    }
+
+    entries.sort((a, b) => b.totalViews - a.totalViews);
+    return entries.slice(0, limit);
   } catch {
     return [];
   }
