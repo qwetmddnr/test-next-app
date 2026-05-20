@@ -108,20 +108,46 @@ export function CardPicker({ deck }: CardPickerProps) {
             style={{ height: 340 }}
           >
             <motion.div
-              animate={{ y: [0, -10, 0] }}
+              animate={{ y: [0, -8, 0] }}
               transition={{
-                duration: 2.6,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="relative flex h-44 w-44 items-center justify-center"
+              className="relative h-44 w-56"
             >
-              <span className="text-[120px] leading-none">🔮</span>
+              {/* 보라 글로우 (수정구슬 뒤) */}
+              <motion.div
+                className="absolute right-2 bottom-2 h-24 w-24 rounded-full bg-violet-300/50 blur-2xl"
+                animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.9, 1.1, 0.9] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* 점쟁이 — 좌상단에서 살짝 흔들림 */}
               <motion.span
-                className="absolute -left-1 top-2 text-2xl"
+                className="absolute left-2 top-1 text-[100px] leading-none"
+                style={{ transformOrigin: "70% 80%" }}
+                animate={{ rotate: [-3, 3, -3] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                🧙‍♀️
+              </motion.span>
+
+              {/* 수정구슬 — 점쟁이 손끝 쪽에 위치, 살짝 맥동 */}
+              <motion.span
+                className="absolute right-2 bottom-2 text-[78px] leading-none"
+                animate={{ scale: [1, 1.06, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                🔮
+              </motion.span>
+
+              {/* 수정구슬 주위 스파클 */}
+              <motion.span
+                className="absolute right-0 top-10 text-2xl"
                 animate={{
                   scale: [1, 1.35, 1],
-                  opacity: [0.5, 1, 0.5],
+                  opacity: [0.4, 1, 0.4],
                   rotate: [0, 15, 0],
                 }}
                 transition={{ duration: 1.6, repeat: Infinity }}
@@ -129,29 +155,29 @@ export function CardPicker({ deck }: CardPickerProps) {
                 ✨
               </motion.span>
               <motion.span
-                className="absolute right-0 top-4 text-xl text-violet-400"
+                className="absolute right-16 -bottom-1 text-lg text-violet-400"
                 animate={{
                   scale: [1, 1.3, 1],
-                  opacity: [0.4, 1, 0.4],
+                  opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
                   duration: 1.8,
                   repeat: Infinity,
-                  delay: 0.4,
+                  delay: 0.5,
                 }}
               >
                 ✦
               </motion.span>
               <motion.span
-                className="absolute -bottom-1 left-6 text-lg"
+                className="absolute right-20 top-3 text-base"
                 animate={{
                   scale: [1, 1.4, 1],
-                  opacity: [0.5, 1, 0.5],
+                  opacity: [0.4, 1, 0.4],
                 }}
                 transition={{
                   duration: 1.4,
                   repeat: Infinity,
-                  delay: 0.9,
+                  delay: 1,
                 }}
               >
                 ✨
