@@ -63,9 +63,9 @@ export function CardPicker({ deck }: CardPickerProps) {
       navigator.vibrate(25);
     }
     setSelectedId(card.id);
-    // 0.6s 중앙 이동 → 0.7s flip → 0.4s 앞면 머무름 → push
+    // 0.6s 중앙 이동 → 0.7s flip → 0.4s 앞면 머무름 → replace
     setTimeout(() => {
-      router.push(`/result/${deck.slug}/${card.id}`);
+      router.replace(`/result/${deck.slug}/${card.id}`);
     }, 1800);
   }
 

@@ -37,7 +37,7 @@ export function TestRunner({ test }: TestRunnerProps) {
 
       if (isLast) {
         const result = calculateResult(test, newAnswers);
-        router.push(`/result/${test.slug}/${result.id}`);
+        router.replace(`/result/${test.slug}/${result.id}`);
       } else {
         setAnswers(newAnswers);
         setCurrentIndex((i) => i + 1);
