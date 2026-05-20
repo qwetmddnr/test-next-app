@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
 
@@ -62,9 +63,10 @@ export function CardPicker({ deck }: CardPickerProps) {
       navigator.vibrate(25);
     }
     setSelectedId(card.id);
+    // 0.6s 중앙 이동 → 0.7s flip → 0.4s 앞면 머무름 → push
     setTimeout(() => {
       router.push(`/result/${deck.slug}/${card.id}`);
-    }, 1100);
+    }, 1800);
   }
 
   const positions = useMemo(() => {
@@ -104,7 +106,12 @@ export function CardPicker({ deck }: CardPickerProps) {
               aria-label={`타로 카드 ${index + 1} 선택`}
               disabled={selectedId !== null && !isSelected}
               className="absolute left-1/2 top-1/2 h-20 w-14 cursor-pointer"
-              style={{ marginLeft: "-1.75rem", marginTop: "-2.5rem" }}
+              style={{
+                marginLeft: "-1.75rem",
+                marginTop: "-2.5rem",
+                perspective: "800px",
+                transformStyle: "preserve-3d",
+              }}
               initial={{
                 x: 0,
                 y: 0,
@@ -165,11 +172,54 @@ export function CardPicker({ deck }: CardPickerProps) {
                 selectedId === null ? { scale: 0.95 } : undefined
               }
             >
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-violet-400/30" />
-              <div className="absolute inset-0.5 rounded-md border border-white/40" />
-              <div className="absolute inset-0 flex items-center justify-center text-white/90">
-                <span className="text-xl">✦</span>
-              </div>
+              <motion.div
+                className="relative h-full w-full"
+                style={{ transformStyle: "preserve-3d" }}
+                animate={
+                  isSelected ? { rotateY: 180 } : { rotateY: 0 }
+                }
+                transition={{
+                  duration: 0.7,
+                  delay: isSelected ? 0.6 : 0,
+                  ease: "easeInOut",
+                }}
+              >
+                {/* 뒷면 */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                  }}
+                >
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-violet-400/30" />
+                  <div className="absolute inset-0.5 rounded-md border border-white/40" />
+                  <div className="absolute inset-0 flex items-center justify-center text-white/90">
+                    <span className="text-xl">✦</span>
+                  </div>
+                </div>
+
+                {/* 앞면 — 선택된 카드만 마운트 */}
+                {isSelected && card.image && (
+                  <div
+                    className="absolute inset-0 overflow-hidden rounded-lg bg-white shadow-lg shadow-violet-400/30 ring-1 ring-violet-200"
+                    style={{
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                  >
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      sizes="160px"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                )}
+              </motion.div>
             </motion.button>
           );
         })}
