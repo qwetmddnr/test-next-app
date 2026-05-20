@@ -2,11 +2,13 @@ import type { TestDefinition, TestResult } from "@/lib/types/test";
 import animalFace from "@/data/tests/animal-face.json";
 import pastLifeJob from "@/data/tests/past-life-job.json";
 import loveStyle from "@/data/tests/love-style.json";
+import mbti from "@/data/tests/mbti";
 
 const TESTS: Record<string, TestDefinition> = {
   "animal-face": animalFace as unknown as TestDefinition,
   "past-life-job": pastLifeJob as unknown as TestDefinition,
   "love-style": loveStyle as unknown as TestDefinition,
+  mbti,
 };
 
 export function getTest(slug: string): TestDefinition | null {

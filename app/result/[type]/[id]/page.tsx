@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ResultView } from "@/components/result/ResultView";
+import { getAIInsight } from "@/lib/ai/insight";
 import { getAllResultParams, getOtherTests, getResult } from "@/lib/test/loader";
 
 type Params = Promise<{ type: string; id: string }>;
@@ -40,11 +41,16 @@ export default async function ResultPage({ params }: { params: Params }) {
   const found = getResult(type, id);
   if (!found) notFound();
   const otherTests = getOtherTests(type);
+  const aiInsight = await getAIInsight({
+    test: found.test,
+    result: found.result,
+  });
   return (
     <ResultView
       test={found.test}
       result={found.result}
       otherTests={otherTests}
+      aiInsight={aiInsight}
     />
   );
 }

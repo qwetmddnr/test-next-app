@@ -14,6 +14,7 @@ interface ResultViewProps {
   test: TestDefinition;
   result: TestResult;
   otherTests?: TestDefinition[];
+  aiInsight?: string | null;
   triggerConfetti?: boolean;
 }
 
@@ -21,6 +22,7 @@ export function ResultView({
   test,
   result,
   otherTests = [],
+  aiInsight,
   triggerConfetti = true,
 }: ResultViewProps) {
   const [viewCount, setViewCount] = useState<number | null>(null);
@@ -144,6 +146,23 @@ export function ResultView({
             {result.description}
           </p>
         </motion.div>
+
+        {aiInsight && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={1.0}
+            className="mt-4 rounded-2xl bg-gradient-to-br from-violet-50 to-pink-50 p-5 ring-1 ring-violet-200 backdrop-blur"
+          >
+            <h3 className="mb-2 flex items-center gap-1.5 text-sm font-bold text-violet-700">
+              <span>✨</span> AI가 본 당신
+            </h3>
+            <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
+              {aiInsight}
+            </p>
+          </motion.div>
+        )}
 
         <motion.div
           variants={fadeUp}
