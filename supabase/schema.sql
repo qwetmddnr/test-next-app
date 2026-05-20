@@ -123,7 +123,15 @@ CREATE POLICY "Anyone can view stats"
   ON result_stats FOR SELECT
   USING (true);
 
--- ai_cache: 서버 전용 (service_role 키로만 접근). RLS는 활성화하되 정책 없음.
+-- ai_cache: AI 응답은 결과 페이지에 표시되는 콘텐츠라 anon SELECT 허용. INSERT/UPDATE도 anon에 허용 (Phase 1).
+-- 캐시 오염 위험 대비 input_hash가 PK라 같은 입력은 멱등. Phase 2에 service_role 분리 검토.
+CREATE POLICY "Anyone can read ai_cache"
+  ON ai_cache FOR SELECT
+  USING (true);
+
+CREATE POLICY "Anyone can insert ai_cache"
+  ON ai_cache FOR INSERT
+  WITH CHECK (true);
 
 -- ============================================================
 -- DONE. Table Editor에서 5개 테이블 생성 확인:

@@ -36,14 +36,25 @@ export async function getAIInsight({
   test,
   result,
 }: GenerateInsightInput): Promise<string | null> {
+  const tag = `[AI insight ${test.slug}/${result.id}]`;
   const promptFn = TEST_PROMPTS[test.slug];
-  if (!promptFn) return null;
+  if (!promptFn) {
+    console.log(`${tag} skip: no prompt registered for slug`);
+    return null;
+  }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!apiKey) return null;
+  console.log(
+    `${tag} env: hasApiKey=${!!apiKey} hasSupabase=${!!supabaseUrl && !!supabaseAnonKey}`
+  );
+
+  if (!apiKey) {
+    console.log(`${tag} skip: ANTHROPIC_API_KEY missing`);
+    return null;
+  }
 
   const inputHash = makeCacheKey(test.slug, result.id);
   const supabase =
@@ -52,14 +63,21 @@ export async function getAIInsight({
       : null;
 
   if (supabase) {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("ai_cache")
       .select("output")
       .eq("input_hash", inputHash)
       .maybeSingle();
-    if (data?.output) return data.output as string;
+    if (error) {
+      console.log(`${tag} cache read error:`, error.message);
+    }
+    if (data?.output) {
+      console.log(`${tag} cache HIT (${(data.output as string).length} chars)`);
+      return data.output as string;
+    }
   }
 
+  console.log(`${tag} cache miss → calling Claude API`);
   try {
     const anthropic = new Anthropic({ apiKey });
     const message = await anthropic.messages.create({
@@ -74,19 +92,29 @@ export async function getAIInsight({
       .join("\n")
       .trim();
 
+    console.log(`${tag} Claude returned ${output.length} chars`);
+
     if (!output) return null;
 
     if (supabase) {
-      await supabase.from("ai_cache").insert({
-        input_hash: inputHash,
-        test_type: test.slug,
-        output,
-      });
+      const { error: insertError } = await supabase
+        .from("ai_cache")
+        .insert({
+          input_hash: inputHash,
+          test_type: test.slug,
+          output,
+        });
+      if (insertError) {
+        console.log(`${tag} cache write error:`, insertError.message);
+      } else {
+        console.log(`${tag} cache stored`);
+      }
     }
 
     return output;
   } catch (err) {
-    console.error("[AI insight] generation failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`${tag} Claude call failed:`, msg);
     return null;
   }
 }
