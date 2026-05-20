@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
@@ -84,14 +85,35 @@ export function ResultView({
   return (
     <main className="flex-1 px-5 pb-12 pt-8">
       <div className="mx-auto max-w-md">
-        <motion.div
-          variants={resultEmoji}
-          initial="hidden"
-          animate="show"
-          className="mb-2 text-center text-8xl"
-        >
-          {result.emoji}
-        </motion.div>
+        {result.image ? (
+          <motion.div
+            variants={resultEmoji}
+            initial="hidden"
+            animate="show"
+            className="mx-auto mb-2 flex justify-center"
+          >
+            <div className="relative w-48 overflow-hidden rounded-2xl shadow-2xl shadow-violet-300/40 ring-1 ring-violet-200">
+              <Image
+                src={result.image}
+                alt={result.title}
+                width={400}
+                height={690}
+                priority
+                sizes="(max-width: 480px) 50vw, 192px"
+                className="h-auto w-full"
+              />
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            variants={resultEmoji}
+            initial="hidden"
+            animate="show"
+            className="mb-2 text-center text-8xl"
+          >
+            {result.emoji}
+          </motion.div>
+        )}
 
         <motion.h1
           variants={fadeUp}

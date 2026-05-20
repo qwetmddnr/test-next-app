@@ -19,6 +19,8 @@ export interface TestResult {
   traits: string[];
   matches: string[];
   avoid: string[];
+  image?: string;
+  imageCredit?: string;
 }
 
 export interface TestDefinition {

@@ -220,6 +220,8 @@ const results: TestResult[] = CARDS.map((c) => ({
   traits: c.traits,
   matches: [],
   avoid: [],
+  image: `/tarot/${c.id}.jpg`,
+  imageCredit: "Rider-Waite-Smith (1909), Public Domain",
 }));
 
 const tarot: TestDefinition = {
