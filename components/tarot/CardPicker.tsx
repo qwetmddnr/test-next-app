@@ -232,7 +232,7 @@ export function CardPicker({ deck }: CardPickerProps) {
                   ease: "easeInOut",
                 }}
               >
-                {/* 뒷면 */}
+                {/* 뒷면 — 다크 보라 + 골드 액센트 (정통 타로 톤) */}
                 <div
                   className="absolute inset-0"
                   style={{
@@ -240,11 +240,25 @@ export function CardPicker({ deck }: CardPickerProps) {
                     WebkitBackfaceVisibility: "hidden",
                   }}
                 >
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-violet-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-violet-400/30" />
-                  <div className="absolute inset-0.5 rounded-md border border-white/40" />
-                  <div className="absolute inset-0 flex items-center justify-center text-white/90">
-                    <span className="text-xl">✦</span>
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-indigo-900 via-violet-900 to-purple-950 shadow-lg shadow-purple-950/60" />
+                  <div className="absolute inset-0.5 rounded-md border border-amber-300/40" />
+                  <div className="absolute inset-1 rounded border border-amber-200/15" />
+                  <div className="absolute inset-0 flex items-center justify-center text-amber-200">
+                    <span className="text-base">✦</span>
                   </div>
+                  {/* 네 모서리 미니 별 */}
+                  <span className="absolute left-1 top-0.5 text-[7px] text-amber-300/60">
+                    ✦
+                  </span>
+                  <span className="absolute right-1 top-0.5 text-[7px] text-amber-300/60">
+                    ✦
+                  </span>
+                  <span className="absolute bottom-0.5 left-1 text-[7px] text-amber-300/60">
+                    ✦
+                  </span>
+                  <span className="absolute bottom-0.5 right-1 text-[7px] text-amber-300/60">
+                    ✦
+                  </span>
                 </div>
 
                 {/* 앞면 — 선택된 카드만 마운트 */}
@@ -278,7 +292,7 @@ export function CardPicker({ deck }: CardPickerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4 }}
-            className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-300"
+            className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/80 shadow-lg shadow-amber-300/40"
           />
         )}
       </div>
