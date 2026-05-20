@@ -89,8 +89,16 @@ export function ResultView({
   const koreanTitle = titleMatch ? titleMatch[1].trim() : result.title;
   const englishTitle = titleMatch ? titleMatch[2].trim() : null;
 
+  const isTarot = test.slug === "tarot";
+
   return (
-    <main className="flex-1 px-5 pb-12 pt-8">
+    <main className="relative flex-1 px-5 pb-12 pt-8">
+      {isTarot && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[620px] bg-gradient-to-b from-violet-300 via-violet-200/50 to-transparent"
+        />
+      )}
       <div className="mx-auto max-w-md">
         {result.image ? (
           <motion.div
