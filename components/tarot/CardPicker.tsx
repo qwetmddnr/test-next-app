@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
+import CatFortuneTellerCharacter from "./CatFortuneTellerCharacter";
 
 interface CardPickerProps {
   deck: TestDefinition;
@@ -102,114 +103,13 @@ export function CardPicker({ deck }: CardPickerProps) {
             key="intro"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24, scale: 0.92 }}
+            exit={{ opacity: 0, y: -20, scale: 0.94 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
-            className="absolute flex flex-col items-center"
-            style={{ height: 340 }}
+            className="absolute flex w-full max-w-[340px] flex-col items-center"
           >
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{
-                duration: 3.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative mx-auto h-56 w-56"
-            >
-              {/* 깊은 보라 후광 (가장 뒤) */}
-              <motion.div
-                className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/30 blur-[60px]"
-                animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.85, 1.05, 0.85] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              {/* 신비로운 안개 링 */}
-              <motion.div
-                className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-violet-300/40"
-                animate={{ rotate: 360, opacity: [0.3, 0.6, 0.3] }}
-                transition={{
-                  rotate: { duration: 12, repeat: Infinity, ease: "linear" },
-                  opacity: { duration: 2.4, repeat: Infinity },
-                }}
-              />
-
-              {/* 점쟁이 — 가운데 위치, 미세하게 어루만지듯 좌우 흔들림 */}
-              <motion.span
-                className="absolute left-1/2 top-0 -translate-x-1/2 text-[130px] leading-none"
-                style={{
-                  transformOrigin: "50% 95%",
-                  filter:
-                    "drop-shadow(0 6px 12px rgba(124, 58, 237, 0.35))",
-                }}
-                animate={{ rotate: [-2.5, 2.5, -2.5] }}
-                transition={{
-                  duration: 3.8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                🧙‍♀️
-              </motion.span>
-
-              {/* 수정구슬 — 점쟁이 손 위치(아래쪽 중앙)에 겹쳐 배치, 부드럽게 떨림 */}
-              <motion.span
-                className="absolute left-1/2 bottom-0 -translate-x-1/2 text-[80px] leading-none"
-                style={{
-                  filter:
-                    "drop-shadow(0 0 24px rgba(167, 139, 250, 0.7))",
-                }}
-                animate={{
-                  scale: [1, 1.05, 1],
-                  y: [0, -2, 0],
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                🔮
-              </motion.span>
-
-              {/* 수정구슬 위로 올라오는 작은 별들 */}
-              <motion.span
-                className="absolute left-[42%] bottom-20 text-base text-violet-400"
-                animate={{
-                  y: [0, -18, -36],
-                  opacity: [0, 0.9, 0],
-                  scale: [0.6, 1, 0.6],
-                }}
-                transition={{ duration: 2.2, repeat: Infinity }}
-              >
-                ✦
-              </motion.span>
-              <motion.span
-                className="absolute right-[34%] bottom-16 text-sm text-pink-400"
-                animate={{
-                  y: [0, -22, -44],
-                  opacity: [0, 0.8, 0],
-                  scale: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 2.4,
-                  repeat: Infinity,
-                  delay: 0.7,
-                }}
-              >
-                ✦
-              </motion.span>
-              <motion.span
-                className="absolute left-[52%] bottom-24 text-xs text-violet-300"
-                animate={{
-                  y: [0, -20, -40],
-                  opacity: [0, 0.7, 0],
-                  scale: [0.5, 0.9, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: 1.3,
-                }}
-              >
-                ✦
-              </motion.span>
-            </motion.div>
+            <div className="w-full overflow-hidden rounded-3xl shadow-xl shadow-violet-300/40 ring-1 ring-violet-200">
+              <CatFortuneTellerCharacter />
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 8 }}
