@@ -234,12 +234,8 @@ export function CardPicker({ deck }: CardPickerProps) {
         )}
       </AnimatePresence>
 
-      <div
-        className={`relative h-[340px] w-[340px] transition-opacity duration-500 ${
-          stage === "intro" ? "pointer-events-none opacity-0" : "opacity-100"
-        }`}
-      >
-        {positions.map(({ card, index, angle, x, y }) => {
+      <div className="relative h-[340px] w-[340px]">
+        {stage === "spread" && positions.map(({ card, index, angle, x, y }) => {
           const isSelected = selectedId === card.id;
           const isOther = selectedId !== null && !isSelected;
           const cardRotation = angle + 90; // top of card points outward from center
@@ -269,7 +265,7 @@ export function CardPicker({ deck }: CardPickerProps) {
                 y: 0,
                 rotate: 0,
                 opacity: 0,
-                scale: 0.6,
+                scale: 0.3,
               }}
               animate={
                 isSelected
@@ -305,9 +301,9 @@ export function CardPicker({ deck }: CardPickerProps) {
                     : index === highlightIndex
                     ? { duration: 0.4, ease: "easeIn" }
                     : {
-                        duration: 0.7,
-                        delay: index * 0.035,
-                        ease: [0.22, 1, 0.36, 1],
+                        duration: 0.8,
+                        delay: index * 0.05,
+                        ease: [0.34, 1.56, 0.64, 1],
                       }
                   : { duration: 0.6, ease: "easeOut" }
               }
@@ -377,11 +373,11 @@ export function CardPicker({ deck }: CardPickerProps) {
         })}
 
         {/* 중앙 안내 점 (선택 전) */}
-        {selectedId === null && total > 0 && (
+        {stage === "spread" && selectedId === null && total > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.0 }}
+            transition={{ delay: 1.4 }}
             className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-300"
           />
         )}
