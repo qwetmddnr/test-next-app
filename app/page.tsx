@@ -27,7 +27,7 @@ export default async function Home() {
           <div className="grid grid-cols-3 gap-3">
             <FortuneCard href="/tarot" emoji="🃏" label="타로" />
             <FortuneCard href="/saju" emoji="☯️" label="사주" />
-            <FortuneCard href="/mbti" emoji="🧬" label="MBTI" />
+            <FortuneCard href="/tests/mbti" emoji="🧬" label="MBTI" />
           </div>
         </section>
 
