@@ -202,105 +202,105 @@
     },
     {
       "id": "q3",
-      "text": "친구들 사이에서 나는?",
+      "text": "그 시대였다면, 마을 사람들에게 나는 어떻게 알려졌을까?",
       "options": [
         {
           "id": "a",
-          "text": "분위기 메이커, 흥을 책임짐",
-          "scores": { "musician": 3, "dancer": 2, "merchant": 2 }
+          "text": "시끌벅적 모임을 만드는 사람",
+          "scores": { "musician": 3, "dancer": 2, "merchant": 2, "cook": 1 }
         },
         {
           "id": "b",
-          "text": "고민을 들어주는 상담가",
-          "scores": { "physician": 3, "scholar": 2, "fortune_teller": 1 }
+          "text": "조용히 고민을 들어주는 사람",
+          "scores": { "physician": 3, "scholar": 2, "fortune_teller": 1, "poet": 1 }
         },
         {
           "id": "c",
-          "text": "결정할 때 의지하는 리더",
-          "scores": { "general": 3, "captain": 2, "swordsman": 1 }
+          "text": "결정적 순간에 따라야 하는 사람",
+          "scores": { "general": 3, "captain": 2, "swordsman": 2 }
         },
         {
           "id": "d",
-          "text": "자기 일에 묵묵한 마이페이스",
-          "scores": { "potter": 3, "farmer": 2, "painter": 1 }
+          "text": "한 가지에 묵묵히 매달리는 사람",
+          "scores": { "potter": 3, "farmer": 2, "painter": 1, "poet": 1 }
         }
       ]
     },
     {
       "id": "q4",
-      "text": "가장 즐거운 활동을 고르라면?",
+      "text": "그 시대로 돌아간다면, 가장 먼저 손에 잡을 것 같은 것?",
       "options": [
         {
           "id": "a",
-          "text": "혼자 무언가를 만들거나 그리기",
-          "scores": { "painter": 3, "potter": 2, "poet": 2 }
+          "text": "붓과 종이 — 글, 그림",
+          "scores": { "painter": 3, "poet": 3, "scholar": 1 }
         },
         {
           "id": "b",
-          "text": "사람들과 어울려 떠들기",
-          "scores": { "merchant": 3, "musician": 2, "dancer": 1 }
+          "text": "약초 바구니와 작은 책",
+          "scores": { "physician": 3, "scholar": 2, "farmer": 1 }
         },
         {
           "id": "c",
-          "text": "새로운 장소 탐험하기",
-          "scores": { "captain": 3, "swordsman": 2, "fortune_teller": 1 }
+          "text": "검 또는 활",
+          "scores": { "swordsman": 3, "general": 2, "captain": 2 }
         },
         {
           "id": "d",
-          "text": "책 읽거나 깊이 사색하기",
-          "scores": { "scholar": 3, "poet": 2, "physician": 1 }
+          "text": "악기 또는 화려한 무대 의상",
+          "scores": { "musician": 3, "dancer": 3, "fortune_teller": 1 }
         }
       ]
     },
     {
       "id": "q5",
-      "text": "내 매력 포인트는?",
+      "text": "그 시대 사람들이 나를 보고 가장 먼저 알아본 것은?",
       "options": [
         {
           "id": "a",
-          "text": "차분하고 듬직한 신뢰감",
-          "scores": { "physician": 2, "farmer": 3, "potter": 2 }
+          "text": "빛나는 손재주 · 솜씨",
+          "scores": { "potter": 3, "painter": 2, "cook": 2, "farmer": 1 }
         },
         {
           "id": "b",
-          "text": "표현력과 분위기를 만드는 힘",
-          "scores": { "dancer": 3, "musician": 2, "painter": 1 }
+          "text": "영민한 말솜씨와 안목",
+          "scores": { "merchant": 3, "scholar": 2, "fortune_teller": 2 }
         },
         {
           "id": "c",
-          "text": "결정력과 카리스마",
-          "scores": { "general": 3, "captain": 2, "swordsman": 2 }
+          "text": "흐트러지지 않는 단단함",
+          "scores": { "general": 3, "swordsman": 2, "farmer": 1, "physician": 1 }
         },
         {
           "id": "d",
-          "text": "직관과 신비로운 분위기",
-          "scores": { "fortune_teller": 3, "poet": 2, "scholar": 1 }
+          "text": "사람을 끄는 매력과 표현",
+          "scores": { "dancer": 3, "musician": 2, "poet": 2 }
         }
       ]
     },
     {
       "id": "q6",
-      "text": "갈등이 생겼을 때 나는?",
+      "text": "낯선 사람이 도움을 청하며 다가왔을 때 나는?",
       "options": [
         {
           "id": "a",
-          "text": "정면으로 부딪쳐 해결",
-          "scores": { "swordsman": 3, "general": 2, "captain": 1 }
+          "text": "일단 따뜻하게 맞이하고 챙긴다",
+          "scores": { "physician": 3, "cook": 2, "farmer": 2 }
         },
         {
           "id": "b",
-          "text": "한 발 물러서서 관찰",
+          "text": "의심부터 하고 거리를 둔다",
           "scores": { "scholar": 3, "fortune_teller": 2, "potter": 1 }
         },
         {
           "id": "c",
-          "text": "분위기를 풀어 화해 유도",
-          "scores": { "merchant": 3, "musician": 2, "dancer": 1 }
+          "text": "도울 가치가 있는지 빠르게 판단",
+          "scores": { "merchant": 3, "captain": 2, "general": 2 }
         },
         {
           "id": "d",
-          "text": "조용히 자기 길을 감",
-          "scores": { "farmer": 3, "potter": 2, "painter": 2 }
+          "text": "어디서 왔는지 호기심부터 생긴다",
+          "scores": { "poet": 3, "dancer": 1, "fortune_teller": 2, "captain": 1 }
         }
       ]
     },
@@ -384,27 +384,27 @@
     },
     {
       "id": "q10",
-      "text": "사람들이 나에 대해 자주 하는 말은?",
+      "text": "긴 여정의 끝에서, 마지막으로 보고 싶은 풍경은?",
       "options": [
         {
           "id": "a",
-          "text": "함께 있으면 든든하다",
-          "scores": { "general": 2, "physician": 3, "farmer": 2 }
+          "text": "내가 만든 작품들이 늘어선 공방",
+          "scores": { "potter": 3, "painter": 2, "poet": 2 }
         },
         {
           "id": "b",
-          "text": "재능이 있어 보인다",
-          "scores": { "painter": 3, "musician": 2, "dancer": 2 }
+          "text": "함께 한 사람들의 웃음",
+          "scores": { "cook": 3, "physician": 2, "musician": 2, "dancer": 1 }
         },
         {
           "id": "c",
-          "text": "사람을 잘 다룬다",
-          "scores": { "merchant": 3, "general": 2, "swordsman": 1 }
+          "text": "함께 지킨 땅과 사람들",
+          "scores": { "general": 3, "farmer": 2, "swordsman": 2 }
         },
         {
           "id": "d",
-          "text": "신비롭다 / 깊이 있다",
-          "scores": { "fortune_teller": 3, "scholar": 2, "poet": 2 }
+          "text": "한 번도 못 본 새로운 세상",
+          "scores": { "captain": 3, "fortune_teller": 2, "dancer": 1, "scholar": 1 }
         }
       ]
     }
