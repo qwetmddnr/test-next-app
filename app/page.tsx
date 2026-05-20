@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
+import { PopularResults } from "@/components/home/PopularResults";
+import { getPopularResults } from "@/lib/stats/popular";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const popular = await getPopularResults(5);
+
   return (
     <main className="flex-1 px-5 pb-8 pt-10">
       <div className="mx-auto max-w-md">
@@ -24,6 +30,8 @@ export default function Home() {
             <FortuneCard href="/mbti" emoji="🧬" label="MBTI" />
           </div>
         </section>
+
+        <PopularResults entries={popular} />
 
         <AdSlot slot="home-middle" />
 
