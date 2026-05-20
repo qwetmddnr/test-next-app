@@ -24,6 +24,7 @@ export function CardPicker({ deck }: CardPickerProps) {
   const router = useRouter();
   const [order, setOrder] = useState<TestResult[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [highlightIndex, setHighlightIndex] = useState<number>(-1);
 
   // Shuffle on client mount to avoid SSR hydration mismatch
   useEffect(() => {
@@ -31,6 +32,29 @@ export function CardPicker({ deck }: CardPickerProps) {
   }, [deck.results]);
 
   const total = order.length;
+
+  // Idle highlight: random card lifts every 1.6s after fan reveal completes
+  useEffect(() => {
+    if (selectedId !== null || total === 0) return;
+    let interval: ReturnType<typeof setInterval> | null = null;
+    const startTimer = setTimeout(() => {
+      setHighlightIndex(Math.floor(Math.random() * total));
+      interval = setInterval(() => {
+        setHighlightIndex((prev) => {
+          let next = Math.floor(Math.random() * total);
+          if (next === prev && total > 1) {
+            next = (next + 1) % total;
+          }
+          return next;
+        });
+      }, 1600);
+    }, 1400);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (interval) clearInterval(interval);
+    };
+  }, [selectedId, total]);
 
   function handleSelect(card: TestResult) {
     if (selectedId !== null || total === 0) return;
@@ -65,6 +89,12 @@ export function CardPicker({ deck }: CardPickerProps) {
           const isSelected = selectedId === card.id;
           const isOther = selectedId !== null && !isSelected;
           const cardRotation = angle + 90; // top of card points outward from center
+          const isHighlighted = highlightIndex === index && selectedId === null;
+
+          // Push the highlighted card 14px outward along its own axis
+          const rad = (angle * Math.PI) / 180;
+          const liftX = isHighlighted ? x + 14 * Math.cos(rad) : x;
+          const liftY = isHighlighted ? y + 14 * Math.sin(rad) : y;
 
           return (
             <motion.button
@@ -101,20 +131,25 @@ export function CardPicker({ deck }: CardPickerProps) {
                       scale: 0.9,
                     }
                   : {
-                      x,
-                      y,
+                      x: liftX,
+                      y: liftY,
                       rotate: cardRotation,
                       opacity: 1,
-                      scale: 1,
+                      scale: isHighlighted ? 1.08 : 1,
+                      zIndex: isHighlighted ? 20 : 10,
                     }
               }
               transition={
                 selectedId === null
-                  ? {
-                      duration: 0.7,
-                      delay: index * 0.035,
-                      ease: [0.22, 1, 0.36, 1],
-                    }
+                  ? isHighlighted
+                    ? { duration: 0.5, ease: "easeOut" }
+                    : index === highlightIndex
+                    ? { duration: 0.4, ease: "easeIn" }
+                    : {
+                        duration: 0.7,
+                        delay: index * 0.035,
+                        ease: [0.22, 1, 0.36, 1],
+                      }
                   : { duration: 0.6, ease: "easeOut" }
               }
               whileHover={
