@@ -21,22 +21,32 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
+type Stage = "intro" | "spread";
+
 export function CardPicker({ deck }: CardPickerProps) {
   const router = useRouter();
   const [order, setOrder] = useState<TestResult[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [highlightIndex, setHighlightIndex] = useState<number>(-1);
+  const [stage, setStage] = useState<Stage>("intro");
 
-  // Shuffle on client mount to avoid SSR hydration mismatch
+  // Shuffle on client mount (during intro) to avoid SSR hydration mismatch
   useEffect(() => {
     setOrder(shuffle(deck.results));
   }, [deck.results]);
+
+  // Intro plays for ~3s, then cards spread
+  useEffect(() => {
+    if (stage !== "intro") return;
+    const t = setTimeout(() => setStage("spread"), 3000);
+    return () => clearTimeout(t);
+  }, [stage]);
 
   const total = order.length;
 
   // Idle highlight: random card lifts every 1.6s after fan reveal completes
   useEffect(() => {
-    if (selectedId !== null || total === 0) return;
+    if (stage !== "spread" || selectedId !== null || total === 0) return;
     let interval: ReturnType<typeof setInterval> | null = null;
     const startTimer = setTimeout(() => {
       setHighlightIndex(Math.floor(Math.random() * total));
@@ -55,7 +65,7 @@ export function CardPicker({ deck }: CardPickerProps) {
       clearTimeout(startTimer);
       if (interval) clearInterval(interval);
     };
-  }, [selectedId, total]);
+  }, [stage, selectedId, total]);
 
   function handleSelect(card: TestResult) {
     if (selectedId !== null || total === 0) return;
@@ -86,7 +96,96 @@ export function CardPicker({ deck }: CardPickerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative h-[340px] w-[340px]">
+      <AnimatePresence>
+        {stage === "intro" && (
+          <motion.div
+            key="intro"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24, scale: 0.92 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            className="absolute flex flex-col items-center"
+            style={{ height: 340 }}
+          >
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                duration: 2.6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="relative flex h-44 w-44 items-center justify-center"
+            >
+              <span className="text-[120px] leading-none">🔮</span>
+              <motion.span
+                className="absolute -left-1 top-2 text-2xl"
+                animate={{
+                  scale: [1, 1.35, 1],
+                  opacity: [0.5, 1, 0.5],
+                  rotate: [0, 15, 0],
+                }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              >
+                ✨
+              </motion.span>
+              <motion.span
+                className="absolute right-0 top-4 text-xl text-violet-400"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.4, 1, 0.4],
+                }}
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                  delay: 0.4,
+                }}
+              >
+                ✦
+              </motion.span>
+              <motion.span
+                className="absolute -bottom-1 left-6 text-lg"
+                animate={{
+                  scale: [1, 1.4, 1],
+                  opacity: [0.5, 1, 0.5],
+                }}
+                transition={{
+                  duration: 1.4,
+                  repeat: Infinity,
+                  delay: 0.9,
+                }}
+              >
+                ✨
+              </motion.span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.45 }}
+              className="mt-4 flex flex-col items-center"
+            >
+              <p className="text-lg font-bold tracking-tight">
+                <span className="bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+                  오늘의 운세를 뽑아보세요
+                </span>
+              </p>
+              <motion.p
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="mt-2 text-xs text-gray-400"
+              >
+                마음을 가라앉히고 잠시만 기다려주세요
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div
+        className={`relative h-[340px] w-[340px] transition-opacity duration-500 ${
+          stage === "intro" ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      >
         {positions.map(({ card, index, angle, x, y }) => {
           const isSelected = selectedId === card.id;
           const isOther = selectedId !== null && !isSelected;
@@ -235,7 +334,11 @@ export function CardPicker({ deck }: CardPickerProps) {
         )}
       </div>
 
-      <div className="mt-4 h-12 text-center">
+      <div
+        className={`mt-4 h-12 text-center transition-opacity duration-500 ${
+          stage === "intro" ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      >
         <AnimatePresence mode="wait">
           {total === 0 ? (
             <motion.p
