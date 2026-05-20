@@ -149,6 +149,20 @@ export function ResultView({
           </motion.p>
         )}
 
+        {result.displayCode && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.5}
+            className="mt-3 flex justify-center"
+          >
+            <span className="rounded-full bg-gradient-to-r from-pink-500 to-violet-500 px-4 py-1 text-sm font-bold tracking-[0.25em] text-white shadow-md shadow-violet-200/60">
+              {result.displayCode}
+            </span>
+          </motion.div>
+        )}
+
         <motion.p
           variants={fadeUp}
           initial="hidden"

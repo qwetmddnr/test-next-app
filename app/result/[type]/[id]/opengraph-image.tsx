@@ -268,6 +268,24 @@ export default async function Image({
             {result.emoji}
           </div>
 
+          {result.displayCode && (
+            <div
+              style={{
+                display: "flex",
+                padding: "8px 24px",
+                background: "linear-gradient(90deg, #FF6B9D, #A78BFA)",
+                color: "#fff",
+                borderRadius: 999,
+                fontSize: 28,
+                fontWeight: 700,
+                letterSpacing: "0.25em",
+                marginTop: 8,
+              }}
+            >
+              {result.displayCode}
+            </div>
+          )}
+
           <div
             style={{
               display: "flex",

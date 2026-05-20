@@ -21,6 +21,7 @@ export interface TestResult {
   avoid: string[];
   image?: string;
   imageCredit?: string;
+  displayCode?: string;
 }
 
 export interface TestDefinition {

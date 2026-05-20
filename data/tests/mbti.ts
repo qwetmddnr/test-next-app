@@ -260,7 +260,7 @@ const mbti: TestDefinition = {
   description: "12문항으로 알아보는 16가지 MBTI 유형",
   emoji: "🧬",
   estimatedMinutes: 3,
-  results: RESULTS,
+  results: RESULTS.map((r) => ({ ...r, displayCode: r.id })),
   questions: QUESTIONS,
 };
 
