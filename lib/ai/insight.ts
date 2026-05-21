@@ -15,6 +15,15 @@ export function todayKey(): string {
   return kst.toISOString().slice(0, 10);
 }
 
+// KST 기준 오늘에서 offset일 떨어진 날짜 키 (음수 = 과거, 양수 = 미래)
+function offsetDateKey(offsetDays: number): string {
+  const now = new Date();
+  const shifted = new Date(
+    now.getTime() + 9 * 60 * 60 * 1000 + offsetDays * 24 * 60 * 60 * 1000
+  );
+  return shifted.toISOString().slice(0, 10);
+}
+
 export function labelFromDateKey(dateKey: string): string {
   // "2026-05-21" -> "2026년 5월 21일 (목요일)"
   const [y, m, d] = dateKey.split("-").map(Number);
@@ -188,17 +197,32 @@ export async function getAIInsight({
       : null;
 
   if (supabase) {
-    const { data, error } = await supabase
-      .from("ai_cache")
-      .select("output")
-      .eq("input_hash", inputHash)
-      .maybeSingle();
-    if (error) {
-      console.log(`${tag} cache read error:`, error.message);
-    }
-    if (data?.output) {
-      console.log(`${tag} cache HIT (${(data.output as string).length} chars)`);
-      return data.output as string;
+    // DAILY_TESTS: 오늘 키 miss 시 가까운 날짜(어제, 내일, 그저께, 모레)도 fallback.
+    // batch가 미리 만들어둔 인근 날짜 데이터를 재활용해서 cold-start sync 호출을 피함.
+    const fallbackOffsets = DAILY_TESTS.has(test.slug)
+      ? [0, -1, 1, -2, 2]
+      : [0];
+
+    for (const offset of fallbackOffsets) {
+      const hash =
+        offset === 0
+          ? inputHash
+          : makeCacheKey(test.slug, result.id, offsetDateKey(offset));
+      const { data, error } = await supabase
+        .from("ai_cache")
+        .select("output")
+        .eq("input_hash", hash)
+        .maybeSingle();
+      if (error) {
+        console.log(`${tag} cache read error (offset=${offset}):`, error.message);
+        continue;
+      }
+      if (data?.output) {
+        console.log(
+          `${tag} cache HIT offset=${offset} (${(data.output as string).length} chars)`
+        );
+        return data.output as string;
+      }
     }
   }
 
