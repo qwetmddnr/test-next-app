@@ -50,28 +50,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "No items" }, { status: 400 });
   }
 
-  // Pre-validate against Anthropic's pattern so we can pinpoint bad IDs
-  const CUSTOM_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
-  const invalid = items
-    .map((i) => i.customId)
-    .filter((id) => !CUSTOM_ID_RE.test(id));
-  console.log(
-    "[create-batch] items=", items.length,
-    "first3=", items.slice(0, 3).map((i) => i.customId),
-    "invalid=", invalid.slice(0, 5)
-  );
-  if (invalid.length > 0) {
-    return NextResponse.json(
-      {
-        error: "Invalid custom_ids",
-        invalid_sample: invalid.slice(0, 5),
-        total_invalid: invalid.length,
-        first_three: items.slice(0, 3).map((i) => i.customId),
-      },
-      { status: 400 }
-    );
-  }
-
   const batch = await createInsightBatch(items);
 
   const supabase = createSupabaseClient(
