@@ -1,7 +1,11 @@
 {
   "crons": [
     {
-      "path": "/api/cron/refresh-daily",
+      "path": "/api/cron/create-batch",
+      "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/cron/fetch-batch",
       "schedule": "1 15 * * *"
     }
   ]

@@ -4,21 +4,27 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
 
 // 매일 새 인사이트를 생성해야 하는 일일 운세 테스트 슬러그
-const DAILY_TESTS = new Set(["tarot", "new-year"]);
+export const DAILY_TESTS = new Set(["tarot", "new-year"]);
 
-function todayKey(): string {
+export const INSIGHT_MODEL = "claude-haiku-4-5-20251001";
+
+export function todayKey(): string {
   // 한국 시간(KST) 기준 YYYY-MM-DD
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
   return kst.toISOString().slice(0, 10);
 }
 
-function todayLabel(): string {
-  // "2026년 5월 21일 (화요일)" 같은 한국어 표기
-  const now = new Date();
-  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+export function labelFromDateKey(dateKey: string): string {
+  // "2026-05-21" -> "2026년 5월 21일 (목요일)"
+  const [y, m, d] = dateKey.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
   const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-  return `${kst.getUTCFullYear()}년 ${kst.getUTCMonth() + 1}월 ${kst.getUTCDate()}일 (${days[kst.getUTCDay()]})`;
+  return `${y}년 ${m}월 ${d}일 (${days[dt.getUTCDay()]})`;
+}
+
+export function todayLabel(): string {
+  return labelFromDateKey(todayKey());
 }
 
 const COMMON_RULES = `
@@ -126,12 +132,28 @@ interface GenerateInsightInput {
   result: TestResult;
 }
 
-function makeCacheKey(testSlug: string, resultId: string): string {
-  const suffix = DAILY_TESTS.has(testSlug) ? `:${todayKey()}` : "";
+export function makeCacheKey(
+  testSlug: string,
+  resultId: string,
+  dateOverride?: string
+): string {
+  const suffix = DAILY_TESTS.has(testSlug)
+    ? `:${dateOverride ?? todayKey()}`
+    : "";
   return crypto
     .createHash("sha256")
     .update(`insight:${testSlug}:${resultId}${suffix}`)
     .digest("hex");
+}
+
+export function buildPrompt(
+  test: TestDefinition,
+  result: TestResult,
+  todayLabelStr: string
+): string | null {
+  const promptFn = TEST_PROMPTS[test.slug];
+  if (!promptFn) return null;
+  return promptFn(result, todayLabelStr);
 }
 
 export async function getAIInsight({
@@ -183,7 +205,7 @@ export async function getAIInsight({
   try {
     const anthropic = new Anthropic({ apiKey });
     const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
+      model: INSIGHT_MODEL,
       max_tokens: 800,
       messages: [
         { role: "user", content: promptFn(result, todayLabel()) },

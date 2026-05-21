@@ -134,6 +134,37 @@ CREATE POLICY "Anyone can insert ai_cache"
   WITH CHECK (true);
 
 -- ============================================================
+-- 7. batch_jobs — 일일 운세 Anthropic Batch API 추적
+-- ============================================================
+CREATE TABLE IF NOT EXISTS batch_jobs (
+  id BIGSERIAL PRIMARY KEY,
+  target_date TEXT NOT NULL,
+  batch_id TEXT NOT NULL,
+  status TEXT DEFAULT 'pending',
+  request_count INTEGER DEFAULT 0,
+  inserted_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  fetched_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_batch_jobs_status ON batch_jobs(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_batch_jobs_date ON batch_jobs(target_date);
+
+ALTER TABLE batch_jobs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can read batch_jobs"
+  ON batch_jobs FOR SELECT
+  USING (true);
+
+CREATE POLICY "Anyone can insert batch_jobs"
+  ON batch_jobs FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Anyone can update batch_jobs"
+  ON batch_jobs FOR UPDATE
+  USING (true);
+
+-- ============================================================
 -- DONE. Table Editor에서 5개 테이블 생성 확인:
 --   profiles, test_results, result_stats, test_definitions, ai_cache
 -- ============================================================
