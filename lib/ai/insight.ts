@@ -25,11 +25,10 @@ function offsetDateKey(offsetDays: number): string {
 }
 
 export function labelFromDateKey(dateKey: string): string {
-  // "2026-05-21" -> "2026년 5월 21일 (목요일)"
+  // "2026-05-21" -> "2026년 5월 21일"
+  // 요일은 일부러 빼서, 인사이트 본문에 요일이 흘러들어가지 않도록 한다.
   const [y, m, d] = dateKey.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d));
-  const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-  return `${y}년 ${m}월 ${d}일 (${days[dt.getUTCDay()]})`;
+  return `${y}년 ${m}월 ${d}일`;
 }
 
 export function todayLabel(): string {
@@ -44,7 +43,7 @@ const COMMON_RULES = `
 - 마크다운 금지: 헤더(#, ##, ###), 굵은글(**), 목록(-, *), 코드(\`) 모두 사용 금지. 평문만.
 - 제목/헤더 줄 없이 바로 본문부터 시작
 - 영어 단어 최소화, 한국어 위주
-- 오늘 외 다른 날짜나 요일(어제, 내일, 이번 주말, 월요일 등) 언급 금지. 모든 문장은 "오늘"의 흐름만 다룰 것.`;
+- 요일·날짜 단어 절대 금지: "월요일/화요일/수요일/목요일/금요일/토요일/일요일", "주말", "평일", "어제", "내일", "모레", "다음 주" 모두 사용 불가. "오늘" 한 단어만 허용.`;
 
 type PromptFn = (result: TestResult, today: string) => string;
 
