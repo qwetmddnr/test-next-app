@@ -5,19 +5,7 @@ import loveStyle from "@/data/tests/love-style.json";
 import mbti from "@/data/tests/mbti";
 import tarot from "@/data/tests/tarot";
 import newYear from "@/data/tests/new-year";
-
-const sajuPlaceholder: TestDefinition = {
-  slug: "saju",
-  title: "오늘의 사주",
-  description: "만세력 기반의 AI 사주 분석 (준비중)",
-  emoji: "☯️",
-  estimatedMinutes: 0,
-  questions: [],
-  results: [],
-  category: "fortune",
-  entryPath: "/saju",
-  comingSoon: true,
-};
+import saju from "@/data/tests/saju";
 
 const TESTS: Record<string, TestDefinition> = {
   "animal-face": animalFace as unknown as TestDefinition,
@@ -26,7 +14,7 @@ const TESTS: Record<string, TestDefinition> = {
   mbti,
   tarot,
   "new-year": newYear,
-  saju: sajuPlaceholder,
+  saju,
 };
 
 export function getTest(slug: string): TestDefinition | null {

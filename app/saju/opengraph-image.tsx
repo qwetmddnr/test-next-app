@@ -10,7 +10,7 @@ import {
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
-export const alt = "사주 — 준비중";
+export const alt = "나의 사주 — 생년월일시로 보는 사주팔자";
 
 export default async function Image() {
   const fontData = await loadPretendard();
@@ -64,7 +64,7 @@ export default async function Image() {
               lineHeight: 1.1,
             }}
           >
-            오늘의 사주
+            나의 사주
           </div>
 
           <div
@@ -76,33 +76,7 @@ export default async function Image() {
               maxWidth: 800,
             }}
           >
-            만세력 기반 AI 사주 분석을 준비하고 있어요
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              marginTop: 14,
-              padding: "12px 24px",
-              background: "rgba(167, 139, 250, 0.15)",
-              color: "#7c3aed",
-              borderRadius: 999,
-              fontSize: 24,
-              fontWeight: 700,
-            }}
-          >
-            <span
-              style={{
-                display: "flex",
-                width: 12,
-                height: 12,
-                borderRadius: 999,
-                background: "#a78bfa",
-              }}
-            />
-            준비중이에요
+            이름·생년월일·시간으로 보는 나만의 사주팔자
           </div>
         </div>
 

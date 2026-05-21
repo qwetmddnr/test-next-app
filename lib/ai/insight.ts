@@ -35,7 +35,7 @@ export function todayLabel(): string {
   return labelFromDateKey(todayKey());
 }
 
-const COMMON_RULES = `
+export const COMMON_RULES = `
 공통 규칙:
 - 친근한 ~요체 (반말과 존댓말 사이의 부드러운 톤)
 - 3개 짧은 단락, 각 2~3문장
