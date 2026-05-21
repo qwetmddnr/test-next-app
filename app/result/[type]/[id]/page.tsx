@@ -6,9 +6,9 @@ import { getAllResultParams, getOtherTests, getResult } from "@/lib/test/loader"
 
 type Params = Promise<{ type: string; id: string }>;
 
-// 일일 운세(타로/띠운세) 결과를 매일 갱신하기 위해 ISR로 24시간 revalidate.
-// 다른 테스트 결과도 같은 주기로 재생성되지만 ai_cache 키가 영구라 캐시 히트 → API 호출 없음.
-export const revalidate = 86400;
+// 일일 운세(타로/띠운세)가 자정 직후에도 stale하지 않도록 1시간으로 단축.
+// daily가 아닌 테스트는 ai_cache 키가 영구라 cache hit → 추가 API 호출 없음.
+export const revalidate = 3600;
 
 const DAILY_TESTS = new Set(["tarot", "new-year"]);
 
