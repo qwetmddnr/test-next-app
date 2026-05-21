@@ -10,7 +10,7 @@ import {
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
-export const alt = "올해의 띠 운세 — 출생년도로 보는 한 해";
+export const alt = "오늘의 띠 운세 — 출생년도로 보는 오늘의 운세";
 
 export default async function Image() {
   const fontData = await loadPretendard();
@@ -65,7 +65,7 @@ export default async function Image() {
               lineHeight: 1.1,
             }}
           >
-            올해의 띠 운세
+            오늘의 띠 운세
           </div>
 
           <div
@@ -77,7 +77,7 @@ export default async function Image() {
               maxWidth: 800,
             }}
           >
-            출생년도로 알아보는 12띠별 한 해 운세
+            출생년도로 알아보는 12띠별 오늘의 운세
           </div>
 
           <div

@@ -79,7 +79,7 @@ export function BirthYearPicker({ thisYear }: BirthYearPickerProps) {
         }}
         className="mt-6 w-full rounded-full bg-gradient-to-r from-pink-500 to-violet-500 py-4 font-bold text-white shadow-lg shadow-pink-200/60 transition disabled:opacity-40 disabled:shadow-none"
       >
-        {submitting ? "운세 확인 중..." : "✨ 올해 운세 보기"}
+        {submitting ? "운세 확인 중..." : "✨ 오늘 운세 보기"}
       </motion.button>
     </form>
   );
