@@ -17,6 +17,7 @@ interface ResultViewProps {
   result: TestResult;
   otherTests?: TestDefinition[];
   aiInsight?: string | null;
+  dailyLabel?: string | null;
   triggerConfetti?: boolean;
 }
 
@@ -25,6 +26,7 @@ export function ResultView({
   result,
   otherTests = [],
   aiInsight,
+  dailyLabel,
   triggerConfetti = true,
 }: ResultViewProps) {
   const [viewCount, setViewCount] = useState<number | null>(null);
@@ -177,6 +179,18 @@ export function ResultView({
         >
           {result.shortDesc}
         </motion.p>
+
+        {dailyLabel && (
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.7}
+            className="mt-3 text-center text-xs font-medium text-violet-500"
+          >
+            📅 {dailyLabel} 오늘의 운세
+          </motion.p>
+        )}
 
         {viewCount !== null && viewCount > 0 && (
           <motion.p

@@ -6,6 +6,21 @@ import { getAllResultParams, getOtherTests, getResult } from "@/lib/test/loader"
 
 type Params = Promise<{ type: string; id: string }>;
 
+// 일일 운세(타로/띠운세) 결과를 매일 갱신하기 위해 ISR로 24시간 revalidate.
+// 다른 테스트 결과도 같은 주기로 재생성되지만 ai_cache 키가 영구라 캐시 히트 → API 호출 없음.
+export const revalidate = 86400;
+
+const DAILY_TESTS = new Set(["tarot", "new-year"]);
+
+function todayLabelKR(): string {
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const yyyy = kst.getUTCFullYear();
+  const mm = String(kst.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(kst.getUTCDate()).padStart(2, "0");
+  return `${yyyy}.${mm}.${dd}`;
+}
+
 export async function generateStaticParams() {
   return getAllResultParams();
 }
@@ -45,12 +60,14 @@ export default async function ResultPage({ params }: { params: Params }) {
     test: found.test,
     result: found.result,
   });
+  const dailyLabel = DAILY_TESTS.has(type) ? todayLabelKR() : null;
   return (
     <ResultView
       test={found.test}
       result={found.result}
       otherTests={otherTests}
       aiInsight={aiInsight}
+      dailyLabel={dailyLabel}
     />
   );
 }

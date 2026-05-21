@@ -3,6 +3,24 @@ import crypto from "crypto";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
 
+// 매일 새 인사이트를 생성해야 하는 일일 운세 테스트 슬러그
+const DAILY_TESTS = new Set(["tarot", "new-year"]);
+
+function todayKey(): string {
+  // 한국 시간(KST) 기준 YYYY-MM-DD
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().slice(0, 10);
+}
+
+function todayLabel(): string {
+  // "2026년 5월 21일 (화요일)" 같은 한국어 표기
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+  return `${kst.getUTCFullYear()}년 ${kst.getUTCMonth() + 1}월 ${kst.getUTCDate()}일 (${days[kst.getUTCDay()]})`;
+}
+
 const COMMON_RULES = `
 공통 규칙:
 - 친근한 ~요체 (반말과 존댓말 사이의 부드러운 톤)
@@ -12,7 +30,9 @@ const COMMON_RULES = `
 - 제목/헤더 줄 없이 바로 본문부터 시작
 - 영어 단어 최소화, 한국어 위주`;
 
-const TEST_PROMPTS: Record<string, (result: TestResult) => string> = {
+type PromptFn = (result: TestResult, today: string) => string;
+
+const TEST_PROMPTS: Record<string, PromptFn> = {
   mbti: (r) => `당신은 한국어 운세/심리 콘텐츠 작가입니다. 아래 MBTI 유형을 가진 사람을 위한 "오늘의 인사이트"를 작성하세요.
 
 유형: ${r.id} (${r.title})
@@ -67,33 +87,37 @@ ${COMMON_RULES}`,
 - "${r.title}", "연애 유형" 단어를 본문에 또 쓰지 말 것
 ${COMMON_RULES}`,
 
-  tarot: (r) => `당신은 한국어 타로 리더입니다. 아래 카드가 오늘 뽑힌 사람에게 "지금 이 순간을 위한 메시지"를 작성하세요.
+  tarot: (r, today) => `당신은 한국어 타로 리더입니다. 오늘 ${today}, 이 카드를 뽑은 사람에게 "지금 이 순간을 위한 메시지"를 작성하세요.
 
+오늘 날짜: ${today}
 카드: ${r.emoji} ${r.title}
 한 줄 요약: ${r.shortDesc}
 키워드: ${r.traits.join(", ")}
 
 내용 구성:
-- 첫 단락: 이 카드가 오늘 당신에게 보내는 핵심 메시지
-- 둘째 단락: 이 카드를 잘 받아들이려면 무엇을 조심하거나 놓아주어야 하는지
-- 셋째 단락: 오늘 한 가지 작은 실천 (이 카드의 에너지를 일상에 녹이는 구체적인 행동)
+- 첫 단락: 이 카드가 오늘 당신에게 보내는 핵심 메시지 (오늘 하루의 흐름과 연결)
+- 둘째 단락: 이 카드를 잘 받아들이려면 오늘 무엇을 조심하거나 놓아주어야 하는지
+- 셋째 단락: 오늘 안에 할 수 있는 한 가지 작은 실천 (오늘 날씨/요일/시간에 자연스럽게 어울리는 행동)
 - 톤은 부드럽고 따뜻하게, 점쟁이 같은 무거운 톤은 피하기
 - 카드 이름이나 "타로", "카드"라는 단어를 본문에 또 반복하지 말 것
+- 매일 다른 인사이트가 되도록 오늘의 분위기/맥락을 반영
 ${COMMON_RULES}`,
 
-  "new-year": (r) => `당신은 한국어 운세 콘텐츠 작가입니다. 아래 띠를 가진 사람에게 "올해의 4가지 운세" 분석을 작성하세요.
+  "new-year": (r, today) => `당신은 한국어 운세 콘텐츠 작가입니다. 오늘 ${today}, 아래 띠를 가진 사람에게 "오늘 하루의 4가지 운세" 분석을 작성하세요.
 
+오늘 날짜: ${today}
 띠: ${r.emoji} ${r.title}
 한 줄 요약: ${r.shortDesc}
 띠의 특성: ${r.traits.join(", ")}
 
 내용 구성 — 3개의 단락:
-- 첫 단락: 💼 일·재물운 — 올해의 일과 돈 흐름이 어떻게 흘러갈지 + 살짝 구체적 팁
-- 둘째 단락: 💕 애정·인간관계운 — 올해의 인연과 관계가 어떻게 흘러갈지 + 챙기면 좋을 점
-- 셋째 단락: 🌿 건강·생활운 — 몸과 마음의 흐름 + 일상에서 챙겨야 할 한 가지
-- 각 단락 첫머리에 이모지+카테고리만 표시 ("💼 일·재물운 — ...") 그 외 마크다운 금지
+- 첫 단락: 💼 오늘의 일·재물운 — 오늘 일과 돈 흐름 + 살짝 구체적 팁
+- 둘째 단락: 💕 오늘의 애정·인간관계운 — 오늘 인연과 관계 흐름 + 챙기면 좋을 점
+- 셋째 단락: 🌿 오늘의 건강·생활운 — 몸과 마음의 오늘 흐름 + 일상에서 챙겨야 할 한 가지
+- 각 단락 첫머리에 이모지+카테고리만 표시 ("💼 오늘의 일·재물운 — ...") 그 외 마크다운 금지
 - 띠 이름을 본문에 반복하지 말 것
 - "행운이 가득", "대박" 같은 진부한 표현 피하기
+- 매일 다른 분석이 되도록 오늘의 흐름/요일 분위기를 반영
 ${COMMON_RULES}`,
 };
 
@@ -103,9 +127,10 @@ interface GenerateInsightInput {
 }
 
 function makeCacheKey(testSlug: string, resultId: string): string {
+  const suffix = DAILY_TESTS.has(testSlug) ? `:${todayKey()}` : "";
   return crypto
     .createHash("sha256")
-    .update(`insight:${testSlug}:${resultId}`)
+    .update(`insight:${testSlug}:${resultId}${suffix}`)
     .digest("hex");
 }
 
@@ -160,7 +185,9 @@ export async function getAIInsight({
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 800,
-      messages: [{ role: "user", content: promptFn(result) }],
+      messages: [
+        { role: "user", content: promptFn(result, todayLabel()) },
+      ],
     });
 
     const output = message.content
