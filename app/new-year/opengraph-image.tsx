@@ -49,10 +49,25 @@ export default async function Image() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: 24,
+            gap: 22,
           }}
         >
-          <div style={{ fontSize: 100, display: "flex" }}>🎍</div>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              padding: "20px 32px",
+              background: "rgba(255, 255, 255, 0.75)",
+              borderRadius: 999,
+              boxShadow: "0 12px 32px rgba(167,139,250,0.18)",
+            }}
+          >
+            {zodiacs.map((z, i) => (
+              <span key={i} style={{ fontSize: 56, display: "flex" }}>
+                {z}
+              </span>
+            ))}
+          </div>
 
           <div
             style={{
@@ -63,6 +78,7 @@ export default async function Image() {
               backgroundClip: "text",
               color: "transparent",
               lineHeight: 1.1,
+              marginTop: 8,
             }}
           >
             오늘의 띠 운세
@@ -83,25 +99,7 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              gap: 6,
-              marginTop: 12,
-              padding: "16px 24px",
-              background: "rgba(255, 255, 255, 0.7)",
-              borderRadius: 999,
-              boxShadow: "0 8px 24px rgba(167,139,250,0.15)",
-            }}
-          >
-            {zodiacs.map((z, i) => (
-              <span key={i} style={{ fontSize: 40, display: "flex" }}>
-                {z}
-              </span>
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              marginTop: 10,
+              marginTop: 6,
               fontSize: 22,
               color: "#db2777",
               fontWeight: 700,

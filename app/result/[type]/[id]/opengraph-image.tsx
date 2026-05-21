@@ -72,13 +72,15 @@ export default async function Image({
     ? await loadImageAsDataUrl(result.image)
     : null;
   const { korean, english } = splitTitle(result.title);
+  const isTarot = type === "tarot";
 
   const baseBg = {
     width: "100%",
     height: "100%",
     display: "flex" as const,
-    background:
-      "linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #fff7ed 100%)",
+    background: isTarot
+      ? "linear-gradient(135deg, #ddd6fe 0%, #f5f3ff 40%, #faf5ff 70%, #fff7ed 100%)"
+      : "linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #fff7ed 100%)",
     fontFamily: "Pretendard, system-ui, sans-serif",
   };
 
