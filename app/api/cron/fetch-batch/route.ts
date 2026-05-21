@@ -57,7 +57,14 @@ export async function GET(req: NextRequest) {
       failed++;
       continue;
     }
-    const [testSlug, resultId] = item.customId.split(":");
+    // customId 형식: "{slug}__{resultId}" (Anthropic Batch API 제약)
+    const sep = item.customId.indexOf("__");
+    if (sep < 0) {
+      failed++;
+      continue;
+    }
+    const testSlug = item.customId.slice(0, sep);
+    const resultId = item.customId.slice(sep + 2);
     const cacheKey = makeCacheKey(testSlug, resultId, job.target_date);
     const { error } = await supabase.from("ai_cache").insert({
       input_hash: cacheKey,

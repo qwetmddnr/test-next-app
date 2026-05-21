@@ -38,8 +38,9 @@ export async function GET(req: NextRequest) {
     for (const result of test.results) {
       const prompt = buildPrompt(test, result, todayLabelStr);
       if (!prompt) continue;
+      // Anthropic Batch API: custom_id는 ^[a-zA-Z0-9_-]{1,64}$ 만 허용. 콜론 X.
       items.push({
-        customId: `${slug}:${result.id}`,
+        customId: `${slug}__${result.id}`,
         prompt,
       });
     }
