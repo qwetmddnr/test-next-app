@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { collectBatchResults, retrieveBatch } from "@/lib/ai/batch";
-import { makeCacheKey } from "@/lib/ai/insight";
+import { DAILY_TESTS, makeCacheKey } from "@/lib/ai/insight";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -48,6 +48,16 @@ export async function GET(req: NextRequest) {
 
   // 결과 수집
   const results = await collectBatchResults(job.batch_id);
+
+  // 옛 daily 캐시 비우기 (같은 test_type의 어제·그저께 row 누적 방지)
+  const dailySlugs = [...DAILY_TESTS];
+  const { error: cleanupErr } = await supabase
+    .from("ai_cache")
+    .delete()
+    .in("test_type", dailySlugs);
+  if (cleanupErr) {
+    console.log("[fetch-batch] cleanup error:", cleanupErr.message);
+  }
 
   // ai_cache INSERT
   let inserted = 0;
