@@ -35,11 +35,11 @@ export function AdSlot({
   const spacing = compact ? "my-3" : "my-6";
 
   if (!adsenseClient) {
+    // AdSense 미승인 상태: compact 슬롯은 자리를 잡지 않음 (결과 페이지 길이 단축)
+    if (compact) return null;
     return (
       <div
-        className={`${spacing} flex items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50 ${
-          compact ? "py-2 text-[10px]" : "py-8 text-xs"
-        } text-gray-400 ${className}`}
+        className={`${spacing} flex items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50 py-8 text-xs text-gray-400 ${className}`}
       >
         📺 광고 자리 (slot: {slot})
       </div>
