@@ -5,11 +5,42 @@ import { getPopularTests } from "@/lib/stats/popular";
 
 export const revalidate = 60;
 
+const SITE_URL = "https://ohna.today";
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "오나 OHNA",
+  alternateName: "오늘의 나",
+  url: SITE_URL,
+  image: `${SITE_URL}/opengraph-image`,
+  description:
+    "오늘의 나(오나)에서 만나는 7가지 무료 운세·성향 테스트. 사주·타로·MBTI·동물상·전생·연애·띠운세.",
+  inLanguage: "ko-KR",
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "오나 OHNA",
+  alternateName: "오늘의 나",
+  url: SITE_URL,
+  logo: `${SITE_URL}/apple-icon`,
+};
+
 export default async function Home() {
   const popular = await getPopularTests(10);
 
   return (
     <main className="flex-1 px-5 pb-8 pt-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
       <div className="mx-auto max-w-md">
         <header className="mb-10 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
