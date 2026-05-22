@@ -4,7 +4,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { TestDefinition, TestResult } from "@/lib/types/test";
 
 // 매일 새 인사이트를 생성해야 하는 일일 운세 테스트 슬러그
-export const DAILY_TESTS = new Set(["tarot", "new-year"]);
+export const DAILY_TESTS = new Set(["tarot", "new-year", "zodiac"]);
 
 export const INSIGHT_MODEL = "claude-haiku-4-5-20251001";
 
@@ -133,6 +133,24 @@ ${COMMON_RULES}`,
 - 띠 이름을 본문에 반복하지 말 것
 - "행운이 가득", "대박" 같은 진부한 표현 피하기
 - 매일 다른 분석이 되도록 오늘의 흐름/요일 분위기를 반영
+${COMMON_RULES}`,
+
+  zodiac: (r, today) => `당신은 한국어 운세 콘텐츠 작가입니다. 오늘 ${today}, 아래 별자리를 가진 사람에게 "오늘 하루의 3가지 운세"를 작성하세요.
+
+오늘 날짜: ${today}
+별자리: ${r.emoji} ${r.title}
+한 줄 요약: ${r.shortDesc}
+별자리의 특성: ${r.traits.join(", ")}
+
+내용 구성 — 3개의 단락:
+- 첫 단락: 💼 오늘의 일·재물운 — 오늘 일과 돈 흐름 + 살짝 구체적 팁
+- 둘째 단락: 💕 오늘의 애정·인간관계운 — 오늘 인연과 관계 흐름 + 챙기면 좋을 점
+- 셋째 단락: 🌿 오늘의 건강·생활운 — 몸과 마음의 오늘 흐름 + 일상에서 챙겨야 할 한 가지
+- 각 단락 첫머리에 이모지+카테고리만 표시 ("💼 오늘의 일·재물운 — ...") 그 외 마크다운 금지
+- 별자리 이름을 본문에 반복하지 말 것
+- "행운이 가득", "대박" 같은 진부한 표현 피하기
+- 별자리 고유의 기질(traits)을 자연스럽게 녹여서 띠/타로와 다른 결로 작성
+- 매일 다른 분석이 되도록 오늘의 흐름/분위기를 반영
 ${COMMON_RULES}`,
 };
 

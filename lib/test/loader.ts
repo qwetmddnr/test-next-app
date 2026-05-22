@@ -7,6 +7,7 @@ import tarot from "@/data/tests/tarot";
 import newYear from "@/data/tests/new-year";
 import saju from "@/data/tests/saju";
 import dream from "@/data/tests/dream";
+import zodiac from "@/data/tests/zodiac";
 
 const TESTS: Record<string, TestDefinition> = {
   "animal-face": animalFace as unknown as TestDefinition,
@@ -17,6 +18,7 @@ const TESTS: Record<string, TestDefinition> = {
   "new-year": newYear,
   saju,
   dream,
+  zodiac,
 };
 
 export function getTest(slug: string): TestDefinition | null {
