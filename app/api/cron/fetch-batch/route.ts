@@ -14,6 +14,8 @@ type BatchJob = {
   status: string;
   request_count: number;
   created_at: string;
+  // 'tarot' | 'new-year' | 'zodiac' | 'mixed' (legacy: 한 batch에 모든 daily가 묶여있던 옛 row).
+  test_type: string;
 };
 
 export async function GET(req: NextRequest) {
@@ -46,7 +48,7 @@ export async function GET(req: NextRequest) {
 
   // 각 batch 상태 확인, ended된 것만 처리. in_progress는 다음 cron에서 재시도하도록 그대로 둠.
   const endedJobs: BatchJob[] = [];
-  const stillPending: { batch_id: string; status: string }[] = [];
+  const stillPending: { batch_id: string; test_type: string; status: string }[] = [];
   for (const job of jobs) {
     const batch = await retrieveBatch(job.batch_id);
     if (batch.processing_status === "ended") {
@@ -54,6 +56,7 @@ export async function GET(req: NextRequest) {
     } else {
       stillPending.push({
         batch_id: job.batch_id,
+        test_type: job.test_type,
         status: batch.processing_status,
       });
     }
@@ -66,26 +69,50 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // 옛 daily 캐시를 한 번만 비움 (같은 test_type의 어제·그저께 row 누적 방지)
-  const dailySlugs = [...DAILY_TESTS];
-  const { error: cleanupErr } = await supabase
-    .from("ai_cache")
-    .delete()
-    .in("test_type", dailySlugs);
-  if (cleanupErr) {
-    console.log("[fetch-batch] cleanup error:", cleanupErr.message);
-  }
-
-  // 모든 ended batches 결과 수집 + insert
+  // 각 ended job별로 처리 — cleanup도 그 batch의 test_type 단위.
+  // 한 테스트의 인근 일자 cache가 누적되는 걸 막으면서, 다른 테스트의 cache는 보존됨.
   const summaries: {
     batch_id: string;
     target_date: string;
+    test_type: string;
     inserted: number;
     failed: number;
   }[] = [];
 
   for (const job of endedJobs) {
+    // 1) batch 결과 먼저 수집 (cleanup 계산에 results의 customId가 필요).
     const results = await collectBatchResults(job.batch_id);
+
+    // 2) cleanup 대상 결정
+    // - 표준 slug (test_type in DAILY_TESTS): 그 slug만 비움.
+    // - 'mixed' (legacy: 옛 한 batch에 모든 daily 묶임): results 안에 실제 등장한 slug만 비움.
+    //   → 새로 추가된 daily slug(예: zodiac)는 옛 mixed batch에 없으므로 cache가 보존됨.
+    const slugsInResults = new Set<string>();
+    for (const item of results) {
+      const sep = item.customId.indexOf("__");
+      if (sep > 0) slugsInResults.add(item.customId.slice(0, sep));
+    }
+    const slugsToCleanup: string[] =
+      job.test_type === "mixed"
+        ? [...slugsInResults].filter((s) => DAILY_TESTS.has(s))
+        : DAILY_TESTS.has(job.test_type)
+          ? [job.test_type]
+          : [];
+
+    if (slugsToCleanup.length > 0) {
+      const { error: cleanupErr } = await supabase
+        .from("ai_cache")
+        .delete()
+        .in("test_type", slugsToCleanup);
+      if (cleanupErr) {
+        console.log(
+          `[fetch-batch] cleanup error for ${job.test_type}:`,
+          cleanupErr.message
+        );
+      }
+    }
+
+    // 3) results insert
     let inserted = 0;
     let failed = 0;
 
@@ -111,6 +138,7 @@ export async function GET(req: NextRequest) {
       else failed++;
     }
 
+    // 3) batch_job 상태 갱신
     await supabase
       .from("batch_jobs")
       .update({
@@ -123,6 +151,7 @@ export async function GET(req: NextRequest) {
     summaries.push({
       batch_id: job.batch_id,
       target_date: job.target_date,
+      test_type: job.test_type,
       inserted,
       failed,
     });

@@ -33,42 +33,69 @@ export async function GET(req: NextRequest) {
   const targetDate = nextDayKSTKey();
   const todayLabelStr = labelFromDateKey(targetDate);
 
-  const items: BatchRequestItem[] = [];
+  const supabase = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  // 각 DAILY_TESTS 슬러그를 별도 Anthropic batch로 생성하고 batch_jobs에 row 별도 insert.
+  // 한 테스트의 batch가 늦거나 실패해도 다른 테스트에 영향이 없도록 격리.
+  const summaries: {
+    test: string;
+    batch_id?: string;
+    request_count: number;
+    error?: string;
+  }[] = [];
+
   for (const slug of DAILY_TESTS) {
     const test = getTest(slug);
-    if (!test) continue;
+    if (!test) {
+      summaries.push({ test: slug, request_count: 0, error: "test not found" });
+      continue;
+    }
+
+    const items: BatchRequestItem[] = [];
     for (const result of test.results) {
       const prompt = buildPrompt(test, result, todayLabelStr);
       if (!prompt) continue;
-      // Anthropic Batch API: custom_id는 ^[a-zA-Z0-9_-]{1,64}$ 만 허용. 콜론 X.
+      // Anthropic Batch API: custom_id는 ^[a-zA-Z0-9_-]{1,64}$ 만 허용.
       items.push({
         customId: `${slug}__${result.id}`,
         prompt,
       });
     }
+
+    if (items.length === 0) {
+      summaries.push({ test: slug, request_count: 0, error: "no prompts" });
+      continue;
+    }
+
+    try {
+      const batch = await createInsightBatch(items);
+      const { error: insertErr } = await supabase.from("batch_jobs").insert({
+        target_date: targetDate,
+        batch_id: batch.id,
+        status: "pending",
+        request_count: items.length,
+        test_type: slug,
+      });
+      summaries.push({
+        test: slug,
+        batch_id: batch.id,
+        request_count: items.length,
+        error: insertErr?.message,
+      });
+    } catch (err) {
+      summaries.push({
+        test: slug,
+        request_count: items.length,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
   }
-
-  if (items.length === 0) {
-    return NextResponse.json({ error: "No items" }, { status: 400 });
-  }
-
-  const batch = await createInsightBatch(items);
-
-  const supabase = createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-  const { error: insertErr } = await supabase.from("batch_jobs").insert({
-    target_date: targetDate,
-    batch_id: batch.id,
-    status: "pending",
-    request_count: items.length,
-  });
 
   return NextResponse.json({
-    batch_id: batch.id,
     target_date: targetDate,
-    request_count: items.length,
-    save_error: insertErr?.message ?? null,
+    batches: summaries,
   });
 }
