@@ -208,9 +208,9 @@ export function ResultView({
           initial="hidden"
           animate="show"
           custom={0.8}
-          className="mt-8"
+          className="mt-4"
         >
-          <AdSlot slot="result-top" />
+          <AdSlot slot="result-top" compact />
         </motion.div>
 
         <motion.div
@@ -317,9 +317,9 @@ export function ResultView({
           initial="hidden"
           animate="show"
           custom={1.5}
-          className="mt-8"
+          className="mt-4"
         >
-          <AdSlot slot="result-bottom" />
+          <AdSlot slot="result-bottom" compact />
         </motion.div>
 
         <motion.div
