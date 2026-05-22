@@ -46,19 +46,27 @@ export function AdSlot({
     );
   }
 
-  const effectiveFormat = compact ? "horizontal" : format;
+  // compact: 모바일 배너 크기로 고정 (320x50). full-width-responsive=false로
+  // AdSense가 화면 폭 기준으로 큰 영역을 reserve하지 않도록 막음. 광고 미채움
+  // 시에는 globals.css의 [data-ad-status="unfilled"] 규칙으로 자동 collapse.
+  if (compact) {
+    return (
+      <ins
+        className={`adsbygoogle ${spacing} mx-auto block ${className}`}
+        style={{ display: "block", width: 320, height: 50 }}
+        data-ad-client={adsenseClient}
+        data-ad-slot={slot}
+      />
+    );
+  }
 
   return (
     <ins
       className={`adsbygoogle ${spacing} block ${className}`}
-      style={
-        compact
-          ? { display: "block", minHeight: 60 }
-          : { display: "block" }
-      }
+      style={{ display: "block" }}
       data-ad-client={adsenseClient}
       data-ad-slot={slot}
-      data-ad-format={effectiveFormat}
+      data-ad-format={format}
       data-full-width-responsive="true"
     />
   );

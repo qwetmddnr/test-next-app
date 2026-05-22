@@ -30,6 +30,11 @@ body {
   min-height: 100vh;
 }
 
+/* AdSense가 광고를 못 채운 경우 ins 박스가 자리 잡지 않도록 */
+.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
