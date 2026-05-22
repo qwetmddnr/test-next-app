@@ -11,7 +11,9 @@ import { getTest } from "@/lib/test/loader";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-// 다음 날 KST 날짜 (cron이 KST 22:00 = UTC 13:00에 실행되므로 +1일)
+// 다음 날 KST 날짜 (cron이 KST 18:00 = UTC 09:00에 실행되므로 +1일).
+// fetch-batch는 KST 00:01에 돌면서 ~6h 사이에 Anthropic batch가 ended 되길 기다림.
+// 미완료 시 다음 cron에서 재시도 (fetch-batch가 모든 pending을 loop 처리).
 function nextDayKSTKey(): string {
   const now = new Date();
   const tomorrowKst = new Date(
