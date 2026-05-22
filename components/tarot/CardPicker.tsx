@@ -31,8 +31,10 @@ export function CardPicker({ deck }: CardPickerProps) {
   const [highlightIndex, setHighlightIndex] = useState<number>(-1);
   const [stage, setStage] = useState<Stage>("intro");
 
-  // Shuffle on client mount (during intro) to avoid SSR hydration mismatch
   useEffect(() => {
+    // shuffle()은 Math.random 의존 — SSR/CSR 결과가 달라 hydration mismatch.
+    // 일부러 client mount 후 셔플 (intro 3초 동안 진행되어 사용자 체감 X).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOrder(shuffle(deck.results));
   }, [deck.results]);
 

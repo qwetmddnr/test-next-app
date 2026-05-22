@@ -39,12 +39,21 @@ export function AIInsightSection({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // sessionStorage는 client-only. SSR=잠금 상태, hydration 후 unlock 동기화.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (sessionStorage.getItem(storageKey)) setUnlocked(true);
   }, [storageKey]);
 
+  function handleUnlockComplete() {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(storageKey, "1");
+    }
+    setUnlocked(true);
+    setTimeout(() => setShowModal(false), 400);
+  }
+
   useEffect(() => {
     if (!showModal) return;
-    setSecondsLeft(COUNTDOWN_SECONDS);
     const interval = setInterval(() => {
       setSecondsLeft((s) => {
         if (s <= 1) {
@@ -63,15 +72,8 @@ export function AIInsightSection({
     if (typeof navigator !== "undefined" && "vibrate" in navigator) {
       navigator.vibrate(20);
     }
+    setSecondsLeft(COUNTDOWN_SECONDS);
     setShowModal(true);
-  }
-
-  function handleUnlockComplete() {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(storageKey, "1");
-    }
-    setUnlocked(true);
-    setTimeout(() => setShowModal(false), 400);
   }
 
   if (unlocked) {

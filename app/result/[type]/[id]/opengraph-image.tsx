@@ -124,6 +124,8 @@ export default async function Image({
                 boxShadow: "0 20px 60px rgba(167,139,250,0.4)",
               }}
             >
+              {/* next/image는 OG ImageResponse(edge runtime)에서 동작 안 함 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={cardImage}
                 alt=""

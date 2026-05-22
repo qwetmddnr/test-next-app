@@ -13,14 +13,7 @@ interface ShareButtonProps {
 export function ShareButton({ url }: ShareButtonProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [kakaoReady, setKakaoReady] = useState(false);
-
-  // Defer the env check to client-side to avoid any SSR/CSR mismatch concerns
-  // when the env var is missing on the server but present on the client
-  // (Next inlines NEXT_PUBLIC_* at build, but this keeps things tidy).
-  useEffect(() => {
-    setKakaoReady(isKakaoConfigured());
-  }, []);
+  const kakaoReady = isKakaoConfigured();
 
   useEffect(() => {
     if (!sheetOpen) return;
