@@ -88,9 +88,9 @@ export function DreamResultView({
           initial="hidden"
           animate="show"
           custom={0.7}
-          className="mt-8"
+          className="mt-4"
         >
-          <AdSlot slot="result-top" />
+          <AdSlot slot="result-top" compact />
         </motion.div>
 
         {aiText ? (
@@ -125,9 +125,9 @@ export function DreamResultView({
           initial="hidden"
           animate="show"
           custom={1.0}
-          className="mt-8"
+          className="mt-4"
         >
-          <AdSlot slot="result-bottom" />
+          <AdSlot slot="result-bottom" compact />
         </motion.div>
 
         <motion.div
