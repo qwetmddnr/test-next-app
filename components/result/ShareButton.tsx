@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { isKakaoConfigured, shareToKakaoScrap } from "@/lib/kakao";
+import {
+  isKakaoConfigured,
+  shareToKakaoFeed,
+  shareToKakaoScrap,
+} from "@/lib/kakao";
 
 interface ShareButtonProps {
   url: string;
@@ -10,7 +14,22 @@ interface ShareButtonProps {
   text: string;
 }
 
-export function ShareButton({ url }: ShareButtonProps) {
+function getOgImageUrl(): string | null {
+  if (typeof document === "undefined") return null;
+  const meta = document.querySelector<HTMLMetaElement>(
+    'meta[property="og:image"]'
+  );
+  const content = meta?.content?.trim();
+  if (!content) return null;
+  // 절대 URL 보장 (Next.js opengraph-image는 보통 절대 URL이지만 안전장치)
+  if (content.startsWith("http")) return content;
+  if (content.startsWith("/") && typeof window !== "undefined") {
+    return `${window.location.origin}${content}`;
+  }
+  return null;
+}
+
+export function ShareButton({ url, title, text }: ShareButtonProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const kakaoReady = isKakaoConfigured();
@@ -51,8 +70,20 @@ export function ShareButton({ url }: ShareButtonProps) {
 
   async function handleKakao() {
     const absoluteUrl = getAbsoluteUrl();
+    const imageUrl = getOgImageUrl();
     try {
-      await shareToKakaoScrap(absoluteUrl);
+      if (imageUrl) {
+        // Feed 템플릿: 제목/설명/이미지/CTA 버튼을 직접 제어
+        await shareToKakaoFeed({
+          url: absoluteUrl,
+          title,
+          description: text,
+          imageUrl,
+        });
+      } else {
+        // OG 이미지 못 찾으면 스크랩 폴백
+        await shareToKakaoScrap(absoluteUrl);
+      }
       setSheetOpen(false);
     } catch {
       // SDK 로드/초기화 실패 시 URL 복사로 폴백

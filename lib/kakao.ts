@@ -7,11 +7,25 @@ const SDK_URL = "https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js";
 const SDK_INTEGRITY =
   "sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka";
 
+type KakaoLink = { mobileWebUrl: string; webUrl: string };
+
+type KakaoFeedOpts = {
+  objectType: "feed";
+  content: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    link: KakaoLink;
+  };
+  buttons?: Array<{ title: string; link: KakaoLink }>;
+};
+
 type KakaoGlobal = {
   init: (key: string) => void;
   isInitialized: () => boolean;
   Share?: {
     sendScrap: (opts: { requestUrl: string; templateId?: number }) => void;
+    sendDefault: (opts: KakaoFeedOpts) => void;
   };
 };
 
@@ -86,4 +100,36 @@ export async function shareToKakaoScrap(absoluteUrl: string): Promise<void> {
     throw new Error("KAKAO_SHARE_UNAVAILABLE");
   }
   window.Kakao.Share.sendScrap({ requestUrl: absoluteUrl });
+}
+
+export async function shareToKakaoFeed(params: {
+  url: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  buttonLabel?: string;
+}): Promise<void> {
+  await loadKakaoSdk();
+  if (typeof window === "undefined" || !window.Kakao?.Share?.sendDefault) {
+    throw new Error("KAKAO_SHARE_UNAVAILABLE");
+  }
+  const link: KakaoLink = {
+    mobileWebUrl: params.url,
+    webUrl: params.url,
+  };
+  window.Kakao.Share.sendDefault({
+    objectType: "feed",
+    content: {
+      title: params.title,
+      description: params.description,
+      imageUrl: params.imageUrl,
+      link,
+    },
+    buttons: [
+      {
+        title: params.buttonLabel ?? "결과 보러가기",
+        link,
+      },
+    ],
+  });
 }
