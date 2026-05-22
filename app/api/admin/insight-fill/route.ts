@@ -11,6 +11,7 @@
 // rows aren't re-charged to the API.
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAIInsight } from "@/lib/ai/insight";
 import { getTest } from "@/lib/test/loader";
 
@@ -62,10 +63,24 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  // ISR로 굳어있는 result 페이지를 즉시 무효화 — 다음 request에 새 ai_cache가 반영됨.
+  // (revalidate=3600인 result/[type]/[id]는 페이지가 이미 빈 aiText로 static 캐시될 수 있음.)
+  for (const result of test.results) {
+    try {
+      revalidatePath(`/result/${testSlug}/${result.id}`);
+    } catch (err) {
+      console.log(
+        `[insight-fill] revalidatePath failed for ${testSlug}/${result.id}:`,
+        err instanceof Error ? err.message : err
+      );
+    }
+  }
+
   return NextResponse.json({
     test: testSlug,
     total: test.results.length,
     ok: summaries.filter((s) => s.ok).length,
     summaries,
+    revalidated: test.results.length,
   });
 }
