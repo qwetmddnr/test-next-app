@@ -31,8 +31,11 @@ export async function POST(req: NextRequest) {
   const hour =
     body.hour === null || body.hour === undefined ? null : Number(body.hour);
 
-  if (!name || name.length > 30) {
-    return NextResponse.json({ error: "이름을 입력해 주세요" }, { status: 400 });
+  if (!name || name.length > 30 || !/^[가-힣]+$/.test(name)) {
+    return NextResponse.json(
+      { error: "이름은 한글로 입력해 주세요" },
+      { status: 400 }
+    );
   }
   if (
     !Number.isInteger(year) || year < 1900 || year > 2100 ||

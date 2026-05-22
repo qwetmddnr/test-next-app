@@ -91,13 +91,18 @@ export function SajuForm() {
       <div className="rounded-3xl bg-white/80 p-6 shadow-sm ring-1 ring-pink-100 backdrop-blur">
         {/* 이름 */}
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">이름</span>
+          <span className="text-sm font-medium text-gray-700">
+            이름 <span className="text-pink-500">*</span>
+          </span>
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value.slice(0, 30))}
-            placeholder="예: 민지"
+            onChange={(e) =>
+              setName(e.target.value.replace(/[^가-힣]/g, "").slice(0, 30))
+            }
+            placeholder="예: 민지 (한글만)"
             autoComplete="off"
+            inputMode="text"
             className="mt-3 w-full border-b-2 border-pink-200 bg-transparent py-1 text-2xl font-bold tracking-wide text-gray-900 focus:border-pink-500 focus:outline-none"
             autoFocus
           />
@@ -123,7 +128,9 @@ export function SajuForm() {
 
         {/* 생년월일 */}
         <label className="mt-5 block">
-          <span className="text-sm font-medium text-gray-700">생년월일</span>
+          <span className="text-sm font-medium text-gray-700">
+            생년월일 <span className="text-pink-500">*</span>
+          </span>
           <div className="mt-3 grid grid-cols-3 gap-2">
             <NumberInput
               value={year}
