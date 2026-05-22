@@ -44,8 +44,17 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("[api/dream/calculate]", msg);
+    if (msg === "AI_OVERLOADED") {
+      return NextResponse.json(
+        {
+          error:
+            "AI 서버가 잠시 붐비고 있어요. 잠깐 후 다시 시도해 주세요 🙏",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
-      { error: "꿈 해몽에 실패했어요" },
+      { error: "꿈 해몽에 실패했어요. 잠시 후 다시 시도해 주세요" },
       { status: 500 }
     );
   }

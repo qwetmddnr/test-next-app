@@ -122,9 +122,12 @@ export async function generateDreamResult(
     return { token, text: normalizedText, aiText: null, cached: false };
   }
 
+  // 529 Overloaded 같은 transient 에러는 SDK가 backoff 재시도하도록 maxRetries 상향.
+  // 실패 시 silent fallback이 아니라 throw — dream 결과 페이지는 ai_cache 적중을
+  // 전제로 lookup하므로 캐시에 결과가 없으면 404로 보임.
   let aiText: string | null = null;
   try {
-    const anthropic = new Anthropic({ apiKey });
+    const anthropic = new Anthropic({ apiKey, maxRetries: 4 });
     const message = await anthropic.messages.create({
       model: INSIGHT_MODEL,
       max_tokens: 700,
@@ -136,15 +139,17 @@ export async function generateDreamResult(
       .join("\n")
       .trim();
   } catch (err) {
-    console.error(
-      "[dream] Claude call failed:",
-      err instanceof Error ? err.message : err
-    );
-    return { token, text: normalizedText, aiText: null, cached: false };
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[dream] Claude call failed:", msg);
+    // 529 Overloaded는 사용자에게 재시도 안내가 가능하도록 별도 마커.
+    if (/\b529\b/.test(msg) || /overloaded/i.test(msg)) {
+      throw new Error("AI_OVERLOADED");
+    }
+    throw new Error("AI_CALL_FAILED");
   }
 
   if (!aiText) {
-    return { token, text: normalizedText, aiText: null, cached: false };
+    throw new Error("AI_EMPTY_RESPONSE");
   }
 
   // 3) 캐시 저장
