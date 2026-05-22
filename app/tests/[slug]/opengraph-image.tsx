@@ -11,7 +11,7 @@ import { getTest } from "@/lib/test/loader";
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
-export const alt = "오늘의 나 - 테스트";
+export const alt = "OHNA — 오늘의 나 · 테스트";
 
 export default async function Image({
   params,
@@ -39,7 +39,7 @@ export default async function Image({
             color: "#9ca3af",
           }}
         >
-          오늘의 나
+          OHNA · 오늘의 나
         </div>
       ),
       {
@@ -77,7 +77,7 @@ export default async function Image({
             color: "transparent",
           }}
         >
-          ✨ 오늘의 나
+          ✨ OHNA
         </div>
 
         <div
@@ -163,7 +163,7 @@ export default async function Image({
             fontWeight: 700,
           }}
         >
-          오늘의나
+          OHNA · ohna.today
         </div>
       </div>
     ),

@@ -176,7 +176,7 @@ export default async function Image() {
             letterSpacing: 1,
           }}
         >
-          ✨ 오늘의 나
+          ✨ OHNA
         </div>
 
         <div
@@ -262,7 +262,7 @@ export default async function Image() {
             letterSpacing: 1,
           }}
         >
-          오늘의나
+          OHNA · ohna.today
         </div>
       </div>
     ),

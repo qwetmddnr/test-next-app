@@ -10,12 +10,15 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "오늘의 나 - 운세 & 재미 테스트",
-    template: "%s | 오늘의 나",
+    default: "오나 OHNA — 오늘의 나",
+    template: "%s | 오나 OHNA",
   },
   description:
-    "동물상, 전생, 연애 유형부터 타로, 사주, MBTI까지. AI가 분석하는 나만의 오늘.",
+    "오늘의 나(오나)에서 만나는 7가지 무료 운세·성향 테스트. 사주·타로·MBTI·동물상·전생·연애·띠운세.",
   keywords: [
+    "오나",
+    "OHNA",
+    "오늘의 나",
     "운세",
     "타로",
     "사주",
@@ -25,13 +28,15 @@ export const metadata: Metadata = {
     "재미테스트",
     "연애 유형",
     "전생 직업",
+    "띠운세",
   ],
   openGraph: {
-    title: "오늘의 나 - 운세 & 재미 테스트",
-    description: "동물상, 전생, 연애 유형부터 타로, 사주, MBTI까지",
+    title: "오나 OHNA — 오늘의 나",
+    description:
+      "오늘의 나(오나)에서 만나는 7가지 무료 운세·성향 테스트. 사주·타로·MBTI·동물상·전생·연애·띠운세.",
     type: "website",
     locale: "ko_KR",
-    siteName: "오늘의 나",
+    siteName: "오나 OHNA",
   },
   twitter: {
     card: "summary_large_image",

@@ -81,7 +81,7 @@ export function ResultView({
     .filter((r): r is TestResult => Boolean(r));
 
   const shareUrl = `/result/${test.slug}/${result.id}`;
-  const shareTitle = `${result.title} - 오늘의 나`;
+  const shareTitle = `${result.title} | 오나 OHNA`;
   const shareText = `나는 ${result.emoji} ${result.title}! ${result.shortDesc}`;
 
   const entryPath = (t: TestDefinition) =>

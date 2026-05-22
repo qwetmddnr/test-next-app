@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
-  description: "오늘의 나 개인정보 수집·이용 안내",
+  description: "오늘의 나(OHNA) 개인정보 수집·이용 안내",
   robots: { index: true, follow: true },
 };
 

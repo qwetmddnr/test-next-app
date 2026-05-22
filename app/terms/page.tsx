@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "이용약관",
-  description: "오늘의 나 서비스 이용약관",
+  description: "오늘의 나(OHNA) 서비스 이용약관",
   robots: { index: true, follow: true },
 };
 
@@ -23,7 +23,7 @@ export default function TermsPage() {
 
         <div className="mt-8 space-y-6 text-sm leading-relaxed text-gray-700">
           <Section title="제1조 (목적)">
-            본 약관은 “오늘의 나”(이하 “서비스”)가 제공하는 운세 및 재미 테스트
+            본 약관은 “오늘의 나(OHNA)”(이하 “서비스”)가 제공하는 운세 및 재미 테스트
             콘텐츠 이용과 관련하여 서비스와 이용자의 권리·의무 및 책임사항을
             규정함을 목적으로 합니다.
           </Section>

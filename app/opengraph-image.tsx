@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "오늘의 나 — 운세 & 재미 테스트";
+export const alt = "OHNA — 오늘의 나 · 운세 & 재미 테스트";
 
 const PRETENDARD_OTF_URL =
   "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/public/static/Pretendard-Bold.otf";
@@ -53,7 +53,7 @@ export default async function Image() {
             color: "transparent",
           }}
         >
-          ✨ 오늘의 나
+          ✨ OHNA
         </div>
 
         <div
@@ -151,7 +151,7 @@ export default async function Image() {
             fontWeight: 700,
           }}
         >
-          오늘의나
+          OHNA · ohna.today
         </div>
       </div>
     ),

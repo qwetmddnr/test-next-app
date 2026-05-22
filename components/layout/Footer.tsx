@@ -13,7 +13,10 @@ export function Footer() {
         </Link>
       </div>
       <p className="mt-2">
-        ✨ 오늘의 나 · 운세와 재미 테스트는 즐거움을 위한 콘텐츠예요
+        ✨ 운세와 재미 테스트는 즐거움을 위한 콘텐츠예요
+      </p>
+      <p className="mt-1 text-[11px] text-gray-300">
+        © 2026 ohna.today | 오늘의 나
       </p>
     </footer>
   );

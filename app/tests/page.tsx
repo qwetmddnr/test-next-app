@@ -5,9 +5,9 @@ import type { TestDefinition } from "@/lib/types/test";
 
 export const metadata: Metadata = {
   title: "전체 테스트",
-  description: "오늘의 나에서 즐길 수 있는 모든 운세와 재미 테스트 모음",
+  description: "오나(OHNA), 오늘의 나에서 즐길 수 있는 모든 운세와 재미 테스트 모음",
   openGraph: {
-    title: "전체 테스트 - 오늘의 나",
+    title: "전체 테스트 | 오나 OHNA",
     description: "운세와 재미 테스트 모음",
     type: "website",
     locale: "ko_KR",

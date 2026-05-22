@@ -14,7 +14,7 @@ export default async function Home() {
         <header className="mb-10 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
             <span className="bg-gradient-to-r from-pink-500 via-fuchsia-500 to-violet-500 bg-clip-text text-transparent">
-              오늘의 나
+              OHNA · 오늘의 나
             </span>
           </h1>
           <p className="mt-2 text-sm text-gray-500">

@@ -39,7 +39,7 @@ export default async function Image() {
             color: "transparent",
           }}
         >
-          ✨ 오늘의 나
+          ✨ OHNA
         </div>
 
         <div
@@ -118,7 +118,7 @@ export default async function Image() {
             fontWeight: 700,
           }}
         >
-          오늘의나
+          OHNA · ohna.today
         </div>
       </div>
     ),
