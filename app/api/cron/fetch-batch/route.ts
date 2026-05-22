@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { collectBatchResults, retrieveBatch } from "@/lib/ai/batch";
 import { DAILY_TESTS, makeCacheKey } from "@/lib/ai/insight";
+import { nowKstIso } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -114,7 +115,7 @@ export async function GET(req: NextRequest) {
       .from("batch_jobs")
       .update({
         status: "completed",
-        fetched_at: new Date().toISOString(),
+        fetched_at: nowKstIso(),
         inserted_count: inserted,
       })
       .eq("id", job.id);
