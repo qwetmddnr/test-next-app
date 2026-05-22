@@ -35,6 +35,11 @@ body {
   display: none !important;
 }
 
+/* unfilled ins를 가진 ad-wrap도 같이 collapse (mt-* 마진까지 제거) */
+.ad-wrap:has(> .adsbygoogle[data-ad-status="unfilled"]) {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
