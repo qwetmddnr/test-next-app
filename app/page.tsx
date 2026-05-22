@@ -55,9 +55,10 @@ export default async function Home() {
 
         <section className="mb-8">
           <h2 className="mb-4 text-lg font-bold text-gray-800">🔮 오늘의 운세</h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <FortuneCard href="/tarot" emoji="🃏" label="타로" />
             <FortuneCard href="/new-year" emoji="🎍" label="띠 운세" />
+            <FortuneCard href="/dream" emoji="🌙" label="꿈 해몽" />
           </div>
         </section>
 
