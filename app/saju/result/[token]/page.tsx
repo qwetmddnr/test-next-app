@@ -22,12 +22,16 @@ function isValidToken(token: string): boolean {
   return /^[a-f0-9]{32,64}$/i.test(token);
 }
 
+// 토큰 기반 개인 결과 페이지 — 검색 색인 대상 아님. OG/SNS 공유는 robots와 별개로 동작.
+const NOINDEX: Metadata["robots"] = { index: false, follow: true };
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { token } = await params;
-  if (!isValidToken(token)) return { title: "사주 결과를 찾을 수 없어요" };
+  if (!isValidToken(token))
+    return { title: "사주 결과를 찾을 수 없어요", robots: NOINDEX };
 
   const result = await lookupSajuByToken(token);
-  if (!result) return { title: "사주 결과를 찾을 수 없어요" };
+  if (!result) return { title: "사주 결과를 찾을 수 없어요", robots: NOINDEX };
 
   const { saju, input } = result;
   const dayMaster = `${saju.pillars.day.ganHanja}${saju.pillars.day.zhiHanja}`;
@@ -37,6 +41,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title,
     description,
+    robots: NOINDEX,
     openGraph: {
       title,
       description,
