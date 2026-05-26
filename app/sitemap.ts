@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getAllResultParams, getAllTests } from "@/lib/test/loader";
+import { getAllResultParams, getAllTests, getEntryPath } from "@/lib/test/loader";
+
+// 매일 새 AI 인사이트가 생성되는 운세 테스트 — sitemap의 changeFrequency/priority를 daily로 높임.
+const DAILY_TESTS = new Set(["tarot", "new-year", "zodiac"]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl =
@@ -7,19 +10,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "http://localhost:3000";
   const now = new Date();
 
-  const tests = getAllTests().map((t) => ({
-    url: `${baseUrl}/tests/${t.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
+  // 각 테스트의 entryPath를 사용해 redirect 없이 final URL을 노출.
+  // (fortune 카테고리는 /tarot, /saju 등 별도 라우트로 살아있음)
+  const tests = getAllTests()
+    .filter((t) => !t.comingSoon)
+    .map((t) => {
+      const isDaily = DAILY_TESTS.has(t.slug);
+      return {
+        url: `${baseUrl}${getEntryPath(t)}`,
+        lastModified: now,
+        changeFrequency: (isDaily ? "daily" : "weekly") as
+          | "daily"
+          | "weekly",
+        priority: isDaily ? 0.9 : 0.8,
+      };
+    });
 
-  const results = getAllResultParams().map((r) => ({
-    url: `${baseUrl}/result/${r.type}/${r.id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const results = getAllResultParams().map((r) => {
+    const isDaily = DAILY_TESTS.has(r.type);
+    return {
+      url: `${baseUrl}/result/${r.type}/${r.id}`,
+      lastModified: now,
+      changeFrequency: (isDaily ? "daily" : "monthly") as
+        | "daily"
+        | "monthly",
+      priority: isDaily ? 0.8 : 0.6,
+    };
+  });
 
   return [
     {
