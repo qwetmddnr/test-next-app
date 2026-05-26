@@ -3,6 +3,14 @@ import { notFound } from "next/navigation";
 import { DreamResultView } from "@/components/dream/DreamResultView";
 import { lookupDreamByToken } from "@/lib/ai/dream";
 import { getOtherTests } from "@/lib/test/loader";
+import {
+  articleJsonLd,
+  kstTodayIso,
+  SITE_LAUNCH_DATE,
+} from "@/lib/seo/structured-data";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://ohna.today";
 
 type Params = Promise<{ token: string }>;
 
@@ -61,12 +69,30 @@ export default async function DreamResultPage({
     (t) => t.results.length > 0
   );
 
+  const preview =
+    result.text.length > 60 ? result.text.slice(0, 60) + "…" : result.text;
+  const pageUrl = `${SITE_URL}/dream/result/${token}`;
+  const jsonLd = articleJsonLd({
+    url: pageUrl,
+    headline: "내 꿈 해몽 — OHNA",
+    description: `"${preview}" — AI가 풀어주는 꿈의 의미.`,
+    image: `${pageUrl}/opengraph-image`,
+    datePublished: SITE_LAUNCH_DATE,
+    dateModified: kstTodayIso(),
+  });
+
   return (
-    <DreamResultView
-      token={token}
-      text={result.text}
-      aiText={result.aiText}
-      otherTests={otherTests}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
+      <DreamResultView
+        token={token}
+        text={result.text}
+        aiText={result.aiText}
+        otherTests={otherTests}
+      />
+    </>
   );
 }

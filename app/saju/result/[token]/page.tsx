@@ -4,6 +4,14 @@ import { SajuResultView } from "@/components/saju/SajuResultView";
 import { lookupSajuByToken } from "@/lib/ai/saju";
 import { elementKorean } from "@/lib/saju/calculate";
 import { getOtherTests } from "@/lib/test/loader";
+import {
+  articleJsonLd,
+  kstTodayIso,
+  SITE_LAUNCH_DATE,
+} from "@/lib/seo/structured-data";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://ohna.today";
 
 type Params = Promise<{ token: string }>;
 
@@ -52,13 +60,30 @@ export default async function SajuResultPage({ params }: { params: Params }) {
 
   const otherTests = getOtherTests("saju").filter((t) => t.results.length > 0);
 
+  const dayMaster = `${result.saju.pillars.day.ganHanja}${result.saju.pillars.day.zhiHanja}`;
+  const pageUrl = `${SITE_URL}/saju/result/${token}`;
+  const jsonLd = articleJsonLd({
+    url: pageUrl,
+    headline: `${result.input.name}님의 사주 — 일간 ${result.saju.dayMasterKorean}${elementKorean(result.saju.dayMasterElement)}`,
+    description: `${dayMaster} 일주, AI가 풀어내는 사주 분석.`,
+    image: `${pageUrl}/opengraph-image`,
+    datePublished: SITE_LAUNCH_DATE,
+    dateModified: kstTodayIso(),
+  });
+
   return (
-    <SajuResultView
-      token={token}
-      saju={result.saju}
-      name={result.input.name}
-      aiText={result.aiText}
-      otherTests={otherTests}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
+      <SajuResultView
+        token={token}
+        saju={result.saju}
+        name={result.input.name}
+        aiText={result.aiText}
+        otherTests={otherTests}
+      />
+    </>
   );
 }

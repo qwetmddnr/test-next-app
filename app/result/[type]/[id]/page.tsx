@@ -3,6 +3,14 @@ import { notFound } from "next/navigation";
 import { ResultView } from "@/components/result/ResultView";
 import { getAIInsight } from "@/lib/ai/insight";
 import { getAllResultParams, getOtherTests, getResult } from "@/lib/test/loader";
+import {
+  articleJsonLd,
+  kstTodayIso,
+  SITE_LAUNCH_DATE,
+} from "@/lib/seo/structured-data";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://ohna.today";
 
 type Params = Promise<{ type: string; id: string }>;
 
@@ -61,13 +69,29 @@ export default async function ResultPage({ params }: { params: Params }) {
     result: found.result,
   });
   const dailyLabel = DAILY_TESTS.has(type) ? todayLabelKR() : null;
+  const isDaily = DAILY_TESTS.has(type);
+  const pageUrl = `${SITE_URL}/result/${type}/${id}`;
+  const jsonLd = articleJsonLd({
+    url: pageUrl,
+    headline: `${found.result.emoji} ${found.result.title} - ${found.test.title}`,
+    description: found.result.shortDesc || found.result.description,
+    image: `${pageUrl}/opengraph-image`,
+    datePublished: SITE_LAUNCH_DATE,
+    dateModified: isDaily ? kstTodayIso() : SITE_LAUNCH_DATE,
+  });
   return (
-    <ResultView
-      test={found.test}
-      result={found.result}
-      otherTests={otherTests}
-      aiInsight={aiInsight}
-      dailyLabel={dailyLabel}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
+      <ResultView
+        test={found.test}
+        result={found.result}
+        otherTests={otherTests}
+        aiInsight={aiInsight}
+        dailyLabel={dailyLabel}
+      />
+    </>
   );
 }
