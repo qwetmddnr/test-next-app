@@ -54,8 +54,8 @@ function edgeVisual(
   };
 }
 
-// 운세 톤 — 잘 맞을수록 빛나는 별, 안 맞을수록 비/번개.
-// mutual은 더 강한 weather/glow로 강조.
+// 표정 이모지 — 강도 순으로 🥰(반함) → 😊(웃음) → 😐(무표정) → 😕(찡그림) → 😖(괴로움).
+// 표정 자체가 매칭 강도를 직관적으로 전달.
 function edgeLabel(p: MemberPair): {
   text: string;
   bg: string;
@@ -63,15 +63,15 @@ function edgeLabel(p: MemberPair): {
 } {
   if (p.score === "match") {
     return p.mutual
-      ? { text: "✨", bg: "#d1fae5", ring: "#10b981" }
-      : { text: "⭐", bg: "#ecfdf5", ring: "#a7f3d0" };
+      ? { text: "🥰", bg: "#d1fae5", ring: "#10b981" }
+      : { text: "😊", bg: "#ecfdf5", ring: "#a7f3d0" };
   }
   if (p.score === "avoid") {
     return p.mutual
-      ? { text: "🌩️", bg: "#fee2e2", ring: "#ef4444" }
-      : { text: "🌧️", bg: "#fef2f2", ring: "#fca5a5" };
+      ? { text: "😖", bg: "#fee2e2", ring: "#ef4444" }
+      : { text: "😕", bg: "#fef2f2", ring: "#fca5a5" };
   }
-  return { text: "☁️", bg: "#f3f4f6", ring: "#d1d5db" };
+  return { text: "😐", bg: "#f3f4f6", ring: "#d1d5db" };
 }
 
 export function MatchNetworkGraph({
