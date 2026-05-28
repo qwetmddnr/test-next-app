@@ -1,6 +1,10 @@
+"use client";
+
 // 멤버 N명을 원 둘레에 균등 배치하고, 모든 쌍 사이를 선으로 연결한 관계망 그래프.
 // 선의 색상은 매칭 점수(match/neutral/avoid), 굵기는 mutual(양방향) 여부에 따라.
+// 노드 클릭 시 그 멤버와 연관된 엣지/노드만 강조, 나머지는 흐려짐 (다시 클릭 또는 빈 공간 탭으로 해제).
 
+import { useState } from "react";
 import type { TestDefinition } from "@/lib/types/test";
 import type { GroupMemberRecord, MemberPair } from "@/lib/group/types";
 
@@ -14,9 +18,11 @@ interface MatchNetworkGraphProps {
 const VIEW = 360;
 const CENTER = VIEW / 2;
 const NODE_RADIUS = 26;
-const RING_RADIUS = VIEW / 2 - NODE_RADIUS - 40; // 라벨 공간 확보
+const RING_RADIUS = VIEW / 2 - NODE_RADIUS - 40;
 
-function edgeStyle(p: MemberPair): {
+const DIM_OPACITY = 0.18;
+
+function baseEdgeStyle(p: MemberPair): {
   stroke: string;
   strokeWidth: number;
   opacity: number;
@@ -38,8 +44,6 @@ function edgeStyle(p: MemberPair): {
   return { stroke: "#e5e7eb", strokeWidth: 1, opacity: 0.6 };
 }
 
-// 선 가운데에 표시할 매칭 라벨.
-// 색상은 stroke 색과 통일, mutual은 한 번 더 표시("XX")로 강조.
 function edgeLabel(p: MemberPair): {
   text: string;
   fill: string;
@@ -68,10 +72,11 @@ export function MatchNetworkGraph({
   pairs,
   myNickname,
 }: MatchNetworkGraphProps) {
+  const [focusedId, setFocusedId] = useState<number | null>(null);
+
   const n = members.length;
   if (n === 0) return null;
 
-  // 1명만 있을 땐 그래프 가운데에 노드 하나만.
   const positions = members.map((m, i) => {
     if (n === 1) {
       return { member: m, x: CENTER, y: CENTER, angle: -Math.PI / 2 };
@@ -87,13 +92,30 @@ export function MatchNetworkGraph({
 
   const positionById = new Map(positions.map((p) => [p.member.id, p]));
 
+  const focusedMode = focusedId !== null;
+  const isEdgeRelated = (p: MemberPair) =>
+    focusedMode && (p.a.id === focusedId || p.b.id === focusedId);
+  const isNodeRelated = (memberId: number) => {
+    if (!focusedMode) return true;
+    if (memberId === focusedId) return true;
+    return pairs.some(
+      (p) =>
+        (p.a.id === focusedId && p.b.id === memberId) ||
+        (p.b.id === focusedId && p.a.id === memberId)
+    );
+  };
+
+  function toggleFocus(memberId: number) {
+    setFocusedId((cur) => (cur === memberId ? null : memberId));
+  }
+
   return (
     <div className="rounded-3xl bg-white/85 p-3 ring-1 ring-pink-100">
       <svg
         viewBox={`0 0 ${VIEW} ${VIEW}`}
         width="100%"
         height="auto"
-        className="block"
+        className="block select-none"
         role="img"
         aria-label="모임 멤버 관계망"
       >
@@ -104,12 +126,24 @@ export function MatchNetworkGraph({
           </radialGradient>
         </defs>
 
+        {/* 빈 공간 탭으로 focus 해제 */}
+        <rect
+          x={0}
+          y={0}
+          width={VIEW}
+          height={VIEW}
+          fill="transparent"
+          onClick={() => setFocusedId(null)}
+          style={{ cursor: focusedMode ? "pointer" : "default" }}
+        />
+
         {/* edges */}
         {pairs.map((p) => {
           const a = positionById.get(p.a.id);
           const b = positionById.get(p.b.id);
           if (!a || !b) return null;
-          const s = edgeStyle(p);
+          const s = baseEdgeStyle(p);
+          const dim = focusedMode && !isEdgeRelated(p);
           return (
             <line
               key={`${p.a.id}-${p.b.id}-line`}
@@ -119,13 +153,14 @@ export function MatchNetworkGraph({
               y2={b.y}
               stroke={s.stroke}
               strokeWidth={s.strokeWidth}
-              opacity={s.opacity}
+              opacity={dim ? DIM_OPACITY : s.opacity}
               strokeLinecap="round"
+              style={{ transition: "opacity 0.2s" }}
             />
           );
         })}
 
-        {/* edge mid-labels — 노드 아래 layer로 깔리지 않도록 라인 다음에 그림 */}
+        {/* edge mid-labels */}
         {pairs.map((p) => {
           const a = positionById.get(p.a.id);
           const b = positionById.get(p.b.id);
@@ -133,13 +168,17 @@ export function MatchNetworkGraph({
           const midX = (a.x + b.x) / 2;
           const midY = (a.y + b.y) / 2;
           const label = edgeLabel(p);
-          // text width 추정: 글자 1자당 ~7px, padding 양쪽 5px씩
           const padX = 5;
           const charW = 8;
           const w = label.text.length * charW + padX * 2;
           const h = 16;
+          const dim = focusedMode && !isEdgeRelated(p);
           return (
-            <g key={`${p.a.id}-${p.b.id}-label`}>
+            <g
+              key={`${p.a.id}-${p.b.id}-label`}
+              opacity={dim ? DIM_OPACITY : 1}
+              style={{ transition: "opacity 0.2s" }}
+            >
               <rect
                 x={midX - w / 2}
                 y={midY - h / 2}
@@ -170,6 +209,8 @@ export function MatchNetworkGraph({
         {positions.map(({ member, x, y, angle }) => {
           const r = test.results.find((x2) => x2.id === member.result_id);
           const isMe = member.nickname === myNickname;
+          const isFocused = focusedId === member.id;
+          const dim = focusedMode && !isNodeRelated(member.id);
           const labelDistance = NODE_RADIUS + 16;
           const labelX =
             n === 1
@@ -181,14 +222,28 @@ export function MatchNetworkGraph({
               : CENTER + (RING_RADIUS + labelDistance) * Math.sin(angle);
 
           return (
-            <g key={member.id}>
+            <g
+              key={member.id}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFocus(member.id);
+              }}
+              style={{
+                cursor: "pointer",
+                transition: "opacity 0.2s",
+              }}
+              opacity={dim ? 0.35 : 1}
+            >
               <circle
                 cx={x}
                 cy={y}
-                r={NODE_RADIUS}
+                r={isFocused ? NODE_RADIUS + 3 : NODE_RADIUS}
                 fill={isMe ? "url(#me-grad)" : "#ffffff"}
-                stroke={isMe ? "#FF6B9D" : "#e5e7eb"}
-                strokeWidth={isMe ? 3 : 1.5}
+                stroke={
+                  isFocused ? "#FF6B9D" : isMe ? "#FF6B9D" : "#e5e7eb"
+                }
+                strokeWidth={isFocused ? 4 : isMe ? 3 : 1.5}
+                style={{ transition: "r 0.15s, stroke-width 0.15s" }}
               />
               <text
                 x={x}
@@ -196,6 +251,7 @@ export function MatchNetworkGraph({
                 textAnchor="middle"
                 dominantBaseline="central"
                 fontSize="26"
+                pointerEvents="none"
               >
                 {r?.emoji ?? "❓"}
               </text>
@@ -205,8 +261,9 @@ export function MatchNetworkGraph({
                 textAnchor="middle"
                 dominantBaseline="central"
                 fontSize="12"
-                fontWeight={isMe ? 700 : 600}
-                fill={isMe ? "#db2777" : "#374151"}
+                fontWeight={isFocused || isMe ? 700 : 600}
+                fill={isFocused ? "#db2777" : isMe ? "#db2777" : "#374151"}
+                pointerEvents="none"
               >
                 {member.nickname}
                 {isMe && " (나)"}
@@ -231,6 +288,12 @@ export function MatchNetworkGraph({
         </span>
         <span className="text-gray-400">진한 선 = 양쪽 모두</span>
       </div>
+
+      <p className="mt-2 text-center text-[11px] text-gray-400">
+        {focusedMode
+          ? "다시 탭하거나 빈 공간을 누르면 모두 보여요"
+          : "노드를 탭하면 그 친구의 관계만 강조돼요"}
+      </p>
     </div>
   );
 }
