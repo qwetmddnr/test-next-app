@@ -54,22 +54,26 @@ function edgeVisual(
   };
 }
 
-// 표정 이모지 — 강도 순으로 🥰(반함) → 😊(웃음) → 😐(무표정) → 😕(찡그림) → 😖(괴로움).
-// 표정 자체가 매칭 강도를 직관적으로 전달.
+// 표정 이모지 — 3단계: 🥰 잘맞음 / 😐 보통 / 😖 안맞음.
+// mutual(양방향) 여부는 라인 두께 + ring 색 진하기로 별도 시각화.
 function edgeLabel(p: MemberPair): {
   text: string;
   bg: string;
   ring: string;
 } {
   if (p.score === "match") {
-    return p.mutual
-      ? { text: "🥰", bg: "#d1fae5", ring: "#10b981" }
-      : { text: "😊", bg: "#ecfdf5", ring: "#a7f3d0" };
+    return {
+      text: "🥰",
+      bg: "#d1fae5",
+      ring: p.mutual ? "#10b981" : "#a7f3d0",
+    };
   }
   if (p.score === "avoid") {
-    return p.mutual
-      ? { text: "😖", bg: "#fee2e2", ring: "#ef4444" }
-      : { text: "😕", bg: "#fef2f2", ring: "#fca5a5" };
+    return {
+      text: "😖",
+      bg: "#fee2e2",
+      ring: p.mutual ? "#ef4444" : "#fca5a5",
+    };
   }
   return { text: "😐", bg: "#f3f4f6", ring: "#d1d5db" };
 }
