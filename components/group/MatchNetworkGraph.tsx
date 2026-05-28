@@ -20,28 +20,38 @@ const CENTER = VIEW / 2;
 const NODE_RADIUS = 26;
 const RING_RADIUS = VIEW / 2 - NODE_RADIUS - 40;
 
-const DIM_OPACITY = 0.18;
+const DIM_OPACITY = 0.12;
 
-function baseEdgeStyle(p: MemberPair): {
-  stroke: string;
-  strokeWidth: number;
-  opacity: number;
-} {
+type EdgeMode = "default" | "focused" | "dimmed";
+
+// 엣지 시각 — focused 모드의 connected edge는 색과 굵기 모두 boost.
+// 특히 neutral은 기본 색이 약하므로(#e5e7eb) focused 시 진한 회색으로 올림.
+function edgeVisual(
+  p: MemberPair,
+  mode: EdgeMode
+): { stroke: string; strokeWidth: number; opacity: number } {
   if (p.score === "match") {
     return {
-      stroke: p.mutual ? "#10b981" : "#6ee7b7",
-      strokeWidth: p.mutual ? 3 : 1.6,
-      opacity: 0.85,
+      stroke: p.mutual ? "#10b981" : "#34d399",
+      strokeWidth:
+        mode === "focused" ? (p.mutual ? 4.5 : 3) : p.mutual ? 3 : 1.8,
+      opacity: mode === "dimmed" ? DIM_OPACITY : mode === "focused" ? 1 : 0.85,
     };
   }
   if (p.score === "avoid") {
     return {
-      stroke: p.mutual ? "#ef4444" : "#fca5a5",
-      strokeWidth: p.mutual ? 3 : 1.6,
-      opacity: 0.85,
+      stroke: p.mutual ? "#ef4444" : "#f87171",
+      strokeWidth:
+        mode === "focused" ? (p.mutual ? 4.5 : 3) : p.mutual ? 3 : 1.8,
+      opacity: mode === "dimmed" ? DIM_OPACITY : mode === "focused" ? 1 : 0.85,
     };
   }
-  return { stroke: "#e5e7eb", strokeWidth: 1, opacity: 0.6 };
+  // neutral — focused 시 회색을 한 단계 진하게(#9ca3af) + 두께 boost
+  return {
+    stroke: mode === "focused" ? "#9ca3af" : "#e5e7eb",
+    strokeWidth: mode === "focused" ? 2.5 : 1,
+    opacity: mode === "dimmed" ? DIM_OPACITY : mode === "focused" ? 1 : 0.6,
+  };
 }
 
 // 운세 톤 — 잘 맞을수록 빛나는 별, 안 맞을수록 비/번개.
@@ -140,8 +150,12 @@ export function MatchNetworkGraph({
           const a = positionById.get(p.a.id);
           const b = positionById.get(p.b.id);
           if (!a || !b) return null;
-          const s = baseEdgeStyle(p);
-          const dim = focusedMode && !isEdgeRelated(p);
+          const mode: EdgeMode = !focusedMode
+            ? "default"
+            : isEdgeRelated(p)
+              ? "focused"
+              : "dimmed";
+          const s = edgeVisual(p, mode);
           return (
             <line
               key={`${p.a.id}-${p.b.id}-line`}
@@ -151,9 +165,11 @@ export function MatchNetworkGraph({
               y2={b.y}
               stroke={s.stroke}
               strokeWidth={s.strokeWidth}
-              opacity={dim ? DIM_OPACITY : s.opacity}
+              opacity={s.opacity}
               strokeLinecap="round"
-              style={{ transition: "opacity 0.2s" }}
+              style={{
+                transition: "opacity 0.2s, stroke 0.2s, stroke-width 0.2s",
+              }}
             />
           );
         })}
@@ -166,8 +182,9 @@ export function MatchNetworkGraph({
           const midX = (a.x + b.x) / 2;
           const midY = (a.y + b.y) / 2;
           const label = edgeLabel(p);
-          const r = 12;
+          const focused = focusedMode && isEdgeRelated(p);
           const dim = focusedMode && !isEdgeRelated(p);
+          const r = focused ? 17 : 15;
           return (
             <g
               key={`${p.a.id}-${p.b.id}-label`}
@@ -180,14 +197,16 @@ export function MatchNetworkGraph({
                 r={r}
                 fill={label.bg}
                 stroke={label.ring}
-                strokeWidth={1.5}
+                strokeWidth={focused ? 2.5 : 1.5}
+                style={{ transition: "r 0.2s, stroke-width 0.2s" }}
               />
               <text
                 x={midX}
                 y={midY + 0.5}
                 textAnchor="middle"
                 dominantBaseline="central"
-                fontSize="14"
+                fontSize={focused ? "20" : "17"}
+                style={{ transition: "font-size 0.2s" }}
               >
                 {label.text}
               </text>
