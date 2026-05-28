@@ -12,6 +12,12 @@ interface ShareButtonProps {
   url: string;
   title: string;
   text: string;
+  // OG meta가 없는 페이지(예: /g/<id> 모임 페이지)에서 카카오 Feed 템플릿용 정보를 명시적으로 전달.
+  // 주어지면 자동 감지보다 우선 사용.
+  kakaoFeed?: {
+    description?: string;
+    imageUrl?: string;
+  };
 }
 
 function getOgImageUrl(): string | null {
@@ -29,7 +35,12 @@ function getOgImageUrl(): string | null {
   return null;
 }
 
-export function ShareButton({ url, title, text }: ShareButtonProps) {
+export function ShareButton({
+  url,
+  title,
+  text,
+  kakaoFeed,
+}: ShareButtonProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const kakaoReady = isKakaoConfigured();
@@ -68,20 +79,34 @@ export function ShareButton({ url, title, text }: ShareButtonProps) {
     }
   }
 
+  function resolveAbsolute(maybeUrl: string): string {
+    if (typeof window !== "undefined" && maybeUrl.startsWith("/")) {
+      return `${window.location.origin}${maybeUrl}`;
+    }
+    return maybeUrl;
+  }
+
   async function handleKakao() {
     const absoluteUrl = getAbsoluteUrl();
-    const imageUrl = getOgImageUrl();
+
+    // explicit override 있으면 OG meta auto-detect 건너뜀
+    const overrideImage = kakaoFeed?.imageUrl
+      ? resolveAbsolute(kakaoFeed.imageUrl)
+      : null;
+    const imageUrl = overrideImage ?? getOgImageUrl();
+    const description = kakaoFeed?.description ?? text;
+
     try {
       if (imageUrl) {
         // Feed 템플릿: 제목/설명/이미지/CTA 버튼을 직접 제어
         await shareToKakaoFeed({
           url: absoluteUrl,
           title,
-          description: text,
+          description,
           imageUrl,
         });
       } else {
-        // OG 이미지 못 찾으면 스크랩 폴백
+        // OG 이미지도 override도 없으면 스크랩 폴백
         await shareToKakaoScrap(absoluteUrl);
       }
       setSheetOpen(false);

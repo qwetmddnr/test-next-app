@@ -7,6 +7,7 @@ import { getTest } from "@/lib/test/loader";
 import { allPairs } from "@/lib/group/match";
 import { setPendingGroup } from "@/lib/group/pending";
 import type { GroupMemberRecord } from "@/lib/group/types";
+import { MatchNetworkGraph } from "@/components/group/MatchNetworkGraph";
 import { ShareButton } from "@/components/result/ShareButton";
 
 interface GroupData {
@@ -251,9 +252,21 @@ function GroupReadyView({
           </div>
         </section>
 
+        {data.members.length >= 2 && (
+          <section className="mb-8">
+            <h2 className="mb-3 text-sm font-bold text-gray-700">관계망</h2>
+            <MatchNetworkGraph
+              test={test}
+              members={data.members}
+              pairs={pairs}
+              myNickname={myNickname}
+            />
+          </section>
+        )}
+
         {pairs.length > 0 && (
           <section className="mb-8">
-            <h2 className="mb-3 text-sm font-bold text-gray-700">궁합</h2>
+            <h2 className="mb-3 text-sm font-bold text-gray-700">궁합 자세히</h2>
             <div className="space-y-2">
               {pairs.map((p, i) => {
                 const color =
@@ -301,7 +314,15 @@ function GroupReadyView({
 
         <section className="mt-8">
           <h2 className="mb-3 text-sm font-bold text-gray-700">모임 공유</h2>
-          <ShareButton url={shareUrl} title={shareTitle} text={shareText} />
+          <ShareButton
+            url={shareUrl}
+            title={shareTitle}
+            text={shareText}
+            kakaoFeed={{
+              description: `${test.title} 결과로 모이는 친구들 ${data.members.length}명. 함께 궁합 보러 오세요!`,
+              imageUrl: "/opengraph-image",
+            }}
+          />
           <p className="mt-2 text-xs text-gray-400">
             URL과 비밀번호를 함께 알려줘야 친구가 들어올 수 있어요
           </p>
