@@ -44,26 +44,24 @@ function baseEdgeStyle(p: MemberPair): {
   return { stroke: "#e5e7eb", strokeWidth: 1, opacity: 0.6 };
 }
 
+// 운세 톤 — 잘 맞을수록 빛나는 별, 안 맞을수록 비/번개.
+// mutual은 더 강한 weather/glow로 강조.
 function edgeLabel(p: MemberPair): {
   text: string;
-  fill: string;
   bg: string;
+  ring: string;
 } {
   if (p.score === "match") {
-    return {
-      text: p.mutual ? "잘잘" : "잘",
-      fill: "#047857",
-      bg: "#d1fae5",
-    };
+    return p.mutual
+      ? { text: "✨", bg: "#d1fae5", ring: "#10b981" }
+      : { text: "⭐", bg: "#ecfdf5", ring: "#a7f3d0" };
   }
   if (p.score === "avoid") {
-    return {
-      text: p.mutual ? "안안" : "안",
-      fill: "#b91c1c",
-      bg: "#fee2e2",
-    };
+    return p.mutual
+      ? { text: "🌩️", bg: "#fee2e2", ring: "#ef4444" }
+      : { text: "🌧️", bg: "#fef2f2", ring: "#fca5a5" };
   }
-  return { text: "보통", fill: "#6b7280", bg: "#f3f4f6" };
+  return { text: "☁️", bg: "#f3f4f6", ring: "#d1d5db" };
 }
 
 export function MatchNetworkGraph({
@@ -160,7 +158,7 @@ export function MatchNetworkGraph({
           );
         })}
 
-        {/* edge mid-labels */}
+        {/* edge mid-labels — 둥근 chip + emoji */}
         {pairs.map((p) => {
           const a = positionById.get(p.a.id);
           const b = positionById.get(p.b.id);
@@ -168,10 +166,7 @@ export function MatchNetworkGraph({
           const midX = (a.x + b.x) / 2;
           const midY = (a.y + b.y) / 2;
           const label = edgeLabel(p);
-          const padX = 5;
-          const charW = 8;
-          const w = label.text.length * charW + padX * 2;
-          const h = 16;
+          const r = 12;
           const dim = focusedMode && !isEdgeRelated(p);
           return (
             <g
@@ -179,25 +174,20 @@ export function MatchNetworkGraph({
               opacity={dim ? DIM_OPACITY : 1}
               style={{ transition: "opacity 0.2s" }}
             >
-              <rect
-                x={midX - w / 2}
-                y={midY - h / 2}
-                width={w}
-                height={h}
-                rx={8}
-                ry={8}
+              <circle
+                cx={midX}
+                cy={midY}
+                r={r}
                 fill={label.bg}
-                stroke="#ffffff"
+                stroke={label.ring}
                 strokeWidth={1.5}
               />
               <text
                 x={midX}
-                y={midY}
+                y={midY + 0.5}
                 textAnchor="middle"
                 dominantBaseline="central"
-                fontSize="11"
-                fontWeight={700}
-                fill={label.fill}
+                fontSize="14"
               >
                 {label.text}
               </text>
