@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import type { TestDefinition } from "@/lib/types/test";
 import { getTest } from "@/lib/test/loader";
 import { allPairs } from "@/lib/group/match";
+import { setPendingGroup } from "@/lib/group/pending";
 import type { GroupMemberRecord } from "@/lib/group/types";
 import { ShareButton } from "@/components/result/ShareButton";
 
@@ -290,6 +291,8 @@ function GroupReadyView({
         {!alreadyJoined && (
           <JoinFormSection
             test={test}
+            groupId={data.group.id}
+            groupName={data.group.name}
             onSubmit={onJoin}
             joining={joining}
             error={error}
@@ -310,20 +313,37 @@ function GroupReadyView({
 
 function JoinFormSection({
   test,
+  groupId,
+  groupName,
   onSubmit,
   joining,
   error,
 }: {
   test: TestDefinition;
+  groupId: string;
+  groupName: string;
   onSubmit: (nickname: string, resultId: string) => Promise<void>;
   joining: boolean;
   error: string | null;
 }) {
+  const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [selectedResultId, setSelectedResultId] = useState<string | null>(null);
 
   const trimmed = nickname.trim();
   const valid = trimmed.length > 0 && selectedResultId !== null;
+  const nicknameReady = trimmed.length > 0;
+
+  function handleGoToTest() {
+    if (!nicknameReady) return;
+    setPendingGroup({
+      group_id: groupId,
+      group_name: groupName,
+      test_type: test.slug,
+      nickname: trimmed,
+    });
+    router.push(test.entryPath ?? `/tests/${test.slug}`);
+  }
 
   return (
     <section className="mb-8 rounded-3xl bg-white/80 p-5 ring-1 ring-pink-100">
@@ -379,6 +399,23 @@ function JoinFormSection({
       >
         {joining ? "참여 중…" : "참여하기"}
       </button>
+
+      <div className="mt-5 border-t border-gray-100 pt-4">
+        <p className="mb-2 text-center text-xs text-gray-500">
+          내 결과를 모르겠다면 ↓
+        </p>
+        <button
+          type="button"
+          onClick={handleGoToTest}
+          disabled={!nicknameReady}
+          className="w-full rounded-full border-2 border-pink-200 bg-white py-2.5 text-sm font-medium text-pink-700 transition disabled:opacity-40 hover:border-pink-300 active:scale-95"
+        >
+          🧪 테스트 진행하고 자동 참여
+        </button>
+        <p className="mt-2 text-center text-xs text-gray-400">
+          닉네임 입력 후 — 테스트 끝나면 결과 페이지에서 자동 합류
+        </p>
+      </div>
     </section>
   );
 }

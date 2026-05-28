@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,11 @@ import { fadeUp, resultEmoji } from "@/lib/motion/variants";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { createClient } from "@/lib/supabase/client";
 import { CreateGroupModal } from "@/components/group/CreateGroupModal";
+import {
+  clearPendingGroup,
+  getPendingGroup,
+  type PendingGroup,
+} from "@/lib/group/pending";
 import { isGroupEligibleTestSlug } from "@/lib/group/types";
 import { AIInsightSection } from "./AIInsightSection";
 import { ShareButton } from "./ShareButton";
@@ -31,12 +37,64 @@ export function ResultView({
   dailyLabel,
   triggerConfetti = true,
 }: ResultViewProps) {
+  const router = useRouter();
   const [viewCount, setViewCount] = useState<number | null>(null);
   const [groupModalOpen, setGroupModalOpen] = useState(false);
+  const [pendingGroup, setPendingGroupState] = useState<PendingGroup | null>(
+    null
+  );
+  const [pendingJoining, setPendingJoining] = useState(false);
+  const [pendingError, setPendingError] = useState<string | null>(null);
 
   const groupEligible =
     isGroupEligibleTestSlug(test.slug) &&
     (result.matches.length > 0 || result.avoid.length > 0);
+
+  useEffect(() => {
+    const p = getPendingGroup();
+    if (p && p.test_type === test.slug) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPendingGroupState(p);
+    }
+  }, [test.slug]);
+
+  async function handlePendingJoin() {
+    if (!pendingGroup || pendingJoining) return;
+    setPendingJoining(true);
+    setPendingError(null);
+    try {
+      const password = sessionStorage.getItem(
+        `group_pw_${pendingGroup.group_id}`
+      );
+      if (!password) {
+        throw new Error(
+          "모임 비밀번호 정보가 만료됐어요. 모임 페이지에서 다시 시도해 주세요"
+        );
+      }
+      const res = await fetch(`/api/group/${pendingGroup.group_id}/join`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password,
+          nickname: pendingGroup.nickname,
+          result_id: result.id,
+        }),
+      });
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.error || "참여에 실패했어요");
+      }
+      sessionStorage.setItem(
+        `group_my_nickname_${pendingGroup.group_id}`,
+        pendingGroup.nickname
+      );
+      clearPendingGroup();
+      router.push(`/g/${pendingGroup.group_id}`);
+    } catch (e) {
+      setPendingError(e instanceof Error ? e.message : "오류");
+      setPendingJoining(false);
+    }
+  }
 
   useEffect(() => {
     if (!triggerConfetti) return;
@@ -208,6 +266,36 @@ export function ResultView({
           >
             ✨ {viewCount.toLocaleString()}회 조회됨
           </motion.p>
+        )}
+
+        {pendingGroup && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.75}
+            className="mt-5 rounded-2xl bg-gradient-to-br from-pink-100 via-fuchsia-100 to-violet-100 p-4 ring-2 ring-pink-300"
+          >
+            <p className="mb-1 text-xs font-medium text-gray-600">
+              📥 모임 참여 진행 중
+            </p>
+            <p className="mb-3 truncate text-base font-bold text-gray-900">
+              {pendingGroup.group_name}
+            </p>
+            <button
+              type="button"
+              onClick={handlePendingJoin}
+              disabled={pendingJoining}
+              className="w-full rounded-full bg-gradient-to-r from-pink-500 to-violet-500 py-3 font-bold text-white shadow-md shadow-pink-200/60 transition disabled:opacity-40 disabled:shadow-none"
+            >
+              {pendingJoining
+                ? "참여 중…"
+                : `✨ 이 결과로 ${pendingGroup.group_name}에 참여`}
+            </button>
+            {pendingError && (
+              <p className="mt-2 text-xs text-red-600">{pendingError}</p>
+            )}
+          </motion.div>
         )}
 
         <motion.div
