@@ -38,6 +38,30 @@ function edgeStyle(p: MemberPair): {
   return { stroke: "#e5e7eb", strokeWidth: 1, opacity: 0.6 };
 }
 
+// 선 가운데에 표시할 매칭 라벨.
+// 색상은 stroke 색과 통일, mutual은 한 번 더 표시("XX")로 강조.
+function edgeLabel(p: MemberPair): {
+  text: string;
+  fill: string;
+  bg: string;
+} {
+  if (p.score === "match") {
+    return {
+      text: p.mutual ? "잘잘" : "잘",
+      fill: "#047857",
+      bg: "#d1fae5",
+    };
+  }
+  if (p.score === "avoid") {
+    return {
+      text: p.mutual ? "안안" : "안",
+      fill: "#b91c1c",
+      bg: "#fee2e2",
+    };
+  }
+  return { text: "보통", fill: "#6b7280", bg: "#f3f4f6" };
+}
+
 export function MatchNetworkGraph({
   test,
   members,
@@ -88,7 +112,7 @@ export function MatchNetworkGraph({
           const s = edgeStyle(p);
           return (
             <line
-              key={`${p.a.id}-${p.b.id}`}
+              key={`${p.a.id}-${p.b.id}-line`}
               x1={a.x}
               y1={a.y}
               x2={b.x}
@@ -98,6 +122,47 @@ export function MatchNetworkGraph({
               opacity={s.opacity}
               strokeLinecap="round"
             />
+          );
+        })}
+
+        {/* edge mid-labels — 노드 아래 layer로 깔리지 않도록 라인 다음에 그림 */}
+        {pairs.map((p) => {
+          const a = positionById.get(p.a.id);
+          const b = positionById.get(p.b.id);
+          if (!a || !b) return null;
+          const midX = (a.x + b.x) / 2;
+          const midY = (a.y + b.y) / 2;
+          const label = edgeLabel(p);
+          // text width 추정: 글자 1자당 ~7px, padding 양쪽 5px씩
+          const padX = 5;
+          const charW = 8;
+          const w = label.text.length * charW + padX * 2;
+          const h = 16;
+          return (
+            <g key={`${p.a.id}-${p.b.id}-label`}>
+              <rect
+                x={midX - w / 2}
+                y={midY - h / 2}
+                width={w}
+                height={h}
+                rx={8}
+                ry={8}
+                fill={label.bg}
+                stroke="#ffffff"
+                strokeWidth={1.5}
+              />
+              <text
+                x={midX}
+                y={midY}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize="11"
+                fontWeight={700}
+                fill={label.fill}
+              >
+                {label.text}
+              </text>
+            </g>
           );
         })}
 
