@@ -9,6 +9,8 @@ import type { TestDefinition, TestResult } from "@/lib/types/test";
 import { fadeUp, resultEmoji } from "@/lib/motion/variants";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { createClient } from "@/lib/supabase/client";
+import { CreateGroupModal } from "@/components/group/CreateGroupModal";
+import { isGroupEligibleTestSlug } from "@/lib/group/types";
 import { AIInsightSection } from "./AIInsightSection";
 import { ShareButton } from "./ShareButton";
 
@@ -30,6 +32,11 @@ export function ResultView({
   triggerConfetti = true,
 }: ResultViewProps) {
   const [viewCount, setViewCount] = useState<number | null>(null);
+  const [groupModalOpen, setGroupModalOpen] = useState(false);
+
+  const groupEligible =
+    isGroupEligibleTestSlug(test.slug) &&
+    (result.matches.length > 0 || result.avoid.length > 0);
 
   useEffect(() => {
     if (!triggerConfetti) return;
@@ -330,6 +337,15 @@ export function ResultView({
           className="mt-6 space-y-3"
         >
           <ShareButton url={shareUrl} title={shareTitle} text={shareText} />
+          {groupEligible && (
+            <button
+              type="button"
+              onClick={() => setGroupModalOpen(true)}
+              className="block w-full rounded-full border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-violet-50 py-4 text-center font-medium text-pink-700 transition hover:border-pink-300 active:scale-95"
+            >
+              👥 이 결과로 모임 만들기
+            </button>
+          )}
           <Link
             href={entryPath(test)}
             replace
@@ -338,6 +354,16 @@ export function ResultView({
             🔄 다시 해보기
           </Link>
         </motion.div>
+
+        {groupEligible && (
+          <CreateGroupModal
+            open={groupModalOpen}
+            onClose={() => setGroupModalOpen(false)}
+            testSlug={test.slug}
+            resultId={result.id}
+            resultTitle={koreanTitle}
+          />
+        )}
 
         {otherTests.length > 0 && (
           <motion.div
