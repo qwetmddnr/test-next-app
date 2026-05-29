@@ -11,11 +11,11 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "오나 OHNA",
-  alternateName: "오늘의 나",
+  alternateName: ["오늘의 나", "오나테", "오나 테스트"],
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image`,
   description:
-    "오늘의 나(오나)에서 만나는 7가지 무료 운세·성향 테스트. 사주·타로·MBTI·동물상·전생·연애·띠운세.",
+    "오나테(오나 테스트) — 오늘의 나에서 만나는 무료 운세·성향 테스트 모음. 사주·타로·MBTI·동물상·전생·연애·띠운세.",
   inLanguage: "ko-KR",
 };
 
@@ -23,7 +23,7 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "오나 OHNA",
-  alternateName: "오늘의 나",
+  alternateName: ["오늘의 나", "오나테"],
   url: SITE_URL,
   logo: `${SITE_URL}/apple-icon`,
 };
@@ -49,7 +49,7 @@ export default async function Home() {
             </span>
           </h1>
           <p className="mt-2 text-sm text-gray-500">
-            운세부터 재미 테스트까지 ✨
+            ✨ 오나테로 만나는 오늘의 나 — 운세부터 재미 테스트까지
           </p>
         </header>
 
