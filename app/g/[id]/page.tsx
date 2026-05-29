@@ -382,23 +382,34 @@ function JoinFormSection({
       <div className="mb-4">
         <p className="mb-2 text-xs text-gray-500">나의 결과 선택</p>
         <div className="grid grid-cols-3 gap-2">
-          {test.results.map((r) => (
-            <button
-              key={r.id}
-              type="button"
-              onClick={() => setSelectedResultId(r.id)}
-              className={`flex flex-col items-center rounded-2xl p-2 text-center ring-1 transition ${
-                selectedResultId === r.id
-                  ? "bg-gradient-to-br from-pink-100 to-violet-100 ring-pink-400"
-                  : "bg-white/70 ring-pink-100 hover:ring-pink-200"
-              }`}
-            >
-              <span className="text-2xl">{r.emoji}</span>
-              <span className="mt-1 line-clamp-1 text-xs font-medium text-gray-700">
-                {r.title}
-              </span>
-            </button>
-          ))}
+          {test.results.map((r) => {
+            // MBTI는 영문 코드(ESFJ 등)가 한글 title보다 식별 쉬움.
+            const labelText =
+              test.slug === "mbti" ? r.id.toUpperCase() : r.title;
+            const labelClass =
+              test.slug === "mbti"
+                ? "font-bold tracking-wider text-pink-600"
+                : "font-medium text-gray-700";
+            return (
+              <button
+                key={r.id}
+                type="button"
+                onClick={() => setSelectedResultId(r.id)}
+                className={`flex flex-col items-center rounded-2xl p-2 text-center ring-1 transition ${
+                  selectedResultId === r.id
+                    ? "bg-gradient-to-br from-pink-100 to-violet-100 ring-pink-400"
+                    : "bg-white/70 ring-pink-100 hover:ring-pink-200"
+                }`}
+              >
+                <span className="text-2xl">{r.emoji}</span>
+                <span
+                  className={`mt-1 line-clamp-1 text-xs ${labelClass}`}
+                >
+                  {labelText}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
