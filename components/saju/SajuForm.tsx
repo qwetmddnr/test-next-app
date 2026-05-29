@@ -44,9 +44,10 @@ export function SajuForm() {
   const y = parseInt(year, 10);
   const m = parseInt(month, 10);
   const d = parseInt(day, 10);
-  const trimmedName = name.trim();
+  // valid 체크와 서버 전송용 이름은 완성된 한글 음절만 (IME 중간 자모 제외)
+  const syllableName = name.trim().replace(/[^가-힣]/g, "");
   const valid =
-    trimmedName.length > 0 && trimmedName.length <= 30 &&
+    syllableName.length > 0 && syllableName.length <= 30 &&
     Number.isFinite(y) && y >= 1920 && y <= thisYear &&
     Number.isFinite(m) && m >= 1 && m <= 12 &&
     Number.isFinite(d) && d >= 1 && d <= 31;
@@ -66,7 +67,7 @@ export function SajuForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: trimmedName,
+          name: syllableName,
           year: y,
           month: m,
           day: d,
@@ -98,7 +99,17 @@ export function SajuForm() {
             type="text"
             value={name}
             onChange={(e) =>
-              setName(e.target.value.replace(/[^가-힣]/g, "").slice(0, 30))
+              // 입력 중: IME 자모(ㄱ-ㅎ, ㅏ-ㅣ)도 통과시켜야 한글 조합이 깨지지 않음.
+              // 영어/숫자/특수문자만 즉시 제거.
+              setName(
+                e.target.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/g, "").slice(0, 30)
+              )
+            }
+            onBlur={(e) =>
+              // 포커스 아웃: 미완성 자모만 남아있으면 제거하고 완성 음절만 유지
+              setName(
+                e.currentTarget.value.replace(/[^가-힣]/g, "").slice(0, 30)
+              )
             }
             placeholder="예: 민지 (한글만)"
             autoComplete="off"
