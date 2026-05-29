@@ -227,6 +227,11 @@ function GroupReadyView({
             {data.members.map((m) => {
               const r = test.results.find((x) => x.id === m.result_id);
               const isMe = m.nickname === myNickname;
+              // MBTI는 한글 title보다 영문 코드(ESFJ 등)가 식별 쉬움. 다른 테스트는 한글 그대로.
+              const subLabel =
+                test.slug === "mbti"
+                  ? m.result_id.toUpperCase()
+                  : (r?.title ?? m.result_id);
               return (
                 <div
                   key={m.id}
@@ -242,8 +247,14 @@ function GroupReadyView({
                       {m.nickname}
                       {isMe && " (나)"}
                     </div>
-                    <div className="truncate text-xs text-gray-500">
-                      {r?.title ?? m.result_id}
+                    <div
+                      className={`truncate text-xs ${
+                        test.slug === "mbti"
+                          ? "font-bold tracking-wider text-pink-600"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {subLabel}
                     </div>
                   </div>
                 </div>
