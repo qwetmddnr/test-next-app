@@ -264,43 +264,6 @@ function GroupReadyView({
           </section>
         )}
 
-        {pairs.length > 0 && (
-          <section className="mb-8">
-            <h2 className="mb-3 text-sm font-bold text-gray-700">궁합 자세히</h2>
-            <div className="space-y-2">
-              {pairs.map((p, i) => {
-                const color =
-                  p.score === "match"
-                    ? "bg-green-50 ring-green-200 text-green-700"
-                    : p.score === "avoid"
-                      ? "bg-rose-50 ring-rose-200 text-rose-700"
-                      : "bg-gray-50 ring-gray-200 text-gray-600";
-                const label =
-                  p.score === "match"
-                    ? p.mutual
-                      ? "🟢 아주 잘 맞음"
-                      : "🟢 잘 맞음"
-                    : p.score === "avoid"
-                      ? p.mutual
-                        ? "🔴 서로 안 맞음"
-                        : "🔴 조심"
-                      : "⚪ 보통";
-                return (
-                  <div
-                    key={i}
-                    className={`flex items-center justify-between rounded-2xl p-3 text-sm ring-1 ${color}`}
-                  >
-                    <span className="font-medium">
-                      {p.a.nickname} ↔ {p.b.nickname}
-                    </span>
-                    <span className="font-bold">{label}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
         {!alreadyJoined && (
           <JoinFormSection
             test={test}
