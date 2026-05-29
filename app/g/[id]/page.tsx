@@ -381,6 +381,30 @@ function JoinFormSection({
         />
       </label>
 
+      {/* 1순위: 결과 모르는 사용자 → 테스트 진행 후 자동 합류 */}
+      <p className="mb-2 text-center text-xs font-medium text-gray-600">
+        내 결과를 모르겠다면 ↓
+      </p>
+      <button
+        type="button"
+        onClick={handleGoToTest}
+        disabled={!nicknameReady}
+        className="w-full rounded-full bg-gradient-to-r from-pink-500 to-violet-500 py-3 font-bold text-white shadow-md shadow-pink-200/60 transition disabled:opacity-40 disabled:shadow-none"
+      >
+        🧪 테스트 진행하고 자동 참여
+      </button>
+      <p className="mt-2 text-center text-xs text-gray-400">
+        닉네임 입력 후 — 테스트 끝나면 결과 페이지에서 자동 합류
+      </p>
+
+      {/* 구분선 */}
+      <div className="my-5 flex items-center gap-3 text-[11px] text-gray-400">
+        <div className="h-px flex-1 bg-gray-200" />
+        <span>또는 결과를 알고 있다면</span>
+        <div className="h-px flex-1 bg-gray-200" />
+      </div>
+
+      {/* 2순위: 본인 결과 직접 선택 */}
       <div className="mb-4">
         <p className="mb-2 text-xs text-gray-500">나의 결과 선택</p>
         <div className="grid grid-cols-3 gap-2">
@@ -416,27 +440,10 @@ function JoinFormSection({
           if (valid && selectedResultId) onSubmit(trimmed, selectedResultId);
         }}
         disabled={!valid || joining}
-        className="w-full rounded-full bg-gradient-to-r from-pink-500 to-violet-500 py-3 font-bold text-white disabled:opacity-40"
+        className="w-full rounded-full border-2 border-pink-300 bg-white py-3 font-bold text-pink-700 transition disabled:opacity-40 active:scale-95"
       >
         {joining ? "참여 중…" : "참여하기"}
       </button>
-
-      <div className="mt-5 border-t border-gray-100 pt-4">
-        <p className="mb-2 text-center text-xs text-gray-500">
-          내 결과를 모르겠다면 ↓
-        </p>
-        <button
-          type="button"
-          onClick={handleGoToTest}
-          disabled={!nicknameReady}
-          className="w-full rounded-full border-2 border-pink-200 bg-white py-2.5 text-sm font-medium text-pink-700 transition disabled:opacity-40 hover:border-pink-300 active:scale-95"
-        >
-          🧪 테스트 진행하고 자동 참여
-        </button>
-        <p className="mt-2 text-center text-xs text-gray-400">
-          닉네임 입력 후 — 테스트 끝나면 결과 페이지에서 자동 합류
-        </p>
-      </div>
     </section>
   );
 }
