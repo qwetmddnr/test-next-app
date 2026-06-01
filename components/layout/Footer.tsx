@@ -3,7 +3,15 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="mt-auto px-5 py-8 text-center text-xs text-gray-400">
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
+        <Link href="/about" className="transition hover:text-gray-600">
+          소개
+        </Link>
+        <span className="text-gray-300">·</span>
+        <Link href="/faq" className="transition hover:text-gray-600">
+          FAQ
+        </Link>
+        <span className="text-gray-300">·</span>
         <Link href="/terms" className="transition hover:text-gray-600">
           이용약관
         </Link>
