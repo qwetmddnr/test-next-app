@@ -453,6 +453,45 @@ export function ResultView({
           />
         )}
 
+        {test.results.length > 1 && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={1.7}
+            className="mt-10"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-base font-bold text-gray-800">
+                🔮 이 테스트의 다른 결과들
+              </h3>
+              <Link
+                href={entryPath(test)}
+                className="text-xs text-gray-400 transition hover:text-gray-600"
+              >
+                전체 →
+              </Link>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {test.results
+                .filter((r) => r.id !== result.id)
+                .slice(0, 6)
+                .map((r) => (
+                  <Link
+                    key={r.id}
+                    href={`/result/${test.slug}/${r.id}`}
+                    className="flex flex-col items-center rounded-2xl bg-white/80 p-3 ring-1 ring-pink-100 backdrop-blur transition hover:-translate-y-0.5"
+                  >
+                    <span className="text-3xl">{r.emoji}</span>
+                    <span className="mt-1 text-center text-xs font-medium text-gray-700">
+                      {r.title.replace(/\s*\([^)]+\)\s*$/, "")}
+                    </span>
+                  </Link>
+                ))}
+            </div>
+          </motion.div>
+        )}
+
         {otherTests.length > 0 && (
           <motion.div
             variants={fadeUp}

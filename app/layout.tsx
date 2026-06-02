@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@/components/analytics/Analytics";
 import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
 const siteUrl =
@@ -72,6 +73,7 @@ export default function RootLayout({
         )}
       </head>
       <body className="flex min-h-full flex-col">
+        <Header />
         {children}
         <Footer />
         <Analytics />
