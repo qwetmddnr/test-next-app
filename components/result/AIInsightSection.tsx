@@ -12,6 +12,11 @@ interface AIInsightSectionProps {
 
 const COUNTDOWN_SECONDS = 5;
 
+// AdSense 승인 전에는 광고 잠금 해제 흐름을 끄고 버튼만 누르면 즉시 unlock.
+// 승인 후 NEXT_PUBLIC_REWARD_AD_ENABLED=true 로 다시 켤 수 있음.
+const REWARD_AD_ENABLED =
+  process.env.NEXT_PUBLIC_REWARD_AD_ENABLED === "true";
+
 function stripMarkdown(text: string): string {
   return text
     .replace(/^#{1,6}\s+.*$/gm, "")
@@ -72,6 +77,11 @@ export function AIInsightSection({
     if (typeof navigator !== "undefined" && "vibrate" in navigator) {
       navigator.vibrate(20);
     }
+    if (!REWARD_AD_ENABLED) {
+      // 광고 흐름 비활성: 클릭 즉시 잠금 해제
+      handleUnlockComplete();
+      return;
+    }
     setSecondsLeft(COUNTDOWN_SECONDS);
     setShowModal(true);
   }
@@ -131,7 +141,7 @@ export function AIInsightSection({
           }}
           className="mt-4 w-full rounded-full bg-gradient-to-r from-violet-500 to-pink-500 py-3 text-sm font-bold text-white shadow-lg shadow-violet-200/60"
         >
-          🎁 광고 보고 잠금 해제하기
+          {REWARD_AD_ENABLED ? "🎁 광고 보고 잠금 해제하기" : "✨ 잠금 해제하기"}
         </motion.button>
       </div>
 
