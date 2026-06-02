@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { PopularTests } from "@/components/home/PopularTests";
+import { TodayPickCard } from "@/components/home/TodayPickCard";
+import { JoinGroupCard } from "@/components/home/JoinGroupCard";
+import { HomeShareCard } from "@/components/home/HomeShareCard";
 import { getPopularTests } from "@/lib/stats/popular";
 
 export const revalidate = 60;
@@ -71,7 +74,41 @@ export default async function Home() {
           </div>
         </section>
 
+        <TodayPickCard />
+
         <PopularTests entries={popular} />
+
+        <HomeShareCard />
+
+        <JoinGroupCard />
+
+        <section className="mb-8">
+          <div className="rounded-2xl bg-white/80 p-5 ring-1 ring-violet-100 backdrop-blur">
+            <h2 className="mb-2 flex items-center gap-1.5 text-sm font-bold text-gray-800">
+              🌸 오나는 어떤 곳인가요?
+            </h2>
+            <p className="text-xs leading-relaxed text-gray-700">
+              오나(OHNA, 오늘의 나)는 한국에서 오래 전해 내려온 운세와 현대의 AI를
+              가볍게 결합해, 매일의 자신을 짧게 들여다보는 무료 콘텐츠 모음이에요.
+              사주·타로·별자리·띠 운세부터 MBTI·동물상·전생 직업·연애 유형까지,
+              회원 가입 없이 바로 즐겨보세요.
+            </p>
+            <div className="mt-3 flex gap-3 text-xs">
+              <Link
+                href="/about"
+                className="font-bold text-pink-600 underline-offset-2 hover:underline"
+              >
+                오나 자세히 보기 →
+              </Link>
+              <Link
+                href="/faq"
+                className="font-bold text-violet-600 underline-offset-2 hover:underline"
+              >
+                자주 묻는 질문 →
+              </Link>
+            </div>
+          </div>
+        </section>
 
         <AdSlot slot="home-middle" />
       </div>
