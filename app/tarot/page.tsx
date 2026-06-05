@@ -85,6 +85,30 @@ export default function TarotPage() {
 
           <section className="mt-6 rounded-2xl bg-white/10 p-5 ring-1 ring-white/20 backdrop-blur-md">
             <h2 className="mb-2 text-sm font-bold text-white">
+              🃏 메이저 아르카나 22장 둘러보기
+            </h2>
+            <p className="mb-4 text-xs leading-relaxed text-violet-100/85">
+              어떤 카드들이 있는지 궁금하다면 카드별 의미를 미리 확인해 볼 수
+              있어요. 카드를 누르면 그 카드의 결과 페이지로 이동합니다.
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {deck.results.map((card) => (
+                <Link
+                  key={card.id}
+                  href={`/result/tarot/${card.id}`}
+                  className="flex flex-col items-center rounded-xl bg-white/10 p-2.5 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:bg-white/15"
+                >
+                  <span className="text-2xl">{card.emoji}</span>
+                  <span className="mt-1 text-center text-[11px] font-medium text-violet-100/90">
+                    {card.title.replace(/\s*\([^)]+\)\s*$/, "")}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl bg-white/10 p-5 ring-1 ring-white/20 backdrop-blur-md">
+            <h2 className="mb-2 text-sm font-bold text-white">
               💫 오늘 카드를 활용하는 법
             </h2>
             <p className="text-xs leading-relaxed text-violet-100/85">

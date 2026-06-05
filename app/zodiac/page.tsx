@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BirthDatePicker } from "@/components/zodiac/BirthDatePicker";
+import { getTest } from "@/lib/test/loader";
 
 export const metadata: Metadata = {
   title: "오늘의 별자리 운세 — 생일로 보는 12 별자리",
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default function ZodiacPage() {
+  const test = getTest("zodiac");
+  const results = test?.results ?? [];
   return (
     <main className="flex-1 px-5 pb-12 pt-6">
       <div className="mx-auto max-w-md">
@@ -73,6 +76,31 @@ export default function ZodiacPage() {
             바탕으로 오늘의 일·관계·건강 흐름을 짧고 따뜻하게 풀어드려요.
           </p>
         </section>
+
+        {results.length > 0 && (
+          <section className="mt-6 rounded-2xl bg-white/70 p-5 ring-1 ring-violet-100 backdrop-blur">
+            <h2 className="mb-2 text-sm font-bold text-gray-800">
+              ✨ 12 별자리 둘러보기
+            </h2>
+            <p className="mb-4 text-xs leading-relaxed text-gray-600">
+              내 별자리를 알고 있다면 생일 입력 없이 바로 결과를 확인할 수 있어요.
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {results.map((r) => (
+                <Link
+                  key={r.id}
+                  href={`/result/zodiac/${r.id}`}
+                  className="flex flex-col items-center rounded-xl bg-white/80 p-2.5 ring-1 ring-violet-100 transition hover:-translate-y-0.5"
+                >
+                  <span className="text-2xl">{r.emoji}</span>
+                  <span className="mt-1 text-center text-[11px] font-medium text-gray-700">
+                    {r.title.replace(/\s*\([^)]+\)\s*$/, "")}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="mt-6 rounded-2xl bg-white/70 p-5 ring-1 ring-violet-100 backdrop-blur">
           <h2 className="mb-2 text-sm font-bold text-gray-800">

@@ -75,20 +75,33 @@ function CategorySection({
   );
 }
 
+// fixed-result 테스트만 결과 미리보기 chip을 노출 (daily/personalized 카테고리는
+// 이미 자체 입력 페이지에서 결과 그리드를 노출하거나 token 기반이라 제외)
+const PREVIEW_ELIGIBLE_SLUGS = new Set([
+  "mbti",
+  "animal-face",
+  "love-style",
+  "past-life-job",
+]);
+
 function TestCatalogCard({ test }: { test: TestDefinition }) {
-  const href = test.comingSoon ? getEntryPath(test) : getEntryPath(test);
+  const href = getEntryPath(test);
   const meta = test.comingSoon
     ? null
     : test.questions.length > 0
     ? `${test.questions.length}문항 · 결과 ${test.results.length}종`
     : `결과 ${test.results.length}종`;
+  const showResultChips =
+    !test.comingSoon &&
+    PREVIEW_ELIGIBLE_SLUGS.has(test.slug) &&
+    test.results.length > 0;
 
   return (
-    <Link
-      href={href}
-      className="block rounded-2xl bg-white/80 p-4 shadow-sm ring-1 ring-pink-100 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
-    >
-      <div className="flex items-center gap-4">
+    <div className="rounded-2xl bg-white/80 p-4 shadow-sm ring-1 ring-pink-100 backdrop-blur transition hover:shadow-md">
+      <Link
+        href={href}
+        className="flex items-center gap-4 transition active:scale-[0.99]"
+      >
         <span className="text-4xl">{test.emoji}</span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
@@ -110,7 +123,32 @@ function TestCatalogCard({ test }: { test: TestDefinition }) {
           )}
         </div>
         <span className="text-gray-300">›</span>
-      </div>
-    </Link>
+      </Link>
+
+      {showResultChips && (
+        <div className="mt-3 border-t border-pink-50 pt-3">
+          <p className="mb-2 text-[11px] font-medium text-gray-400">
+            결과 미리보기
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {test.results.slice(0, 8).map((r) => (
+              <Link
+                key={r.id}
+                href={`/result/${test.slug}/${r.id}`}
+                className="inline-flex items-center gap-1 rounded-full bg-pink-50 px-2.5 py-1 text-[11px] font-medium text-pink-700 ring-1 ring-pink-100 transition hover:bg-pink-100"
+              >
+                <span>{r.emoji}</span>
+                <span>{r.title.replace(/\s*\([^)]+\)\s*$/, "")}</span>
+              </Link>
+            ))}
+            {test.results.length > 8 && (
+              <span className="inline-flex items-center rounded-full bg-gray-50 px-2.5 py-1 text-[11px] text-gray-500 ring-1 ring-gray-100">
+                +{test.results.length - 8}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
