@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllResultParams, getAllTests, getEntryPath } from "@/lib/test/loader";
+import { getAllArticles } from "@/lib/blog/loader";
 
 // 매일 새 AI 인사이트가 생성되는 운세 테스트 — sitemap의 changeFrequency/priority를 daily로 높임.
 const DAILY_TESTS = new Set(["tarot", "new-year", "zodiac"]);
@@ -25,6 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: isDaily ? 0.9 : 0.8,
       };
     });
+
+  const articles = getAllArticles().map((a) => ({
+    url: `${baseUrl}/magazine/${a.slug}`,
+    lastModified: a.updatedAt ?? a.publishedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   const results = getAllResultParams().map((r) => {
     const isDaily = DAILY_TESTS.has(r.type);
@@ -52,6 +60,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/magazine`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/about`,
       lastModified: now,
       changeFrequency: "monthly",
@@ -75,6 +89,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...articles,
     ...tests,
     ...results,
   ];

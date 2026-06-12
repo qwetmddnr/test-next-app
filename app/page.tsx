@@ -5,6 +5,7 @@ import { TodayPickCard } from "@/components/home/TodayPickCard";
 import { JoinGroupCard } from "@/components/home/JoinGroupCard";
 import { HomeShareCard } from "@/components/home/HomeShareCard";
 import { getPopularTests } from "@/lib/stats/popular";
+import { getAllArticles } from "@/lib/blog/loader";
 
 export const revalidate = 60;
 
@@ -33,6 +34,7 @@ const organizationSchema = {
 
 export default async function Home() {
   const popular = await getPopularTests(10);
+  const articles = getAllArticles().slice(0, 3);
 
   return (
     <main className="flex-1 px-5 pb-8 pt-10">
@@ -79,6 +81,33 @@ export default async function Home() {
         <PopularTests entries={popular} />
 
         <HomeShareCard />
+
+        <section className="mb-8">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-800">📖 오나 매거진</h2>
+            <Link
+              href="/magazine"
+              className="text-xs font-bold text-violet-600 underline-offset-2 hover:underline"
+            >
+              전체 보기 →
+            </Link>
+          </div>
+          <div className="space-y-2">
+            {articles.map((a) => (
+              <Link
+                key={a.slug}
+                href={`/magazine/${a.slug}`}
+                className="flex items-center gap-3 rounded-2xl bg-white/80 px-4 py-3 shadow-sm ring-1 ring-violet-100 backdrop-blur transition hover:shadow-md active:scale-[0.99]"
+              >
+                <span className="text-2xl">{a.emoji}</span>
+                <span className="min-w-0 flex-1 truncate text-sm font-medium text-gray-700">
+                  {a.title}
+                </span>
+                <span className="text-gray-300">›</span>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         <JoinGroupCard />
 

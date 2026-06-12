@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const NAV_ITEMS = [
   { href: "/", label: "홈" },
   { href: "/tests", label: "테스트 둘러보기" },
+  { href: "/magazine", label: "매거진" },
   { href: "/about", label: "오나 소개" },
   { href: "/faq", label: "자주 묻는 질문" },
 ];

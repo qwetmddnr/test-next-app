@@ -8,6 +8,10 @@ export function Footer() {
           소개
         </Link>
         <span className="text-gray-300">·</span>
+        <Link href="/magazine" className="transition hover:text-gray-600">
+          매거진
+        </Link>
+        <span className="text-gray-300">·</span>
         <Link href="/faq" className="transition hover:text-gray-600">
           FAQ
         </Link>
