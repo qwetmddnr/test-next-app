@@ -45,6 +45,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title,
     description,
+    // 결과 페이지는 동일 템플릿의 자동생성 페이지가 100여 개라 thin-content 신호를 줌.
+    // 검색 색인에서는 제외하되(follow는 유지해 내부 링크는 크롤) 공유 링크는 그대로 동작.
+    robots: { index: false, follow: true },
     openGraph: {
       title,
       description,

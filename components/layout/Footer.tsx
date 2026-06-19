@@ -16,6 +16,10 @@ export function Footer() {
           FAQ
         </Link>
         <span className="text-gray-300">·</span>
+        <Link href="/contact" className="transition hover:text-gray-600">
+          문의하기
+        </Link>
+        <span className="text-gray-300">·</span>
         <Link href="/terms" className="transition hover:text-gray-600">
           이용약관
         </Link>

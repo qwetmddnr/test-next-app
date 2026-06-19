@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllResultParams, getAllTests, getEntryPath } from "@/lib/test/loader";
+import { getAllTests, getEntryPath } from "@/lib/test/loader";
 import { getAllArticles } from "@/lib/blog/loader";
 
 // 매일 새 AI 인사이트가 생성되는 운세 테스트 — sitemap의 changeFrequency/priority를 daily로 높임.
@@ -34,17 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const results = getAllResultParams().map((r) => {
-    const isDaily = DAILY_TESTS.has(r.type);
-    return {
-      url: `${baseUrl}/result/${r.type}/${r.id}`,
-      lastModified: now,
-      changeFrequency: (isDaily ? "daily" : "monthly") as
-        | "daily"
-        | "monthly",
-      priority: isDaily ? 0.8 : 0.6,
-    };
-  });
+  // /result/[type]/[id] 페이지(100여 개)는 동일 템플릿의 자동생성 thin-content라
+  // 색인 대상에서 제외(robots noindex) → 사이트맵에서도 제거. 공유는 직접 링크로 동작.
 
   return [
     {
@@ -78,6 +69,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/contact`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
       url: `${baseUrl}/privacy`,
       lastModified: now,
       changeFrequency: "yearly",
@@ -91,6 +88,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...articles,
     ...tests,
-    ...results,
   ];
 }
