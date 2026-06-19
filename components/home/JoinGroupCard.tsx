@@ -43,12 +43,12 @@ export function JoinGroupCard() {
             placeholder="모임 코드 입력"
             inputMode="text"
             autoComplete="off"
-            className="flex-1 rounded-full border border-violet-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-violet-400 focus:outline-none"
+            className="min-w-0 flex-1 rounded-full border border-violet-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-violet-400 focus:outline-none"
           />
           <button
             type="submit"
             disabled={!valid || going}
-            className="rounded-full bg-gradient-to-r from-violet-500 to-pink-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-violet-200/60 transition active:scale-95 disabled:opacity-40 disabled:shadow-none"
+            className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-violet-500 to-pink-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-violet-200/60 transition active:scale-95 disabled:opacity-40 disabled:shadow-none"
           >
             {going ? "이동 중..." : "참여"}
           </button>
