@@ -77,20 +77,75 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="5. 쿠키의 사용">
-            서비스는 사용자 경험 향상 및 광고 노출을 위해 쿠키를 사용합니다.
-            브라우저 설정을 통해 쿠키 사용을 거부할 수 있으며, 거부 시 일부
-            기능이 제한될 수 있습니다.
+            <p>
+              서비스는 사용자 경험 향상 및 광고 노출을 위해 쿠키를 사용합니다.
+              브라우저 설정을 통해 쿠키 사용을 거부할 수 있으며, 거부 시 일부
+              기능이 제한될 수 있습니다.
+            </p>
+            <p className="mt-2">
+              특히 Google을 포함한 제3자 광고 사업자는 쿠키를 사용해 이용자의
+              이전 방문 기록을 바탕으로 맞춤형 광고를 게재합니다. Google이
+              광고 쿠키를 사용하는 방식은{" "}
+              <a
+                href="https://policies.google.com/technologies/ads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 underline-offset-2 hover:underline"
+              >
+                Google 광고 정책
+              </a>
+              에서 확인할 수 있으며, 이용자는{" "}
+              <a
+                href="https://www.google.com/settings/ads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 underline-offset-2 hover:underline"
+              >
+                Google 광고 설정
+              </a>
+              에서 맞춤형 광고를 거부하거나,{" "}
+              <a
+                href="https://www.aboutads.info/choices"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 underline-offset-2 hover:underline"
+              >
+                www.aboutads.info
+              </a>
+              에서 제3자 광고 쿠키를 일괄 차단할 수 있습니다.
+            </p>
           </Section>
 
           <Section title="6. 이용자의 권리">
             이용자는 언제든지 본인의 개인정보 열람, 정정, 삭제, 처리 정지를
-            요청할 수 있습니다. 문의는 서비스 운영자에게 전달해 주세요.
+            요청할 수 있습니다. 관련 문의는{" "}
+            <Link
+              href="/contact"
+              className="text-pink-600 underline-offset-2 hover:underline"
+            >
+              문의하기
+            </Link>{" "}
+            페이지를 통해 전달해 주세요.
           </Section>
 
           <Section title="7. 개인정보 보호책임자">
-            <p>책임자: 서비스 운영자</p>
-            <p className="mt-1 text-xs text-gray-500">
-              구체적인 연락처는 추후 사업자 등록 완료 시 공개됩니다.
+            <p>책임자: 오나(OHNA) 운영자</p>
+            <p className="mt-1">
+              문의 이메일:{" "}
+              <a
+                href="mailto:lahani0918@gmail.com"
+                className="text-pink-600 underline-offset-2 hover:underline"
+              >
+                lahani0918@gmail.com
+              </a>{" "}
+              (
+              <Link
+                href="/contact"
+                className="text-pink-600 underline-offset-2 hover:underline"
+              >
+                문의하기
+              </Link>
+              )
             </p>
           </Section>
 
