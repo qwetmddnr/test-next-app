@@ -1,0 +1,302 @@
+{
+  "slug": "teto-egen",
+  "title": "테토-에겐 테스트",
+  "description": "테스토스테론 vs 에스트로겐, 나의 분위기는? 테토남·테토녀·에겐남·에겐녀 4유형",
+  "emoji": "⚡",
+  "estimatedMinutes": 2,
+  "category": "fun",
+  "results": [
+    {
+      "id": "teto-male",
+      "title": "테토남",
+      "emoji": "🔥",
+      "shortDesc": "직진·주도·단순명쾌, 타고난 상남자 에너지",
+      "description": "당신은 생각보다 행동이 먼저인 테토남이에요. 좋고 싫음이 분명하고, 한 번 정하면 거침없이 밀고 나가는 추진력이 가장 큰 무기죠. 복잡한 눈치 싸움보다 솔직하고 시원한 소통을 좋아하고, 곁에 있는 사람을 든든하게 지켜주는 리더형이에요. 가끔은 한 박자 멈춰 상대의 감정을 살피면 더 단단한 관계를 만들 수 있어요.",
+      "traits": ["주도적", "직진", "추진력", "솔직함"],
+      "matches": ["egen-female"],
+      "avoid": ["teto-female"]
+    },
+    {
+      "id": "teto-female",
+      "title": "테토녀",
+      "emoji": "⚡",
+      "shortDesc": "쿨하고 주도적인 걸크러시 에너지",
+      "description": "당신은 할 말은 하고 할 일은 하는 테토녀예요. 분위기에 휩쓸리지 않는 단단한 중심과 시원시원한 결단력으로 어디서나 듬직한 존재감을 풍기죠. 의리 있고 솔직해서 한번 내 사람이라 정하면 끝까지 챙기는 타입. 다만 너무 강하게만 보이지 않게, 가끔은 약한 모습도 살짝 보여주면 매력이 배가돼요.",
+      "traits": ["쿨함", "결단력", "의리", "주도적"],
+      "matches": ["egen-male"],
+      "avoid": ["egen-female"]
+    },
+    {
+      "id": "egen-male",
+      "title": "에겐남",
+      "emoji": "🌿",
+      "shortDesc": "다정하고 섬세한, 감성 충만한 부드러움",
+      "description": "당신은 상대의 마음을 먼저 읽는 섬세한 에겐남이에요. 작은 변화도 놓치지 않는 공감 능력과 부드러운 다정함으로 사람들에게 편안함을 주죠. 감정 표현이 자연스럽고 분위기를 따뜻하게 만드는 재능이 있어요. 때로는 남을 챙기느라 미뤄둔 내 마음도 잘 살펴주면 더 좋아요.",
+      "traits": ["다정함", "섬세함", "공감", "감성"],
+      "matches": ["teto-female"],
+      "avoid": ["teto-male"]
+    },
+    {
+      "id": "egen-female",
+      "title": "에겐녀",
+      "emoji": "🌸",
+      "shortDesc": "섬세한 감성과 따뜻한 분위기의 소유자",
+      "description": "당신은 감정과 분위기에 예민하게 반응하는 에겐녀예요. 섬세한 감수성과 깊은 공감으로 사람들의 마음을 어루만지고, 작은 순간도 특별하게 느끼는 풍부한 감성이 큰 매력이죠. 다정하고 배려심이 깊어 곁에 있으면 마음이 편안해져요. 가끔은 내 감정도 솔직하게 표현하면 관계가 한층 깊어집니다.",
+      "traits": ["섬세함", "감성", "공감", "배려"],
+      "matches": ["teto-male"],
+      "avoid": ["egen-male"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": "먼저, 당신의 성별은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "남성",
+          "scores": { "teto-male": 100, "egen-male": 100 }
+        },
+        {
+          "id": "b",
+          "text": "여성",
+          "scores": { "teto-female": 100, "egen-female": 100 }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "친구들 사이에서 내 역할은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "분위기를 주도하고 모임을 끌고 가는 쪽",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "조용히 챙기고 고민을 들어주는 쪽",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "할 말은 직설적으로 하는 쪽",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "갈등이 생기면 분위기를 다독이는 쪽",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "중요한 결정을 내릴 때 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "직감대로 빠르게 결정한다",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "주변 감정과 분위기를 살펴 신중히",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "효율과 결과 위주로 단순하게",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "관련된 사람들 마음을 두루 고려해서",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "스트레스를 받으면 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "운동이나 활동으로 확 풀어버린다",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "감정을 곱씹다 누군가에게 털어놓는다",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "혼자 빠르게 해결하고 잊는다",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "음악·분위기로 감성을 달랜다",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "좋아하는 사람이 생기면?",
+      "options": [
+        {
+          "id": "a",
+          "text": "티 내고 적극적으로 직진한다",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "상대의 신호를 섬세하게 살핀다",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "쿨하게 할 말은 하고 본다",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "분위기부터 천천히 만든다",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "대화할 때 내 스타일은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "결론부터 단도직입으로",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "감정과 맥락을 충분히 담아서",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "팩트 위주로 깔끔하게",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "상대 기분을 살피며 부드럽게",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "내 옷차림·스타일은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "심플하고 편한 게 최고",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "분위기와 디테일을 신경 쓴다",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "기능성·실용성 위주",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "그날의 감성·무드를 살린다",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "갈등 상황에서 나는?",
+      "options": [
+        {
+          "id": "a",
+          "text": "정면돌파, 바로 부딪혀 푼다",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "상대의 감정을 먼저 살핀다",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "감정은 빼고 논리로 정리한다",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "분위기 안 깨지게 조심한다",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "주말을 보내는 방식은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "약속 잡고 밖에서 액티브하게",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "카페·영화·산책으로 감성 충전",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "할 일 처리하고 운동",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "집에서 분위기 내며 힐링",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "사람들이 말하는 내 첫인상은?",
+      "options": [
+        {
+          "id": "a",
+          "text": "당당하고 시원시원하다",
+          "scores": { "teto-male": 3, "teto-female": 3 }
+        },
+        {
+          "id": "b",
+          "text": "다정하고 부드럽다",
+          "scores": { "egen-male": 3, "egen-female": 3 }
+        },
+        {
+          "id": "c",
+          "text": "쿨하고 똑 부러진다",
+          "scores": { "teto-male": 2, "teto-female": 2 }
+        },
+        {
+          "id": "d",
+          "text": "섬세하고 분위기 있다",
+          "scores": { "egen-male": 2, "egen-female": 2 }
+        }
+      ]
+    }
+  ]
+}

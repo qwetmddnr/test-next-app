@@ -2,6 +2,7 @@ import type { TestCategory, TestDefinition, TestResult } from "@/lib/types/test"
 import animalFace from "@/data/tests/animal-face.json";
 import pastLifeJob from "@/data/tests/past-life-job.json";
 import loveStyle from "@/data/tests/love-style.json";
+import tetoEgen from "@/data/tests/teto-egen.json";
 import mbti from "@/data/tests/mbti";
 import tarot from "@/data/tests/tarot";
 import newYear from "@/data/tests/new-year";
@@ -10,6 +11,7 @@ import dream from "@/data/tests/dream";
 import zodiac from "@/data/tests/zodiac";
 
 const TESTS: Record<string, TestDefinition> = {
+  "teto-egen": tetoEgen as unknown as TestDefinition,
   "animal-face": animalFace as unknown as TestDefinition,
   "past-life-job": pastLifeJob as unknown as TestDefinition,
   "love-style": loveStyle as unknown as TestDefinition,
