@@ -1,4 +1,5 @@
 import type { Article } from "@/lib/blog/types";
+import tetoEgenYuhyeong from "@/data/articles/teto-egen-yuhyeong";
 import jeongsinYeonryeong from "@/data/articles/jeongsin-yeonryeong";
 import beonautJagajindan from "@/data/articles/beonaut-jagajindan";
 import mbti16Yuhyeong from "@/data/articles/mbti-16-yuhyeong";
@@ -13,6 +14,7 @@ import cheonjikJeokseong from "@/data/articles/cheonjik-jeokseong-chatgi";
 import naehyangOehyang from "@/data/articles/naehyang-oehyang-cha-i";
 
 const ARTICLES: Record<string, Article> = {
+  [tetoEgenYuhyeong.slug]: tetoEgenYuhyeong,
   [jeongsinYeonryeong.slug]: jeongsinYeonryeong,
   [beonautJagajindan.slug]: beonautJagajindan,
   [mbti16Yuhyeong.slug]: mbti16Yuhyeong,
